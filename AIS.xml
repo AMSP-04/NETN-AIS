@@ -1,0 +1,2084 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<objectModel xsi:schemaLocation="http://standards.ieee.org/IEEE1516-2010 http://standards.ieee.org/downloads/1516/1516.2-2010/IEEE1516-DIF-2010.xsd" xmlns="http://standards.ieee.org/IEEE1516-2010" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelIdentification>
+        <name>NETN AIS</name>
+        <type>FOM</type>
+        <version>1.0</version>
+        <modificationDate>2019-11-11</modificationDate>
+        <securityClassification>Not Classified</securityClassification>
+        <purpose>
+The purpose of the AIS FOM module is to enable the exchange of AIS messages in both a real-time and non real-time platform level simulation, and to support the translation of AIS messages to/from the NMEA 0183 protocol using for example generic gateway components. The AIS FOM module defines almost all of the AIS message types, whose content can be interpreted by applications without knowledge of the NMEA 0183 protocol.
+		</purpose>
+        <applicationDomain>Training, analysis</applicationDomain>
+        <description>
+NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module.
+
+The Automatic Identification System (AIS) is a world-wide automated tracking system used on vessels and by Vessel Traffic Services (VTS) for identifying and locating vessels by electronically exchanging messages with other nearby vessels and VTS stations. 27 message types are defined in ITU-R M.1371-5 annex 8 (see https://www.itu.int). Most commonly used message types are the Position Report Class A (Message types 1,2, and 3) and the Static and Voyage Related Data (Message type 5). And a commonly used live protocol to exhange AIS messages is NMEA-0183. This is an electrical and data specification for communication between marine electronics (see https://www.nmea.org).
+
+The AIS FOM module defines all of the messages types specified in ITU-R M.1371-5 annex 8, with the exception of rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure is closely aligned with the message type specification in ITU-R M.1371-5 annex 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes and most of the class parameters are optional. The root class - AisMessage - is integrated in the RPR-FOM by subclassing RadioSignal, using the concept of HostRadioIndex to refer to the RadioTransmitter object instance on board of the vessel. The AIS message types include SOTDMA and ITDMA communication state data, but the parameters related to communication state can be omitted if there is no need to model communication.
+
+The AIS FOM module content is based on available open source material from the United States Coast Guard (https://www.navcen.uscg.gov), the GPSD project website (https://gpsd.gitlab.io/gpsd/AIVDM.html), and ITU-R M.1371-5.
+		</description>
+        <useLimitation>
+The AIS FOM module is simulation oriented and does not focus on the communication of live AIS data. However, the FOM is aligned well with the specification in ITU-R M.1371-5, enabling relatively easy mapping to/from NMEA 0183.
+		</useLimitation>
+        <other></other>
+    </modelIdentification>
+    <objects>
+        <objectClass>
+            <name>HLAobjectRoot</name>
+        </objectClass>
+    </objects>
+    <interactions>
+        <interactionClass>
+            <name>HLAinteractionRoot</name>
+            <interactionClass>
+                <name>RadioSignal</name>
+                <sharing>Neither</sharing>
+                <transportation>HLAreliable</transportation>
+                <order>Receive</order>
+                <semantics></semantics>
+                <interactionClass>
+                    <name>AisRadioSignal</name>
+                    <sharing>Subscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>Receive</order>
+                    <semantics>This is the root interaction class for all AIS messages. The interaction class contains a reference to the embedded system that represents the AIS transmitter. The embedded system should be modelled as a RadioTransmitter, an RPR-FOM object class that is suclassed from Embedded System.</semantics>
+                    <parameter>
+                        <name>HostRadioIndex</name>
+                        <dataType>RTIobjectId</dataType>
+                        <semantics>Object instance ID of the embedded system host.</semantics>
+                    </parameter>
+                    <interactionClass>
+                        <name>AisMessage</name>
+                        <sharing>Subscribe</sharing>
+                        <transportation>HLAreliable</transportation>
+                        <order>Receive</order>
+                        <semantics>Super class for all AIS message types.</semantics>
+                        <parameter>
+                            <name>messageId</name>
+                            <dataType>MsgIdEnum</dataType>
+                            <semantics>Message identifier.</semantics>
+                        </parameter>
+                        <parameter>
+                            <name>repeatIndicator</name>
+                            <dataType>RepeatIndicatorBit2</dataType>
+                            <semantics>Message repeat Indicator. 
+ 
+OPTIONAL. DEFAULT: 0.</semantics>
+                        </parameter>
+                        <parameter>
+                            <name>mmsi</name>
+                            <dataType>MMSIBit30</dataType>
+                            <semantics>The AIS message is from the vessel identified by this MMSI.</semantics>
+                        </parameter>
+                        <interactionClass>
+                            <name>AisNavigationData</name>
+                            <sharing>Subscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Message Types 1, 2 and 3 share a common reporting structure for navigational data, captured in this class.</semantics>
+                            <parameter>
+                                <name>navigationalStatus</name>
+                                <dataType>NavigationStatusEnum</dataType>
+                                <semantics>Navigational status. 
+ 
+OPTIONAL. DEFAULT: 15 (not defined).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>rateOfTurn</name>
+                                <dataType>RateOfTurnBit8</dataType>
+                                <semantics>Rate of turn. 
+ 
+OPTIONAL. DEFAULT: 128 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>speedOverGround</name>
+                                <dataType>SpeedOverGroundBit10</dataType>
+                                <semantics>Speed over ground. 
+ 
+OPTIONAL. DEFAULT: 1023 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>positionAccuracy</name>
+                                <dataType>PositionAccuracyEnum</dataType>
+                                <semantics>Position accuracy. 
+ 
+OPTIONAL. DEFAULT: 0 (unaugmented GNSS).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>position</name>
+                                <dataType>AisPosition</dataType>
+                                <semantics>AIS (Lat,Lon) position. 
+ 
+OPTIONAL. DEFAULT: Lat=91, Lon=181 (not available, not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>courseOverGround</name>
+                                <dataType>CourseOverGroundBit12</dataType>
+                                <semantics>Course over ground. 
+ 
+OPTIONAL. DEFAULT: 3600 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>trueHeading</name>
+                                <dataType>TrueHeadingBit9</dataType>
+                                <semantics>True heading. 
+ 
+OPTIONAL. DEFAULT: 511 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>utcSecond</name>
+                                <dataType>UTCsecondBit6</dataType>
+                                <semantics>Second of UTC timestamp. 
+ 
+OPTIONAL. DEFAULT: 60 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>specialManeuverIndicator</name>
+                                <dataType>ManeuverIndicatorEnum</dataType>
+                                <semantics>Maneuver indication. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>raim</name>
+                                <dataType>RAIMEnum</dataType>
+                                <semantics>RAIM flag. 
+ 
+OPTIONAL. DEFAULT 0 (not in use).</semantics>
+                            </parameter>
+                            <interactionClass>
+                                <name>AisMessage1</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 1: Position Report Class A. 
+ 
+Message type for a scheduled position report; Class A shipborne mobile equipment. 
+ 
+This message transmits information pertaining to a ships navigation: Longitude and latitude, time, heading, speed, ships navigation status (under power, at anchor...). This message is transmitted every 2 to 10 seconds while underway, and every 3 minutes while at anchor.</semantics>
+                                <parameter>
+                                    <name>communicationState</name>
+                                    <dataType>SOTDMACommunicationState</dataType>
+                                    <semantics>SOTDMA communication state. 
+ 
+OPTIONAL. DEFAULT: zero filled record.</semantics>
+                                </parameter>
+                            </interactionClass>
+                            <interactionClass>
+                                <name>AisMessage2</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 2: Position Report Class A. 
+ 
+Message type for an assigned scheduled position report; Class A shipborne mobile equipment. 
+ 
+This message transmits information pertaining to a ships navigation: Longitude and latitude, time, heading, speed, ships navigation status (under power, at anchor...). This message is transmitted every 2 to 10 seconds while underway, and every 3 minutes while at anchor.</semantics>
+                                <parameter>
+                                    <name>communicationState</name>
+                                    <dataType>SOTDMACommunicationState</dataType>
+                                    <semantics>SOTDMA state. 
+ 
+OPTIONAL. DEFAULT: zero filled record.</semantics>
+                                </parameter>
+                            </interactionClass>
+                            <interactionClass>
+                                <name>AisMessage3</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 3: Position Report Class A. 
+ 
+Message type for a special position report, response to interrogation; Class A shipborne mobile equipment. 
+ 
+This message transmits information pertaining to a ships navigation: Longitude and latitude, time, heading, speed, ships navigation status (under power, at anchor...). This message is transmitted every 2 to 10 seconds while underway, and every 3 minutes while at anchor.</semantics>
+                                <parameter>
+                                    <name>communicationState</name>
+                                    <dataType>ITDMACommunicationState</dataType>
+                                    <semantics>ITDMA state. 
+ 
+OPTIONAL. DEFAULT: zero filled record.</semantics>
+                                </parameter>
+                            </interactionClass>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AisBaseStationReportAndUTCDateResponseData</name>
+                            <sharing>Subscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Common reporting structure for Message Types 4 and 11 for reporting UTC time and date and, at the same time, position. It is also is used by AIS stations for determining if it is within 120 NM for response to Messages Types 20 and 23.</semantics>
+                            <parameter>
+                                <name>utcYear</name>
+                                <dataType>UTCyearBit14</dataType>
+                                <semantics>Year. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>utcMonth</name>
+                                <dataType>UTCmonthBit4</dataType>
+                                <semantics>Month. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>utcDay</name>
+                                <dataType>UTCdayBit5</dataType>
+                                <semantics>Day. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>utcHour</name>
+                                <dataType>UTChourBit5</dataType>
+                                <semantics>Hour. 
+ 
+OPTIONAL. DEFAULT: 24 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>utcMinute</name>
+                                <dataType>UTCminuteBit6</dataType>
+                                <semantics>Minute. 
+ 
+OPTIONAL. DEFAULT: 60 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>utcSecond</name>
+                                <dataType>UTCsecondBit6</dataType>
+                                <semantics>Second. 
+ 
+OPTIONAL. DEFAULT: 60 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>positionAccuracy</name>
+                                <dataType>PositionAccuracyEnum</dataType>
+                                <semantics>Position accuracy. 
+ 
+OPTIONAL. DEFAULT: 0 (unaugmented GNSS).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>position</name>
+                                <dataType>AisPosition</dataType>
+                                <semantics>AIS (Lat,Lon) position. 
+ 
+OPTIONAL. DEFAULT: Lat=91, Lon=181 (not available, not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>posType</name>
+                                <dataType>PositionFixTypeEnum</dataType>
+                                <semantics>Type of electronic position fixing device. 
+ 
+OPTIONAL. DEFAULT: 0 (undefined).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>transmissionControl</name>
+                                <dataType>TransmissionControlEnum</dataType>
+                                <semantics>Transmission control for long-range broadcast message. 
+ 
+OPTIONAL. DEFAULT 0.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>raim</name>
+                                <dataType>RAIMEnum</dataType>
+                                <semantics>RAIM. 
+ 
+OPTIONAL. DEFAULT 0 (not in use).</semantics>
+                            </parameter>
+                            <interactionClass>
+                                <name>AisMessage4</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 4: Base Station Report. 
+ 
+This message is to be used by fixed-location base stations to periodically report a position and time reference.</semantics>
+                                <parameter>
+                                    <name>communicationState</name>
+                                    <dataType>SOTDMACommunicationState</dataType>
+                                    <semantics>SOTDMA state. 
+ 
+OPTIONAL. DEFAULT: zero filled record.</semantics>
+                                </parameter>
+                            </interactionClass>
+                            <interactionClass>
+                                <name>AisMessage11</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 11: UTC/Date Response. 
+ 
+Identical to Message Type 4, with the semantics of a response to inquiry. Message Type 11 is only transmitted from a mobile station as a result of a UTC request message (Message Type 10).</semantics>
+                                <parameter>
+                                    <name>communicationState</name>
+                                    <dataType>SOTDMACommunicationState</dataType>
+                                    <semantics>SOTDMA state. 
+ 
+OPTIONAL. DEFAULT: zero filled record.</semantics>
+                                </parameter>
+                            </interactionClass>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AisStaticandVoyageData</name>
+                            <sharing>Subscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Common Static and Voyage Data for Message Types 5, 19 and 24.</semantics>
+                            <parameter>
+                                <name>callsign</name>
+                                <dataType>HLAASCIIstring</dataType>
+                                <semantics>7 six-bit characters for the callsign.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>name</name>
+                                <dataType>HLAASCIIstring</dataType>
+                                <semantics>20 six-bit characters for the name.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>shipType</name>
+                                <dataType>ShipTypeBit8</dataType>
+                                <semantics>Ship type. 
+ 
+OPTIONAL. DEFAULT: 0 (not available or no ship).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dimBow</name>
+                                <dataType>BowDimensionBit9</dataType>
+                                <semantics>GPS Ant. Distance from bow. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dimStern</name>
+                                <dataType>SternDimensionBit9</dataType>
+                                <semantics>GPS Ant. Distance from stern. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dimPort</name>
+                                <dataType>PortDimensionBit6</dataType>
+                                <semantics>GPS Ant. Distance from port. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dimStarboard</name>
+                                <dataType>StarboardDimensionBit6</dataType>
+                                <semantics>GPS Ant. Distance from starboard. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <interactionClass>
+                                <name>AisMessage5</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 5: Static and Voyage Related Data. 
+ 
+This message type is transmitted every 6 minutes and should only be used by Class A shipborne and SAR aircraft AIS stations when reporting static or voyage related data.</semantics>
+                                <parameter>
+                                    <name>version</name>
+                                    <dataType>AISVersionEnum</dataType>
+                                    <semantics>2 bit value for AIS version. 
+ 
+OPTIONAL. DEFAULT: 0 (UT1371).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>imo</name>
+                                    <dataType>IMOBit30</dataType>
+                                    <semantics>30 bit value for IMO ship ID number. Not applicable to SAR aircraft. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>positionFixType</name>
+                                    <dataType>PositionFixTypeEnum</dataType>
+                                    <semantics>4 bit value for type of electronic position fixing device. 
+ 
+OPTIONAL. DEFAULT: 0 (undefined).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>etaMonth</name>
+                                    <dataType>UTCmonthBit4</dataType>
+                                    <semantics>Month. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>etaDay</name>
+                                    <dataType>UTCdayBit5</dataType>
+                                    <semantics>Day. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>etaHour</name>
+                                    <dataType>UTChourBit5</dataType>
+                                    <semantics>Hour. 
+ 
+OPTIONAL. DEFAULT: 24 (not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>etaMinute</name>
+                                    <dataType>UTCminuteBit6</dataType>
+                                    <semantics>Month. 
+ 
+OPTIONAL. DEFAULT: 60 (not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>draught</name>
+                                    <dataType>DraughtBit8</dataType>
+                                    <semantics>Maximum present static draught. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>dest</name>
+                                    <dataType>HLAASCIIstring</dataType>
+                                    <semantics>20 six-bit characters for the destination. 
+ 
+OPTIONAL. DEFAULT: @@@@@@@@@@@@@@@@@@@@ (not available). 
+ 
+For SAR aircraft, the use of this field may be decided by the responsible administration.</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>dte</name>
+                                    <dataType>DataTerminlEquipmentEnum</dataType>
+                                    <semantics>Data terminal equipment (DTE). 
+ 
+OPTIONAL. DEFAULT: 1 (not available).</semantics>
+                                </parameter>
+                            </interactionClass>
+                            <interactionClass>
+                                <name>AisMessage19</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 19: Extended Class B CS Position Report. 
+ 
+A slightly more detailed report than Message Type 18 for vessels using Class B transmitters. Omits navigational status and rate of turn. Fields are as in the common navigation block and the Message Type 5 message.</semantics>
+                                <parameter>
+                                    <name>speedOverGround</name>
+                                    <dataType>SpeedOverGroundBit10</dataType>
+                                    <semantics>Speed over ground. 
+ 
+OPTIONAL. DEFAULT: 1023 (not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>positionAccuracy</name>
+                                    <dataType>PositionAccuracyEnum</dataType>
+                                    <semantics>Position accuracy. 
+ 
+OPTIONAL. DEFAULT: 0 (unaugmented GNSS).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>position</name>
+                                    <dataType>AisPosition</dataType>
+                                    <semantics>AIS (Lat,Lon) position. 
+ 
+OPTIONAL. DEFAULT: Lat=91, Lon=181 (not available, not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>courseOverGround</name>
+                                    <dataType>CourseOverGroundBit12</dataType>
+                                    <semantics>Course over ground. 
+ 
+OPTIONAL. DEFAULT: 3600 (not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>trueHeading</name>
+                                    <dataType>TrueHeadingBit9</dataType>
+                                    <semantics>True heading. 
+ 
+OPTIONAL. DEFAULT: 511 (not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>utcSecond</name>
+                                    <dataType>UTCsecondBit6</dataType>
+                                    <semantics>Second of UTC timestamp. 
+ 
+OPTIONAL. DEFAULT: 60 (not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>posType</name>
+                                    <dataType>PositionFixTypeEnum</dataType>
+                                    <semantics>4 bit value for type of electronic position fixing device. 
+ 
+OPTIONAL. DEFAULT: 0 (undefined).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>raim</name>
+                                    <dataType>RAIMEnum</dataType>
+                                    <semantics>RAIM. 
+ 
+OPTIONAL. DEFAULT 0 (not in use).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>dte</name>
+                                    <dataType>DataTerminlEquipmentEnum</dataType>
+                                    <semantics>Data terminal equipment (DTE). 
+ 
+OPTIONAL. DEFAULT: 1 (not available).</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>mode</name>
+                                    <dataType>AssignedModeEnum</dataType>
+                                    <semantics>Mode. 
+ 
+OPTIONAL. DEFAULT: 0 (autonomous and continuous mode).</semantics>
+                                </parameter>
+                            </interactionClass>
+                            <interactionClass>
+                                <name>AisMessage24</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 24: Static Data Report. 
+ 
+Equivalent of Message Type 5 for ships using Class B equipment. Also used to associate an MMSI with a name on either class A or class B equipment. A Message Type 24 may be in part A or part B format. According to the standard, parts A and B are expected to be broadcast in adjacent pairs.</semantics>
+                                <parameter>
+                                    <name>partNumber</name>
+                                    <dataType>PartNumberBit2</dataType>
+                                    <semantics>Part number.</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>vendorId</name>
+                                    <dataType>HLAASCIIchar</dataType>
+                                    <semantics>(Part B) 3 six-bit chars.</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>unitModelCode</name>
+                                    <dataType>UnitModelCodeBit4</dataType>
+                                    <semantics>(Part B) Unit Model Code.</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>serialNumber</name>
+                                    <dataType>SerialNumberBit20</dataType>
+                                    <semantics>Serial Number.</semantics>
+                                </parameter>
+                            </interactionClass>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AisBinaryMessageData</name>
+                            <sharing>Subscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Binary Payload for Message Types 6 and 8. The interpretation of the binary payload is controlled by: 
+- The Designated Area Code (DAC), which is a jurisdiction code: 366 for the United States. It uses the same encoding as the area designator in MMMSIs; see [ITU-MID]. 1 designates international (ITU) messages. 
+- The FID, which is the Functional ID for a message subtype. In some sources this is abbreviated FI.</semantics>
+                            <parameter>
+                                <name>dac</name>
+                                <dataType>DesignatedAreaCodeBit10</dataType>
+                                <semantics>Designated area code (DAC).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>fi</name>
+                                <dataType>FunctionIDBit6</dataType>
+                                <semantics>Functional ID (FID).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>data</name>
+                                <dataType>BinArray</dataType>
+                                <semantics>Binary data up to 920 bits.</semantics>
+                            </parameter>
+                            <interactionClass>
+                                <name>AisMessage6</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 6: Binary Addressed Message. 
+ 
+Message type 6 is an addressed point-to-point message with unspecified binary payload.</semantics>
+                                <parameter>
+                                    <name>seqNum</name>
+                                    <dataType>SequenceNumberBit2</dataType>
+                                    <semantics>Sequence Number.</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>destination</name>
+                                    <dataType>MMSIBit30</dataType>
+                                    <semantics>Destination MMSI.</semantics>
+                                </parameter>
+                                <parameter>
+                                    <name>retransmit</name>
+                                    <dataType>HLAboolean</dataType>
+                                    <semantics>Retransmit flag.</semantics>
+                                </parameter>
+                            </interactionClass>
+                            <interactionClass>
+                                <name>AisMessage8</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 8: Binary Broadcast Message. 
+ 
+Message Type 8 is a broadcast message with a binary payload.</semantics>
+                            </interactionClass>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AcknowledgeData</name>
+                            <sharing>Subscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Acknowledge data for Message Types 7 and 13.</semantics>
+                            <parameter>
+                                <name>dest1</name>
+                                <dataType>MMSIBit30</dataType>
+                                <semantics>MMSI number 1.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>seq1</name>
+                                <dataType>SequenceNumberBit2</dataType>
+                                <semantics>Sequence for MMSI 1.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dest2</name>
+                                <dataType>MMSIBit30</dataType>
+                                <semantics>MMSI number 2.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>seq2</name>
+                                <dataType>SequenceNumberBit2</dataType>
+                                <semantics>Sequence for MMSI 2.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dest3</name>
+                                <dataType>MMSIBit30</dataType>
+                                <semantics>MMSI number 3.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>seq3</name>
+                                <dataType>SequenceNumberBit2</dataType>
+                                <semantics>Sequence for MMSI 3.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dest4</name>
+                                <dataType>MMSIBit30</dataType>
+                                <semantics>MMSI number 4.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>seq4</name>
+                                <dataType>SequenceNumberBit2</dataType>
+                                <semantics>Sequence for MMSI 4.</semantics>
+                            </parameter>
+                            <interactionClass>
+                                <name>AisMessage7</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 7: Binary Acknowledge. 
+ 
+Message type 7 is a receipt acknowledgement to the senders of a previous messages of Message Type 6. Total length varies depending on the number of destination MMSIs included (1..4).</semantics>
+                            </interactionClass>
+                            <interactionClass>
+                                <name>AisMessage13</name>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Message Type 13: Safety-Related Acknowledgement. 
+ 
+Message Type 13 is a receipt acknowledgement to senders of previous messages of Message Type 12.</semantics>
+                            </interactionClass>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AisMessage9</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Message type 9: Standard SAR Aircraft Position Report. 
+ 
+Tracking information for search-and-rescue aircraft.</semantics>
+                            <parameter>
+                                <name>altitude</name>
+                                <dataType>AltitudeBit12</dataType>
+                                <semantics>Altitude. 
+ 
+OPTIONAL. DEFAULT: 4095 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>speedOverGround</name>
+                                <dataType>SpeedOverGroundInKnotsBit10</dataType>
+                                <semantics>Speed over ground. 
+ 
+OPTIONAL. DEFAULT: 1023 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>positionAccuracy</name>
+                                <dataType>PositionAccuracyEnum</dataType>
+                                <semantics>Position accuracy. 
+ 
+OPTIONAL. DEFAULT: 0 (unaugmented GNSS).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>position</name>
+                                <dataType>AisPosition</dataType>
+                                <semantics>Position. 
+ 
+AIS (Lat,Lon) position. 
+ 
+OPTIONAL. DEFAULT: Lat=91, Lon=181 (not available, not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>courseOverGround</name>
+                                <dataType>CourseOverGroundBit12</dataType>
+                                <semantics>Course over ground. 
+ 
+OPTIONAL. DEFAULT: 3600 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>utcSec</name>
+                                <dataType>UTCsecondBit6</dataType>
+                                <semantics>Second of UTC timestamp. 
+ 
+OPTIONAL. DEFAULT: 60 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>regionalReserved</name>
+                                <dataType>RegionalReservedBit8</dataType>
+                                <semantics>Reserved. 
+ 
+OPTIONAL. DEFAULT: zero value.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dte</name>
+                                <dataType>DataTerminlEquipmentEnum</dataType>
+                                <semantics>Data terminal equipment (DTE). 
+ 
+OPTIONAL. DEFAULT: 1 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>mode</name>
+                                <dataType>AssignedModeEnum</dataType>
+                                <semantics>Mode flag. 
+ 
+OPTIONAL. DEFAULT: 0 (autonomous and continuous mode).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>raim</name>
+                                <dataType>RAIMEnum</dataType>
+                                <semantics>RAIM flag. 
+ 
+OPTIONAL. DEFAULT 0 (not in use).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>commsState</name>
+                                <dataType>CommunicationState</dataType>
+                                <semantics>Communication state. 
+ 
+OPTIONAL. DEFAULT: zero values.</semantics>
+                            </parameter>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AisMessage10</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Type 10: UTC/Date Inquiry. Request for UTC/Date information from an AIS base station.</semantics>
+                            <parameter>
+                                <name>destination</name>
+                                <dataType>MMSIBit30</dataType>
+                                <semantics>Destination MMSI.</semantics>
+                            </parameter>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AisMessage12</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Type 12: Addressed Safety-Related Message. 
+ 
+This is a point-to-point text message. The payload is interpreted as six-bit text.</semantics>
+                            <parameter>
+                                <name>seqNum</name>
+                                <dataType>SequenceNumberBit2</dataType>
+                                <semantics>Sequence Number.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>destination</name>
+                                <dataType>MMSIBit30</dataType>
+                                <semantics>Destination MMSI.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>retransmitFlag</name>
+                                <dataType>HLAboolean</dataType>
+                                <semantics>Retransmit flag. 
+ 
+0 (false) = no retransmit (default), 1 (true) = retransmitted</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>message</name>
+                                <dataType>HLAASCIIstring</dataType>
+                                <semantics>1-156 chars of six-bit text.</semantics>
+                            </parameter>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AisMessage14</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Type 14: Safety-Related Broadcast Message. 
+ 
+This is a broadcast text message. The payload is interpreted as six-bit text.</semantics>
+                            <parameter>
+                                <name>message</name>
+                                <dataType>HLAASCIIstring</dataType>
+                                <semantics>1-161 chars of six-bit text.</semantics>
+                            </parameter>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AisMessage17</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Message Type 17: DGNSS Broadcast Binary Message. Message Type 17 is used to broadcast differential corrections for GPS. The data in the payload is intended to be passed directly to GPS receivers capable of accepting such corrections. 
+ 
+Note that latitude and longitude are in units of a tenth of a minute; sign interpretation and out-of-band values are as in the Common Navigation Clock. (Note, however, that the hex representation of the out-of-band values differs; it is 181 \* 60 \* 10 = 0x1a838 for longitude, 91 \* 60 \* 10 = 0xd548 for latitude.)</semantics>
+                            <parameter>
+                                <name>lon</name>
+                                <dataType>DeciLongitudeBit18</dataType>
+                                <semantics>Signed: minutes/10.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>lat</name>
+                                <dataType>DeciLatitudeBit17</dataType>
+                                <semantics>Signed: minutes/10.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>data</name>
+                                <dataType>DifferentialCorrectionData</dataType>
+                                <semantics>Differential correction data. If interrogated and differential correction service not available, the data field should remain empty (zero bits). This should be interpreted by the recipient as DGNSS data words set to zero.</semantics>
+                            </parameter>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AisMessage18</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Message Type 18: Standard Class B CS Position Report. A less detailed report than message types 1-3 for vessels using Class B transmitters. Omits navigational status and rate of turn.</semantics>
+                            <parameter>
+                                <name>speedOverGround</name>
+                                <dataType>SpeedOverGroundBit10</dataType>
+                                <semantics>Speed over ground. 
+ 
+OPTIONAL. DEFAULT: 1023 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>positionAccuracy</name>
+                                <dataType>PositionAccuracyEnum</dataType>
+                                <semantics>Position accuracy. 
+ 
+OPTIONAL. DEFAULT: 0 (unaugmented GNSS).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>position</name>
+                                <dataType>AisPosition</dataType>
+                                <semantics>AIS (Lat,Lon) position. 
+ 
+OPTIONAL. DEFAULT: Lat=91, Lon=181 (not available, not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>courseOverGround</name>
+                                <dataType>CourseOverGroundBit12</dataType>
+                                <semantics>Course over ground. 
+ 
+OPTIONAL. DEFAULT: 3600 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>trueHeading</name>
+                                <dataType>TrueHeadingBit9</dataType>
+                                <semantics>True heading. 
+ 
+OPTIONAL. DEFAULT: 511 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>utcSec</name>
+                                <dataType>UTCsecondBit6</dataType>
+                                <semantics>Second of UTC timestamp. 
+ 
+OPTIONAL. DEFAULT: 60 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>classBUnitFlag</name>
+                                <dataType>HLAboolean</dataType>
+                                <semantics>0 (false) = Class B SOTDMA unit. 
+1 (true) = Class B CS (Carrier Sense) unit. 
+ 
+OPTIONAL. DEFAULT: false.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>classBDisplayFlag</name>
+                                <dataType>HLAboolean</dataType>
+                                <semantics>0 (false) = No visual display. 
+1 (true) = Has display. 
+ 
+OPTIONAL. DEFAULT: false.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>classBDscFlag</name>
+                                <dataType>HLAboolean</dataType>
+                                <semantics>True if unit is attached to a VHF voice radio with DSC capability, false otherwise. 
+ 
+OPTIONAL. DEFAULT: false.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>classBBandFlag</name>
+                                <dataType>HLAboolean</dataType>
+                                <semantics>Base stations can command units to switch frequency. If this flag is true, then the unit can use any part of the marine channel. 
+ 
+OPTIONAL. DEFAULT: false.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>classBMsg22Flag</name>
+                                <dataType>HLAboolean</dataType>
+                                <semantics>True if unit can accept a channel assignment via Message Type 22, false otherwise. 
+ 
+OPTIONAL. DEFAULT: false.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>mode</name>
+                                <dataType>AssignedModeEnum</dataType>
+                                <semantics>Mode. 
+ 
+OPTIONAL. DEFAULT: 0 (autonomous and continuous mode).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>raim</name>
+                                <dataType>RAIMEnum</dataType>
+                                <semantics>RAIM. 
+ 
+OPTIONAL. DEFAULT 0 (not in use).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>commsState</name>
+                                <dataType>CommunicationState</dataType>
+                                <semantics>Communication state. 
+ 
+OPTIONAL. DEFAULT: zero values.</semantics>
+                            </parameter>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AisMessage21</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Message Type 21: Aid-to-Navigation Report. Identification and location message to be emitted by aids to navigation such as buoys and lighthouses.</semantics>
+                            <parameter>
+                                <name>aidType</name>
+                                <dataType>AidTypeEnum</dataType>
+                                <semantics>Type of aid.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>name</name>
+                                <dataType>HLAASCIIstring</dataType>
+                                <semantics>Name in 20 sixbit chars. If this field is full (has no trailing @ characters) the chars in the Name Extension field later in the message must be concatenate it to this name to obtain the full name.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>positionAccuracy</name>
+                                <dataType>PositionAccuracyEnum</dataType>
+                                <semantics>Position accuracy. 
+ 
+OPTIONAL. DEFAULT: 0 (unaugmented GNSS).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>position</name>
+                                <dataType>AisPosition</dataType>
+                                <semantics>AIS (Lat,Lon) position. 
+ 
+OPTIONAL. DEFAULT: Lat=91, Lon=181 (not available, not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dimBow</name>
+                                <dataType>BowDimensionBit9</dataType>
+                                <semantics>Dimension to bow in [m]. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dimStern</name>
+                                <dataType>SternDimensionBit9</dataType>
+                                <semantics>Distance to sterm [m]. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dimPort</name>
+                                <dataType>PortDimensionBit6</dataType>
+                                <semantics>Distance to port [m]. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>dimStarboard</name>
+                                <dataType>StarboardDimensionBit6</dataType>
+                                <semantics>Distance to starboard [m]. 
+ 
+OPTIONAL. DEFAULT: 0 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>positionType</name>
+                                <dataType>PositionFixTypeEnum</dataType>
+                                <semantics>Type of EPFD. 
+ 
+OPTIONAL. DEFAULT: 0 (undefined).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>utcSecond</name>
+                                <dataType>UTCsecondBit6</dataType>
+                                <semantics>Second of UTC timestamp. 
+ 
+OPTIONAL. DEFAULT: 60 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>offPositionFlag</name>
+                                <dataType>HLAboolean</dataType>
+                                <semantics>Off-Position Indicator. The Off-Position Indicator is for floating Aids-to-Navigation only: 0 (false) means on position; 1 (true) means off position. Only valid if UTC second is equal to or below 59. 
+ 
+OPTIONAL. DEFAULT: false.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>regional</name>
+                                <dataType>RegionalReservedBit8</dataType>
+                                <semantics>Regional reserved. 
+ 
+OPTIONAL. DEFAULT: zero value.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>raim</name>
+                                <dataType>RAIMEnum</dataType>
+                                <semantics>RAIM. 
+ 
+OPTIONAL. DEFAULT 0 (not in use).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>virtualFlag</name>
+                                <dataType>HLAboolean</dataType>
+                                <semantics>Virtual-aid flag. The Virtual Aid flag is interpreted as follows: 0 (false) = default = real Aid to Navigation at indicated position; 1 (true) = virtual Aid to Navigation simulated by nearby AIS station. 
+ 
+OPTIONAL. DEFAULT: false.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>mode</name>
+                                <dataType>AssignedModeEnum</dataType>
+                                <semantics>Mode. 
+ 
+OPTIONAL. DEFAULT: 0 (autonomous and continuous mode).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>nameExt</name>
+                                <dataType>HLAASCIIstring</dataType>
+                                <semantics>If present, the Name Extension consists of max 14 six-bit chars that must be concatenated to the name parameter. This parameter must be omitted when no more than 20 characters for the name  are needed in total. Only the required number of characters should be listed, i.e. no @-character should be used in the name extension.</semantics>
+                            </parameter>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AisMessage27</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>Message Type 27: Long Range AIS Broadcast message. 
+ 
+This message is primarily intended for long-range detection of AIS Class A equipped vessels (typically by satellite). This message has a similar content to Messages 1, 2 and 3, but the total number of bits has been compressed to allow for increased propagation delays associated with long-range detection.</semantics>
+                            <parameter>
+                                <name>positionAccuracy</name>
+                                <dataType>PositionAccuracyEnum</dataType>
+                                <semantics>Position accuracy. 
+ 
+OPTIONAL. DEFAULT: 0 (unaugmented GNSS).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>raim</name>
+                                <dataType>RAIMEnum</dataType>
+                                <semantics>RAIM. 
+ 
+OPTIONAL. DEFAULT 0 (not in use).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>navigationStatus</name>
+                                <dataType>NavigationStatusEnum</dataType>
+                                <semantics>Navigational status. 
+ 
+OPTIONAL. DEFAULT: 15 (not defined).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>position</name>
+                                <dataType>AisPosition</dataType>
+                                <semantics>AIS (Lat,Lon) position. 
+ 
+OPTIONAL. DEFAULT: Lat=91, Lon=181 (not available, not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>speedOverGround</name>
+                                <dataType>SpeedOverGroundInKnotsBit6</dataType>
+                                <semantics>Speed over ground. 
+ 
+OPTIONAL. DEFAULT: 63 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>courseOverGround</name>
+                                <dataType>CourseOverGroundBit9</dataType>
+                                <semantics>Course over ground. 
+ 
+OPTIONAL. DEFAULT: 511 (not available).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>gnssPositionStatusFlag</name>
+                                <dataType>HLAboolean</dataType>
+                                <semantics>GNSS Position status. 
+0 (false) = current GNSS position. 
+1 (true) = not GNSS position (default). 
+ 
+OPTIONAL. DEFAULT: true.</semantics>
+                            </parameter>
+                        </interactionClass>
+                    </interactionClass>
+                </interactionClass>
+            </interactionClass>
+        </interactionClass>
+    </interactions>
+    <switches>
+        <autoProvide isEnabled="true"/>
+        <conveyRegionDesignatorSets isEnabled="false"/>
+        <conveyProducingFederate isEnabled="false"/>
+        <attributeScopeAdvisory isEnabled="false"/>
+        <attributeRelevanceAdvisory isEnabled="false"/>
+        <objectClassRelevanceAdvisory isEnabled="false"/>
+        <interactionRelevanceAdvisory isEnabled="false"/>
+        <serviceReporting isEnabled="false"/>
+        <exceptionReporting isEnabled="false"/>
+        <delaySubscriptionEvaluation isEnabled="false"/>
+        <automaticResignAction resignAction="CancelThenDeleteThenDivest"/>
+    </switches>
+    <dataTypes>
+        <simpleDataTypes>
+            <simpleData>
+                <name>MMSIBit30</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>30 bits</accuracy>
+                <semantics>The MMSI number (Maritime Mobile Service Identity) is a unique nine-digit number for identifying a vessel. An MMSI number has the format MIDXXXXXX. The first three digits are called MID (Maritime Identification Digits) and represent the nationality. The last six digits are used for the unique identification of the vessel.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>RateOfTurnBit8</name>
+                <representation>HLAinteger32BE</representation>
+                <units>SQRT(degree/minute)</units>
+                <resolution>NA</resolution>
+                <accuracy>8 bits</accuracy>
+                <semantics>The turn rate is encoded as follows: 
+0 = not turning 
+1…126 = turning right at up to 708 degrees per minute or higher 
+1…-126 = turning left at up to 708 degrees per minute or higher 
+127 = turning right at more than 5deg/30s (No TI available) 
+-127 = turning left at more than 5deg/30s (No TI available) 
+128 (80 hex) indicates no turn information available (default) 
+ 
+Values between 0 and 708 degrees/min coded by ROTAIS=4.733 * SQRT(ROTsensor) degrees/min where ROTsensor is the Rate of Turn as input by an external Rate of Turn Indicator. ROTAIS is rounded to the nearest integer value. Thus, to decode the field value, divide by 4.733 and then square it. Sign of the field value should be preserved when squaring it, otherwise the left/right indication will be lost.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>SpeedOverGroundBit10</name>
+                <representation>HLAinteger32BE</representation>
+                <units>10e-1 knot</units>
+                <resolution>NA</resolution>
+                <accuracy>10 bits</accuracy>
+                <semantics>Speed over ground is in deci-knot resolution from 0 to 102 knots. Value 1023 indicates speed is not available, value 1022 indicates 102.2 knots or higher.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>CourseOverGroundBit12</name>
+                <representation>HLAinteger32BE</representation>
+                <units>10e-1 degree</units>
+                <resolution>NA</resolution>
+                <accuracy>12 bits</accuracy>
+                <semantics>Course over ground. Course is relative to the true north, to 0.1 degree precision. Course over ground will be 3600 (0xE10) if that data is not available.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>TrueHeadingBit9</name>
+                <representation>HLAinteger32BE</representation>
+                <units>degree</units>
+                <resolution>NA</resolution>
+                <accuracy>9 bits</accuracy>
+                <semantics>The true heading is from 0 to 359 degrees, 511 = not available.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>UTCsecondBit6</name>
+                <representation>HLAinteger32BE</representation>
+                <units>second</units>
+                <resolution>NA</resolution>
+                <accuracy>6 bits</accuracy>
+                <semantics>UTC second when the report was generated by the electronic position system (EPFS) (0-59, or 60 if time stamp is not available, which is the default value, or 61 if positioning system is in manual input mode, or 62 if electronic position fixing system operates in estimated (dead reckoning) mode, or 63 if the positioning system is inoperative).</semantics>
+            </simpleData>
+            <simpleData>
+                <name>SlotTimeOutBit3</name>
+                <representation>HLAinteger32BE</representation>
+                <units>frame</units>
+                <resolution>NA</resolution>
+                <accuracy>3 bits</accuracy>
+                <semantics>SlotTimeOut specifies the number of frames remaining until a new slot is selected: 
+0 means that this was the last transmission in this slot. 
+1-7 means that 1 to 7 frames respectively are left until slot change.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>SubMessageBit14</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>14 bits</accuracy>
+                <semantics>The sub message depends on the current value in slot time-out as described in Table 19 of [ITU-R  M.1371-5].</semantics>
+            </simpleData>
+            <simpleData>
+                <name>SlotIncrementBit13</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>13 bits</accuracy>
+                <semantics>ITDMA Slot Increment.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>NumberOfSlotsBit3</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>3 bits</accuracy>
+                <semantics>ITDMA Number of Slots.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>UTCyearBit14</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>14 bits</accuracy>
+                <semantics>Year in the range 1-9999, 0 = N/A (default).</semantics>
+            </simpleData>
+            <simpleData>
+                <name>UTCmonthBit4</name>
+                <representation>HLAinteger32BE</representation>
+                <units>month</units>
+                <resolution>NA</resolution>
+                <accuracy>4 bits</accuracy>
+                <semantics>Month in the range 1-12; 0 = N/A (default).</semantics>
+            </simpleData>
+            <simpleData>
+                <name>UTCdayBit5</name>
+                <representation>HLAinteger32BE</representation>
+                <units>day</units>
+                <resolution>NA</resolution>
+                <accuracy>5 bits</accuracy>
+                <semantics>Day in the range 1-31; 0 = N/A (default).</semantics>
+            </simpleData>
+            <simpleData>
+                <name>UTChourBit5</name>
+                <representation>HLAinteger32BE</representation>
+                <units>hour</units>
+                <resolution>NA</resolution>
+                <accuracy>5 bits</accuracy>
+                <semantics>Hour in the range 0-23; 24 = N/A (default).</semantics>
+            </simpleData>
+            <simpleData>
+                <name>UTCminuteBit6</name>
+                <representation>HLAinteger32BE</representation>
+                <units>minute</units>
+                <resolution>NA</resolution>
+                <accuracy>6 bits</accuracy>
+                <semantics>Minute in the range 0-59; 60 = N/A (default).</semantics>
+            </simpleData>
+            <simpleData>
+                <name>ShipTypeBit8</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>8 bits</accuracy>
+                <semantics>Type of ship and cargo type: 
+0 = not available or no ship = default. 
+Not applicable to SAR aircraft.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>BowDimensionBit9</name>
+                <representation>HLAinteger32BE</representation>
+                <units>meter</units>
+                <resolution>NA</resolution>
+                <accuracy>9 bits</accuracy>
+                <semantics>Distance from bow: Reference point for reported position. Also indicates the dimension of ship (m). When GPS position is not available, but the ships dimension is available, then this field should be 0. The value 511 indicates 511 meters or greater.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>SternDimensionBit9</name>
+                <representation>HLAinteger32BE</representation>
+                <units>meter</units>
+                <resolution>NA</resolution>
+                <accuracy>9 bits</accuracy>
+                <semantics>GPS Ant. Distance from stern Reference point for reported position. Also indicates the dimension of ship (m). NOTE: When GPS position is not available, but the ships dimensions is available, then this field should be representing the length of the ship. The value 511 indicates 511 meters or greater.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>PortDimensionBit6</name>
+                <representation>HLAinteger32BE</representation>
+                <units>meter</units>
+                <resolution>NA</resolution>
+                <accuracy>6 bits</accuracy>
+                <semantics>GPS Ant. Distance from port Reference point for reported position. Also indicates the dimension of ship (m). NOTE: When GPS position is not available, but the ships dimensions is available, then this field should be 0. The value 63 indicates 63 meters or greater.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>StarboardDimensionBit6</name>
+                <representation>HLAinteger32BE</representation>
+                <units>meter</units>
+                <resolution>NA</resolution>
+                <accuracy>6 bits</accuracy>
+                <semantics>GPS Ant. Distance from starboard: Reference point for reported position. Also indicates the dimension of ship (m). NOTE: When GPS position is not available, but the ships dimensions is available, then this field should be  representing the with of the ship. The value 63 indicates 63 meters or greater.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>IMOBit30</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>30 bits</accuracy>
+                <semantics>IMO ship ID number. Not applicable to SAR aircraft.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>DraughtBit8</name>
+                <representation>HLAinteger32BE</representation>
+                <units>10e-1 meter</units>
+                <resolution>NA</resolution>
+                <accuracy>8 bits</accuracy>
+                <semantics>The maximum present static draught in deci-meters: 
+255 = draught 25.5 m or greater 
+0 = not available = default 
+Not applicable to SAR aircraft, should be set to 0.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>PartNumberBit2</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>2 bits</accuracy>
+                <semantics>Part number: 
+Bit 0 - Part A. 
+Bit 1 - Part B.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>UnitModelCodeBit4</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>4 bits</accuracy>
+                <semantics>(Part B) Unit Model Code.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>SerialNumberBit20</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>20 bits</accuracy>
+                <semantics>(Part B) Serial Number.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>SequenceNumberBit2</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>2 bits</accuracy>
+                <semantics>Sequence Number.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>DesignatedAreaCodeBit10</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>10 bits</accuracy>
+                <semantics>Designated area code (DAC).</semantics>
+            </simpleData>
+            <simpleData>
+                <name>FunctionIDBit6</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>6 bits</accuracy>
+                <semantics>Functional ID (FID).</semantics>
+            </simpleData>
+            <simpleData>
+                <name>AltitudeBit12</name>
+                <representation>HLAinteger32BE</representation>
+                <units>meter</units>
+                <resolution>NA</resolution>
+                <accuracy>12 bits</accuracy>
+                <semantics>Altitude of SAR aircraft. The special value 4095 indicates altitude is not available; 4094 indicates 4094 meters or higher.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>SpeedOverGroundInKnotsBit10</name>
+                <representation>HLAinteger32BE</representation>
+                <units>knot</units>
+                <resolution>NA</resolution>
+                <accuracy>10 bits</accuracy>
+                <semantics>Speed over ground is in knots, not deci-knots as in the AisNavigationData class; aircraft go faster. The special value 1023 indicates speed not available, 1022 indicates 1022 knots or higher.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>RegionalReservedBit8</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>8 bits</accuracy>
+                <semantics>Regional reserved value.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>DeciLongitudeBit18</name>
+                <representation>HLAinteger32BE</representation>
+                <units>10e-1 minute</units>
+                <resolution>NA</resolution>
+                <accuracy>18 bits</accuracy>
+                <semantics>Longitude as signed value in deci-minutes.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>DeciLatitudeBit17</name>
+                <representation>HLAinteger32BE</representation>
+                <units>10e-1 minute</units>
+                <resolution>NA</resolution>
+                <accuracy>17 bits</accuracy>
+                <semantics>Latitude as signed value in deci-minutes.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>SpeedOverGroundInKnotsBit6</name>
+                <representation>HLAinteger32BE</representation>
+                <units>knot</units>
+                <resolution>NA</resolution>
+                <accuracy>6 bits</accuracy>
+                <semantics>Speed over ground in knots. Knots (0-62); 63 = N/A (default).</semantics>
+            </simpleData>
+            <simpleData>
+                <name>CourseOverGroundBit9</name>
+                <representation>HLAinteger32BE</representation>
+                <units>degree</units>
+                <resolution>NA</resolution>
+                <accuracy>9 bits</accuracy>
+                <semantics>Course over Ground. 0 to 359 degrees, 511 = not available.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>LatitudeBit27</name>
+                <representation>HLAinteger32BE</representation>
+                <units>10e-4 minute</units>
+                <resolution>NA</resolution>
+                <accuracy>27 bits</accuracy>
+                <semantics>Latitude is given in in 1/10000 min; divide by 600000.0 to obtain degrees. Values up to plus or minus 90 degrees, North = positive, South = negative. A value of 91 degrees (0x3412140 hex) indicates latitude is not available and is the default.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>LongitudeBit28</name>
+                <representation>HLAinteger32BE</representation>
+                <units>10e-4 minute</units>
+                <resolution>NA</resolution>
+                <accuracy>28 bits</accuracy>
+                <semantics>Longitude is given in in 1/10000 min; divide by 600000.0 to obtain degrees. Values up to plus or minus 180 degrees, East = positive, West \= negative. A value of 181 degrees (0x6791AC0 hex) indicates that longitude is not available and is the default.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>IntegerType</name>
+                <representation>HLAinteger16BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>NA</accuracy>
+                <semantics>16 bit integer value.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>RepeatIndicatorBit2</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>2 bits</accuracy>
+                <semantics>Message repeat Indicator. The Repeat Indicator is a directive to an AIS transceiver that this message should be rebroadcast. This was intended as a way of getting AIS messages around hills and other obstructions in coastal waters, but is little used as base station coverage is more effective. It is intended that the bit be incremented on each retransmission, to a maximum of three hops. A value of 3 indicates "Do not repeat".</semantics>
+            </simpleData>
+            <simpleData>
+                <name>Bit03</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>3 bits</accuracy>
+                <semantics>3 bit unsigned integer.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>Bit05</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>5 bits</accuracy>
+                <semantics>5 bit unsigned integer.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>Bit13</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>13 bits</accuracy>
+                <semantics>13 bit unsigned integer.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>Bit10</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>10 bits</accuracy>
+                <semantics>10 bit unsigned integer.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>Bit06</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>6 bits</accuracy>
+                <semantics>6 bit unsigned integer.</semantics>
+            </simpleData>
+        </simpleDataTypes>
+        <enumeratedDataTypes>
+            <enumeratedData>
+                <name>MsgIdEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value for the message type.</semantics>
+                <enumerator>
+                    <name>MSG1</name>
+                    <value>1</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG2</name>
+                    <value>2</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG3</name>
+                    <value>3</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG4</name>
+                    <value>4</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG5</name>
+                    <value>5</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG6</name>
+                    <value>6</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG7</name>
+                    <value>7</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG8</name>
+                    <value>8</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG9</name>
+                    <value>9</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG10</name>
+                    <value>10</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG12</name>
+                    <value>12</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG13</name>
+                    <value>13</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG14</name>
+                    <value>14</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG17</name>
+                    <value>17</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG18</name>
+                    <value>18</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG19</name>
+                    <value>19</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG21</name>
+                    <value>21</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG24</name>
+                    <value>24</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>NavigationStatusEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value to indicate the navigational status.</semantics>
+                <enumerator>
+                    <name>Under_way_using_engine</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>At_anchor</name>
+                    <value>1</value>
+                </enumerator>
+                <enumerator>
+                    <name>Not_under_command</name>
+                    <value>2</value>
+                </enumerator>
+                <enumerator>
+                    <name>Restricted_manoeuverability</name>
+                    <value>3</value>
+                </enumerator>
+                <enumerator>
+                    <name>Constrained_by_her_draught</name>
+                    <value>4</value>
+                </enumerator>
+                <enumerator>
+                    <name>Moored</name>
+                    <value>5</value>
+                </enumerator>
+                <enumerator>
+                    <name>Aground</name>
+                    <value>6</value>
+                </enumerator>
+                <enumerator>
+                    <name>Engaged_in_Fishing</name>
+                    <value>7</value>
+                </enumerator>
+                <enumerator>
+                    <name>Under_way_sailing</name>
+                    <value>8</value>
+                </enumerator>
+                <enumerator>
+                    <name>Reserved1</name>
+                    <value>9</value>
+                </enumerator>
+                <enumerator>
+                    <name>Reserved2</name>
+                    <value>10</value>
+                </enumerator>
+                <enumerator>
+                    <name>Reserved3</name>
+                    <value>11</value>
+                </enumerator>
+                <enumerator>
+                    <name>Reserved4</name>
+                    <value>12</value>
+                </enumerator>
+                <enumerator>
+                    <name>Reserved5</name>
+                    <value>13</value>
+                </enumerator>
+                <enumerator>
+                    <name>AIS_SART_is_active</name>
+                    <value>14</value>
+                </enumerator>
+                <enumerator>
+                    <name>Not_Defined</name>
+                    <value>15</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>ManeuverIndicatorEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value to indicate a maneuver.</semantics>
+                <enumerator>
+                    <name>Not_available</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>No_special_maneuver</name>
+                    <value>1</value>
+                </enumerator>
+                <enumerator>
+                    <name>Special_maneuver</name>
+                    <value>2</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>RAIMEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value for the receiver autonomous integrity monitoring (RAIM) flag of the electronic position fixing device; 0 = RAIM not in use = default; 1 = RAIM in use.</semantics>
+                <enumerator>
+                    <name>RAIM_not_in_use</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>RAIM_in_use</name>
+                    <value>1</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>PositionAccuracyEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value to indicate the position accuracy. The position accuracy indicates the accuracy of the fix. A value of 1 indicates a DGPS-quality fix with an accuracy of &lt; 10ms. 0, the default, indicates an unaugmented GNSS fix with accuracy &gt; 10m.</semantics>
+                <enumerator>
+                    <name>Unaugmented_GNSS</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>DGPS_quality</name>
+                    <value>1</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>CommunicationSyncStateEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value that defines the sync state of the own station.</semantics>
+                <enumerator>
+                    <name>UTC_direct</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>UTC_indirect</name>
+                    <value>1</value>
+                </enumerator>
+                <enumerator>
+                    <name>Base_direct</name>
+                    <value>2</value>
+                </enumerator>
+                <enumerator>
+                    <name>Base_indirect</name>
+                    <value>3</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>AISVersionEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value for AIS version.</semantics>
+                <enumerator>
+                    <name>ITU1371</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>Future_Edition1</name>
+                    <value>1</value>
+                </enumerator>
+                <enumerator>
+                    <name>Future_Edition2</name>
+                    <value>2</value>
+                </enumerator>
+                <enumerator>
+                    <name>Future_Edition3</name>
+                    <value>3</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>PositionFixTypeEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value for he EPFD type.</semantics>
+                <enumerator>
+                    <name>Undefined</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>GPS</name>
+                    <value>1</value>
+                </enumerator>
+                <enumerator>
+                    <name>GLONASS</name>
+                    <value>2</value>
+                </enumerator>
+                <enumerator>
+                    <name>Combined_GPS_GLONASS</name>
+                    <value>3</value>
+                </enumerator>
+                <enumerator>
+                    <name>Loran_C</name>
+                    <value>4</value>
+                </enumerator>
+                <enumerator>
+                    <name>Chayka</name>
+                    <value>5</value>
+                </enumerator>
+                <enumerator>
+                    <name>Integrated_navigation_system</name>
+                    <value>6</value>
+                </enumerator>
+                <enumerator>
+                    <name>Surveyed</name>
+                    <value>7</value>
+                </enumerator>
+                <enumerator>
+                    <name>Galileo</name>
+                    <value>8</value>
+                </enumerator>
+                <enumerator>
+                    <name>Unused1</name>
+                    <value>9</value>
+                </enumerator>
+                <enumerator>
+                    <name>Unused2</name>
+                    <value>10</value>
+                </enumerator>
+                <enumerator>
+                    <name>Unused3</name>
+                    <value>11</value>
+                </enumerator>
+                <enumerator>
+                    <name>Unused4</name>
+                    <value>12</value>
+                </enumerator>
+                <enumerator>
+                    <name>Unused5</name>
+                    <value>13</value>
+                </enumerator>
+                <enumerator>
+                    <name>Unused6</name>
+                    <value>14</value>
+                </enumerator>
+                <enumerator>
+                    <name>Unused7</name>
+                    <value>15</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>DataTerminlEquipmentEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration for Data terminal equipment (DTE): 
+0 = available 
+1 = not available = default</semantics>
+                <enumerator>
+                    <name>Ready</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>Not_ready</name>
+                    <value>1</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>AssignedModeEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value for the assigned mode: 
+0 = Station operating in autonomous and continuous mode = default 
+1 = Station operating in assigned mode</semantics>
+                <enumerator>
+                    <name>Autonomous_and_continuous</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>Assigned</name>
+                    <value>1</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>TransmissionControlEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value for the transmission control for long-range broadcast message. 
+ 
+0 = default – Class-A AIS station stops transmission of Message 27 within an AIS base station coverage area. 
+1 = Request Class-A station to transmit Message 27 within an AIS base station coverage area. 
+Base station coverage area should be defined by Message 23; If Message 23 is not received, the AIS station which is allowed to transmit on CH75 and 76 should ignore this bit and transmit Message 27.</semantics>
+                <enumerator>
+                    <name>Stop_transmission</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>Request_transmission</name>
+                    <value>1</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>CommunicationStateSelectorEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value for the communication state.</semantics>
+                <enumerator>
+                    <name>SOTDMA_comms</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>ITDMA_comms</name>
+                    <value>1</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>AidTypeEnum</name>
+                <representation>HLAinteger32BE</representation>
+                <semantics>Enumeration value for the aid type. According to [IALA], the aid type field has values 1-15 for fixed and 16-31 for floating aids to navigation.</semantics>
+                <enumerator>
+                    <name>Not_specified</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>Reference_point</name>
+                    <value>1</value>
+                </enumerator>
+                <enumerator>
+                    <name>RACON</name>
+                    <value>2</value>
+                </enumerator>
+                <enumerator>
+                    <name>Fixed_structure_off_shore</name>
+                    <value>3</value>
+                </enumerator>
+                <enumerator>
+                    <name>Spare1</name>
+                    <value>4</value>
+                </enumerator>
+                <enumerator>
+                    <name>Light_without_sectors</name>
+                    <value>5</value>
+                </enumerator>
+                <enumerator>
+                    <name>Light_with_sectors</name>
+                    <value>6</value>
+                </enumerator>
+                <enumerator>
+                    <name>Leading_Light_Front</name>
+                    <value>7</value>
+                </enumerator>
+                <enumerator>
+                    <name>Leading_Light_Rear</name>
+                    <value>8</value>
+                </enumerator>
+                <enumerator>
+                    <name>Beacon_Cardinal_N</name>
+                    <value>9</value>
+                </enumerator>
+                <enumerator>
+                    <name>Beacon_Cardinal_E</name>
+                    <value>10</value>
+                </enumerator>
+                <enumerator>
+                    <name>Light_Vessel</name>
+                    <value>31</value>
+                </enumerator>
+            </enumeratedData>
+        </enumeratedDataTypes>
+        <arrayDataTypes>
+            <arrayData>
+                <name>BinArray</name>
+                <dataType>HLAboolean</dataType>
+                <cardinality>Dynamic</cardinality>
+                <encoding>HLAvariableArray</encoding>
+                <semantics>Binary data.</semantics>
+            </arrayData>
+            <arrayData>
+                <name>WordArray</name>
+                <dataType>IntegerType</dataType>
+                <cardinality>Dynamic</cardinality>
+                <encoding>HLAvariableArray</encoding>
+                <semantics>Dynamic array of words.</semantics>
+            </arrayData>
+        </arrayDataTypes>
+        <fixedRecordDataTypes>
+            <fixedRecordData>
+                <name>AisPosition</name>
+                <encoding>HLAfixedRecord</encoding>
+                <semantics>Lat-Lon position.</semantics>
+                <field>
+                    <name>latitude</name>
+                    <dataType>LatitudeBit27</dataType>
+                    <semantics>Latitude.</semantics>
+                </field>
+                <field>
+                    <name>longitude</name>
+                    <dataType>LongitudeBit28</dataType>
+                    <semantics>Longitude.</semantics>
+                </field>
+            </fixedRecordData>
+            <fixedRecordData>
+                <name>SOTDMACommunicationState</name>
+                <encoding>HLAfixedRecord</encoding>
+                <semantics>The SOTDMA (Self-organized time-division multiple access communication state) communication state provides the following functions according to [ITU-R  M.1371-5]: 
+- it contains information used by the slot allocation algorithm in the SOTDMA concept; 
+- it also indicates the synchronization state.</semantics>
+                <field>
+                    <name>syncState</name>
+                    <dataType>CommunicationSyncStateEnum</dataType>
+                    <semantics>Sync state.</semantics>
+                </field>
+                <field>
+                    <name>slotTimeOut</name>
+                    <dataType>SlotTimeOutBit3</dataType>
+                    <semantics>The number of frames remaining until a new slot is selected.</semantics>
+                </field>
+                <field>
+                    <name>subMessage</name>
+                    <dataType>SubMessageBit14</dataType>
+                    <semantics>Sub message.</semantics>
+                </field>
+            </fixedRecordData>
+            <fixedRecordData>
+                <name>ITDMACommunicationState</name>
+                <encoding>HLAfixedRecord</encoding>
+                <semantics>The ITDMA communication state provides the following functions according to [ITU-R  M.1371-5]: 
+- it contains information used by the slot allocation algorithm in the ITDMA concept; 
+- it also indicates the synchronization state.</semantics>
+                <field>
+                    <name>syncState</name>
+                    <dataType>CommunicationSyncStateEnum</dataType>
+                    <semantics>Sync state.</semantics>
+                </field>
+                <field>
+                    <name>slotIncrement</name>
+                    <dataType>SlotIncrementBit13</dataType>
+                    <semantics>Slot Increment.</semantics>
+                </field>
+                <field>
+                    <name>numSlots</name>
+                    <dataType>NumberOfSlotsBit3</dataType>
+                    <semantics>Number of Slots.</semantics>
+                </field>
+                <field>
+                    <name>keep</name>
+                    <dataType>HLAboolean</dataType>
+                    <semantics>Keep flag.</semantics>
+                </field>
+            </fixedRecordData>
+            <fixedRecordData>
+                <name>DifferentialCorrectionData</name>
+                <encoding>HLAfixedRecord</encoding>
+                <semantics>Differential correction data. If interrogated and differential correction service not available, the data field should remain empty (zero bits). This should be interpreted by the recipient as DGNSS data words set to zero.</semantics>
+                <field>
+                    <name>messageType</name>
+                    <dataType>Bit06</dataType>
+                    <semantics>Recommendation ITU-R M.823.</semantics>
+                </field>
+                <field>
+                    <name>stationID</name>
+                    <dataType>Bit10</dataType>
+                    <semantics>Recommendation ITU-R M.823 station identifier.</semantics>
+                </field>
+                <field>
+                    <name>zcount</name>
+                    <dataType>Bit13</dataType>
+                    <semantics>Time value in 0.6 s (0-3 599.4).</semantics>
+                </field>
+                <field>
+                    <name>sequenceNumber</name>
+                    <dataType>Bit03</dataType>
+                    <semantics>Message sequence number (cyclic 0-7).</semantics>
+                </field>
+                <field>
+                    <name>n</name>
+                    <dataType>Bit05</dataType>
+                    <semantics>Number of DGNSS data words following the two word header, up to a maximum of 29.</semantics>
+                </field>
+                <field>
+                    <name>health</name>
+                    <dataType>Bit03</dataType>
+                    <semantics>Reference station health (specified in Recommendation ITU-R M.823).</semantics>
+                </field>
+                <field>
+                    <name>dataWords</name>
+                    <dataType>WordArray</dataType>
+                    <semantics>DGNSS message data words excluding parity.</semantics>
+                </field>
+            </fixedRecordData>
+        </fixedRecordDataTypes>
+        <variantRecordDataTypes>
+            <variantRecordData>
+                <name>CommunicationState</name>
+                <discriminant>commsSelector</discriminant>
+                <dataType>CommunicationStateSelectorEnum</dataType>
+                <alternative>
+                    <enumerator>SOTDMA_comms</enumerator>
+                    <name>sotdma</name>
+                    <dataType>SOTDMACommunicationState</dataType>
+                    <semantics>SOTDMA comms.</semantics>
+                </alternative>
+                <alternative>
+                    <enumerator>ITDMA_comms</enumerator>
+                    <name>itdma</name>
+                    <dataType>ITDMACommunicationState</dataType>
+                    <semantics>ITDMA comms.</semantics>
+                </alternative>
+                <encoding>HLAvariantRecord</encoding>
+                <semantics>Communication state.</semantics>
+            </variantRecordData>
+        </variantRecordDataTypes>
+    </dataTypes>
+    <notes/>
+</objectModel>
