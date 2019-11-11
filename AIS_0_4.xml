@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<objectModel xsi:schemaLocation="http://standards.ieee.org/IEEE1516-2010 http://standards.ieee.org/downloads/1516/1516.2-2010/IEEE1516-DIF-2010.xsd" xmlns="http://standards.ieee.org/IEEE1516-2010" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelIdentification>
+        <name>AIS FOM module</name>
+        <type>FOM</type>
+        <version>0.4</version>
+        <modificationDate>2016-02-08</modificationDate>
+        <securityClassification>Unclassified</securityClassification>
+        <purpose></purpose>
+        <applicationDomain>Analysis</applicationDomain>
+        <description>The AIS FOM module models the messages related AIS class A equipment.</description>
+        <useLimitation></useLimitation>
+        <poc>
+            <pocType>Primary author</pocType>
+            <pocName>T.W. van den Berg</pocName>
+            <pocOrg>TNO</pocOrg>
+        </poc>
+        <other></other>
+    </modelIdentification>
+    <objects>
+        <objectClass>
+            <name>HLAobjectRoot</name>
+        </objectClass>
+    </objects>
+    <interactions>
+        <interactionClass>
+            <name>HLAinteractionRoot</name>
+            <interactionClass>
+                <name>RadioSignal</name>
+                <interactionClass>
+                    <name>AISRadioSignal</name>
+                    <sharing>Subscribe</sharing>
+                    <transportation>HLAreliable</transportation>
+                    <order>TimeStamp</order>
+                    <semantics>This is the root interaction class for all AIS messages. The interaction class contains a reference to the embedded system that represents the AIS transmitter. The embedded system should be modelled as a RadioTransmitter, an RPR-FOM object class that is suclassed from Embedded System.</semantics>
+                    <parameter>
+                        <name>HostRadioIndex</name>
+                        <dataType>RTIobjectId</dataType>
+                        <semantics>Object instance ID of the embedded system host.</semantics>
+                    </parameter>
+                    <parameter>
+                        <name>MessageID</name>
+                        <dataType>Integer32</dataType>
+                        <semantics>Identifier for this message: 
+AISPositionReportRadioSignal (1-3): 
+1 = Scheduled position report 
+2 = Assigned scheduled position report 
+3 = Special position report, response to interrogation 
+AISStaticAndVoyageRadioSignal (5)</semantics>
+                    </parameter>
+                    <parameter>
+                        <name>RepeatIndicator</name>
+                        <dataType>Integer32</dataType>
+                        <semantics>Used by the repeater to indicate how many times a message has been repeated (0-3). 
+0 = default; 3 = do not repeat any more</semantics>
+                    </parameter>
+                    <parameter>
+                        <name>MMSI</name>
+                        <dataType>Integer32</dataType>
+                        <semantics>The vessel's Maritime Mobile Service Identity (MMSI); a unique nine digit identification number.</semantics>
+                    </parameter>
+                    <interactionClass>
+                        <name>AISClassARadioSignal</name>
+                        <sharing>Subscribe</sharing>
+                        <transportation>HLAreliable</transportation>
+                        <order>TimeStamp</order>
+                        <semantics>This is the root interaction class for all AIS Class A messages. This class contains no parameters.</semantics>
+                        <interactionClass>
+                            <name>AISPositionReportRadioSignal</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>TimeStamp</order>
+                            <semantics>This interaction class models an AIS Class A Position Report.</semantics>
+                            <parameter>
+                                <name>NavigationalStatus</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>Navigational status: 
+0 = under way using engine, 
+1 = at anchor, 
+2 = not under command, 
+3 = restricted maneuverability, 
+4 = constrained by her draught, 
+5 = moored, 
+6 = aground, 
+7 = engaged in fishing, 
+8 = under way sailing, 
+9 = reserved for future amendment of navigational status for ships carrying DG, HS, or MP, or IMO hazard or pollutant category C, high speed craft (HSC), 
+10 = reserved for future amendment of navigational status for ships carrying dangerous goods (DG), harmful substances (HS) or marine pollutants (MP), or IMO hazard or pollutant category A, wing in grand (WIG); 
+11-13 = reserved for future use, 
+14 = AIS-SART (active), 
+15 = not defined = default (also used by AIS-SART under test).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>RateOfTurn</name>
+                                <dataType>Float64</dataType>
+                                <semantics>Rate of turn: right (+) or left (-), degrees per minute.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>SpeedOverGround</name>
+                                <dataType>Float64</dataType>
+                                <semantics>Speed over ground (knots).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>PositionAccuracy</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>The position accuracy: 
+1 = high (&lt;= 10 m) 
+0 = low (&gt; 10 m) 
+0 = default</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>Position</name>
+                                <dataType>WorldLocationStruct</dataType>
+                                <semantics>Position (latitude, longitude, altitude) converted in the ECEF coordinates system.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>CourseOverGround</name>
+                                <dataType>Float64</dataType>
+                                <semantics>Course over ground; relative to true north (0 to 360 degrees).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>TrueHeading</name>
+                                <dataType>Float64</dataType>
+                                <semantics>True heading (0 to 360 degrees).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>ReportTime</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>UTC second when the report was generated by the electronic position system (EPFS) (0-59, or 60 if time stamp is not available, which should also be the default value, or 61 if positioning system is in manual input mode, or 62 if electronic position fixing system operates in estimated (dead reckoning) mode, or 63 if the positioning system is inoperative)</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>SpecialManeuvreIndicator</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>Special Maneuvre Indicator: 
+0 = not available = default 
+1 = not engaged in special maneuver 
+2 = engaged in special maneuver</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>RAIMFlag</name>
+                                <dataType>HLAboolean</dataType>
+                                <semantics>Receiver autonomous integrity monitoring (RAIM) flag of electronic position fixing device; 0 = RAIM not in use = default; 
+1 = RAIM in use.</semantics>
+                            </parameter>
+                        </interactionClass>
+                        <interactionClass>
+                            <name>AISStaticAndVoyageRadioSignal</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>TimeStamp</order>
+                            <semantics>This interaction class models AIS Class A Static and Voyage data.</semantics>
+                            <parameter>
+                                <name>AISVersionIndicator</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>AIS version indicator: 
+0 = station compliant with Recommendation ITU-R M.1371-1 
+1 = station compliant with Recommendation ITU-R M.1371-3 
+2-3 = station compliant with future editions</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>IMO</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>IMO ship identification number; a seven digit number that remains unchanged upon transfer of the ship's registration to another country.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>CallSign</name>
+                                <dataType>HLAunicodeString</dataType>
+                                <semantics>Radio call sign; international radio call sign, up to seven characters, assigned to the vessel by its country of registry.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>VesselName</name>
+                                <dataType>HLAunicodeString</dataType>
+                                <semantics>Name ? 20 characters to represent the name of the vessel.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>ShipType</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>Type of ship/cargo (0 .. 255).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>DimensionToBow</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>From vessel position reference point to front of vessel (rounded to integer meters).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>DimensionToStern</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>From vessel position reference point to back of vessel (rounded to integer meters).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>DimensionToPort</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>From vessel position reference point to left side of vessel (rounded to integer meters).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>DimensionToStarboard</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>From vessel position reference point to right side of vessel (rounded to integer meters).</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>ElectronicPositionFixingDevice</name>
+                                <dataType>Integer32</dataType>
+                                <semantics>Type of electronic position fixing device: 
+0 = undefined (default) 
+1 = GPS 
+2 = GLONASS 
+3 = combined GPS/GLONASS 
+4 = Loran-C 
+5 = Chayka 
+6 = integrated navigation system 
+7 = surveyed 
+8 = Galileo, 
+9-15 = not used</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>ETA</name>
+                                <dataType>HLAfloat64Time</dataType>
+                                <semantics>Estimated time of arrival at destination.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>Draught</name>
+                                <dataType>Float64</dataType>
+                                <semantics>Maximum present static draught.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>Destination</name>
+                                <dataType>HLAunicodeString</dataType>
+                                <semantics>Destination.</semantics>
+                            </parameter>
+                            <parameter>
+                                <name>DataTerminalEquipment</name>
+                                <dataType>HLAboolean</dataType>
+                                <semantics>Data terminal equipment (DTE) ready (0 = available, 1 = not available = default)</semantics>
+                            </parameter>
+                        </interactionClass>
+                    </interactionClass>
+                </interactionClass>
+            </interactionClass>
+        </interactionClass>
+    </interactions>
+    <switches>
+        <autoProvide isEnabled="false"/>
+        <conveyRegionDesignatorSets isEnabled="false"/>
+        <conveyProducingFederate isEnabled="false"/>
+        <attributeScopeAdvisory isEnabled="false"/>
+        <attributeRelevanceAdvisory isEnabled="false"/>
+        <objectClassRelevanceAdvisory isEnabled="false"/>
+        <interactionRelevanceAdvisory isEnabled="false"/>
+        <serviceReporting isEnabled="false"/>
+        <exceptionReporting isEnabled="false"/>
+        <delaySubscriptionEvaluation isEnabled="false"/>
+        <automaticResignAction resignAction="CancelThenDeleteThenDivest"/>
+    </switches>
+    <dataTypes>
+        <simpleDataTypes/>
+        <enumeratedDataTypes/>
+        <arrayDataTypes/>
+        <fixedRecordDataTypes/>
+        <variantRecordDataTypes/>
+    </dataTypes>
+    <notes/>
+</objectModel>
