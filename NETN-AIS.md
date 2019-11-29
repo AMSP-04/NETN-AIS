@@ -50,12 +50,12 @@ For example, to transmit a **Position Report Class A** message only the followin
 
 All other parameters are optional. However, to include a minimum amount of navigation data in the message and make the message useful, the following parameters should also be provided:
 
-| Parameter name | Semantics                                       |
-| -------------- | ----------------------------------------------- |
-| `position`     | AIS (Lat,Lon) position.                         |
-| `utcSecond`    | Second of UTC timestamp. I.e. time of position. |
+| Parameter name | Semantics                                                    |
+| -------------- | ------------------------------------------------------------ |
+| `position`     | OPTIONAL (Default: not available). AIS (Lat,Lon) position.   |
+| `utcTime`      | OPTIONAL (Default: not available). Time of the report. The value is only valid if the `positionSystemStatus` is set to `NormalMode`. |
 
-Other parameters include true heading, course, rate of turn, etc. These are all optional, but can be provided when available.
+The `positionSystemStatus` parameter is also optional with default `NormalMode`, so `utcTime` is by default valid. Other parameters include true heading, course, rate of turn, etc. These are all optional, but can be provided when available.
 
 Note that the AIS position in the NETN-AIS FOM module is defined using an `HLAfloat64BE` representation. This is different from ITU-R M.1371-5, where Longitude and Latitude are defined in 1/10 000 min and stored in a 28 and 27 bit field respectively. The purpose of this FOM module is to not bother the user with the message format in ITU-R M.1371-5, but rather let the user focus on the information that is exchanged in the simulation. The message format defined in ITU-R M.1371-5 is not a concern of this FOM module, however the class and parameter structure is such that the mapping between the NETN-AIS FOM and ITU-R M.1371-5 is straightforward.
 

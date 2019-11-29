@@ -112,7 +112,7 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                             <parameter>
                                 <name>utcTime</name>
                                 <dataType>UTCTime</dataType>
-                                <semantics>OPTIONAL (Default: not available). Time of the report. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
+                                <semantics>OPTIONAL (Default: not available). Time of the report. The value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
                             </parameter>
                             <parameter>
                                 <name>positionSystemStatus</name>
@@ -358,7 +358,7 @@ A slightly more detailed report than Message Type 18 for vessels using Class B t
                                 <parameter>
                                     <name>utcTime</name>
                                     <dataType>UTCTime</dataType>
-                                    <semantics>OPTIONAL (Default: not available). Time of the report. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
+                                    <semantics>OPTIONAL (Default: not available). Time of the report. The value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
                                 </parameter>
                                 <parameter>
                                     <name>positionSystemStatus</name>
@@ -554,7 +554,7 @@ Tracking information for search-and-rescue aircraft.</semantics>
                             <parameter>
                                 <name>utcTime</name>
                                 <dataType>UTCTime</dataType>
-                                <semantics>OPTIONAL (Default: not available). Time of the report. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
+                                <semantics>OPTIONAL (Default: not available). Time of the report. The value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
                             </parameter>
                             <parameter>
                                 <name>positionSystemStatus</name>
@@ -699,7 +699,7 @@ A less detailed report than message types 1-3 for vessels using Class B transmit
                             <parameter>
                                 <name>utcTime</name>
                                 <dataType>UTCTime</dataType>
-                                <semantics>OPTIONAL (Default: not available). Time of the report. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
+                                <semantics>OPTIONAL (Default: not available). Time of the report. The value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
                             </parameter>
                             <parameter>
                                 <name>positionSystemStatus</name>
@@ -803,7 +803,7 @@ Identification and location message to be emitted by aids to navigation such as 
                             <parameter>
                                 <name>utcTime</name>
                                 <dataType>UTCTime</dataType>
-                                <semantics>OPTIONAL (Default: not available). Time of the report. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
+                                <semantics>OPTIONAL (Default: not available). Time of the report. The value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
                             </parameter>
                             <parameter>
                                 <name>positionSystemStatus</name>
