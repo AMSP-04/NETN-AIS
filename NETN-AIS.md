@@ -5,7 +5,7 @@ This work is licensed under a [Creative Commons Attribution-NoDerivatives 4.0 In
 
 ## Overview
 
-The following figure shows the class structure, with the following two classes at the root of the structure:
+All AIS message types are modelled as HLA Interaction Classes. The following figure shows the class structure, with the following two classes at the root of the structure:
 
 - `AisRadioSignal` is sub-classed from the RPR-FOM 2.0 class `RadioSignal` and represents an AIS radio signal. `AisRadioSignal` optionally includes a reference to a Transmitter object instance.
 - `AisMessage` is sub-classed from `AisRadioSignal` and is the super class for all AIS message types. This class defines the AIS message parameters that are common across all sub-classes.
@@ -39,11 +39,29 @@ The modelled AIS message types are:
 
 ## Class parameters
 
-Many of the class parameters are optional. For each optional parameter a default value is defined that can be assumed by the receiving HLA federate application if no parameter value has been sent.
+Many of the class parameters in the NETN-AIS FOM module are optional. For each optional parameter a default value is defined (in the semantics of the respective parameter) that can be assumed by the receiving HLA federate application if no parameter value has been provided.
 
-## Six-bit ASCII characters
+For example, to transmit a **Position Report Class A** message only the following parameters are required:
 
-Several parameters are coded as six-bit characters. For example, vessel name and callsign.  The parameter datatype of a six-bit character string is `HLAASCIIstring` and the following table shows the ASCII character to be used for a each six-bit character.
+| Parameter name | Semantics                                               |
+| -------------- | ------------------------------------------------------- |
+| `messageId`    | Message type identifier.                                |
+| `mmsi`         | The message is from the vessel identified by this MMSI. |
+
+All other parameters are optional. However, to include a minimum amount of navigation data in the message and make the message useful, the following parameters should also be provided:
+
+| Parameter name | Semantics                                       |
+| -------------- | ----------------------------------------------- |
+| `position`     | AIS (Lat,Lon) position.                         |
+| `utcSecond`    | Second of UTC timestamp. I.e. time of position. |
+
+Other parameters include true heading, course, rate of turn, etc. These are all optional, but can be provided when available.
+
+Note that the AIS position in the NETN-AIS FOM module is defined using an `HLAfloat64BE` representation. This is different from ITU-R M.1371-5, where Longitude and Latitude are defined in 1/10 000 min and stored in a 28 and 27 bit field respectively. The purpose of this FOM module is to not bother the user with the message format in ITU-R M.1371-5, but rather let the user focus on the information that is exchanged in the simulation. The message format defined in ITU-R M.1371-5 is not a concern of this FOM module, however the class and parameter structure is such that the mapping between the NETN-AIS FOM and ITU-R M.1371-5 is straightforward.
+
+## Six-bit ASCII character strings
+
+Several parameters in the FOM module are typed as six-bit character strings. For example, vessel name and callsign. The parameter datatype of a six-bit character string is `HLAASCIIstring` and the following table shows the ASCII character to be used for a each six-bit character.
 
 | 000000 | 0    | "@"  | 010000 | 16   | "P"  | 100000 | 32   | " "  | 110000 | 48   | "0"  |
 | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- |
@@ -63,17 +81,28 @@ Several parameters are coded as six-bit characters. For example, vessel name and
 | 001110 | 14   | "N"  | 011110 | 30   | "\^" | 101110 | 46   | "."  | 111110 | 62   | ">"  |
 | 001111 | 15   | "O"  | 011111 | 31   | "\_" | 101111 | 47   | "/"  | 111111 | 63   | "?"  |
 
-## Transmitter
+## RadioTransmitter
 
-Optionally an AIS Radio Signal can be associated with a Transmitter object instance. The non-optional attributes of the Transmitter object instance may be assigned for example the following values:
+Optionally an AIS Radio Signal can be associated with a `RadioTransmitter` object instance. The non-optional attributes of the `RadioTransmitter` object instance may be assigned the following values:
 
 | Attribute name                 | Description                                                  | Value                                                        |
 | ------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `Frequency`                    | Center frequency of the radio transmissions.                 | 162 MHz                                                      |
-| `FrequencyBandwidth`           | Bandpass of the radio transmissions, specified in hertz.     | 25000 Hz                                                     |
-| `RadioIndex`                   | Specifies the identification number for each radio on a given host. This ID shall not change during an exercise. | Per agreement.                                               |
-| `RadioSystemType`              | Kind, Country, Domain, Category, Nomenclature Version, and Nomenclature of the DIS Radio Type. This ID shall not change during an exercise. | Kind, Domain, Country, Category, Subcategory, Specific, Extra = 7.3.0.37.0.0.0 |
-| `TransmittedPower`             | The average power being transmitted in units of decibel-milliwatts. | 12500 Milliwatts for class A, or 2000 Milliwatts for class B |
-| `TransmitterOperationalStatus` | On/Off state of the transmitter as an enumeration.           | `on` or `off`                                                |
-| `WorldLocation`                | Location of the antenna in world coordinates.                | Typically the vessel position.                               |
+| `Frequency`                    | Center frequency of the radio transmissions.                 | `162000000000` Hz (162 MHz)                                  |
+| `FrequencyBandwidth`           | Bandpass of the radio transmissions, specified in hertz.     | `25000` Hz                                                   |
+| `RadioIndex`                   | Specifies the identification number for each radio on a given host. This ID shall not change during an exercise. | Per agreement. If the `RadioTransmitter` is the only radio for the vessel, use `0`. |
+| `RadioSystemType`              | Kind, Country, Domain, Category, Nomenclature Version, and Nomenclature of the DIS Radio Type. This ID shall not change during an exercise. | Kind, Domain, Country, Category, Subcategory, Specific, Extra = `7.3.0.37.0.0.0` |
+| `TransmittedPower`             | The average power being transmitted in units of decibel-milliwatts. | `12500` Milliwatts for class A, or `2000` Milliwatts for class B |
+| `TransmitterOperationalStatus` | On/Off state of the transmitter as an enumeration.           | `Off`, `OnButNotTransmitting` or `OnAndTransmitting`         |
+| `WorldLocation`                | Location of the antenna in world coordinates.                | The vessel position.                                         |
+
+## Entity marking and callsign
+
+As a best practice the vessel callsign (a 7 six-bit character string) should be based on (a) the `Callsign` attribute of the `NETN_SurfaceVessel` class or (b) the `Marking` attribute of the `SurfaceVessel` class, depending on what class is used. The size of these attributes is however different, as summarized in the following table:
+
+| Attribute                                                    | Datatype             | Size      |
+| ------------------------------------------------------------ | -------------------- | --------- |
+| `BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel.Callsign` | ` HLAunicodeString ` | Unlimited |
+| `BaseEntity.PhysicalEntity.Platform.SurfaceVessel.Marking`   | `MarkingStruct`      | 11 Octets |
+
+When defining values for entity marking or callsign, the limitation for the vessel callsign should be taken into account.
 

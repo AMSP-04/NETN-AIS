@@ -6,7 +6,15 @@
         <version>1.0</version>
         <modificationDate>2019-11-11</modificationDate>
         <securityClassification>Not Classified</securityClassification>
-        <purpose> The purpose of the AIS FOM module is to enable the exchange of AIS messages in both a real-time and non real-time platform level simulation, and to support the translation of AIS messages to/from the NMEA 0183 protocol using for example generic gateway components. The AIS FOM module defines almost all of the AIS message types, whose content can be interpreted by applications without knowledge of the NMEA 0183 protocol. 		</purpose>
+        <purpose>The purpose of the NETN-AIS FOM module is to:
+
+- enable the exchange of AIS messages between HLA federate applications in both a real-time and non real-time platform level simulation;
+- enable HLA application developers to focus on the logical data exchanged, rather than on the physical format of messages as defined in ITU-R M.1371-5;
+
+- allow the translation to the physical message format in ITU-R M.1371-5 by for example gateways.
+
+The NETN-AIS FOM module defines almost all of the AIS message types, whose content can be interpreted by applications without extensive knowledge of the ITU-R M.1371-5 standard and the message format defined by that standard.
+</purpose>
         <applicationDomain>Training, analysis</applicationDomain>
         <description>NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module.
 
@@ -14,8 +22,8 @@ The Automatic Identification System (AIS) is a world-wide automated tracking sys
 
 The AIS FOM module defines all of the messages types specified in ITU-R M.1371-5 annex 8, with the exception of rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure is closely aligned with the message type specification in ITU-R M.1371-5 annex 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes and most of the class parameters are optional. The root class - AisMessage - is integrated in the RPR-FOM by subclassing RadioSignal, using the concept of HostRadioIndex to refer to the RadioTransmitter object instance on board of the vessel. The AIS message types include SOTDMA and ITDMA communication state data, but the parameters related to communication state can be omitted if there is no need to model communication.
 
-The AIS FOM module content is based on ITU-R M.1371-5.</description>
-        <useLimitation> The AIS FOM module is simulation oriented and does not focus on the communication of live AIS data. However, the FOM is aligned well with the specification in ITU-R M.1371-5, enabling relatively easy mapping to/from NMEA 0183. 		</useLimitation>
+The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteristics for an automatic identification system using time division multiple access in the VHF maritime mobile frequency band (https://www.itu.int).</description>
+        <useLimitation>The NETN-AIS FOM module is simulation oriented and does not focus on the physical message format as defined by ITU-R M.1371-5. However, the FOM is aligned well with ITU-R M.1371-5, enabling relatively easy mapping to/from the message format defined in ITU-R M.1371-5.</useLimitation>
         <other></other>
     </modelIdentification>
     <objects>
@@ -48,7 +56,7 @@ The AIS FOM module content is based on ITU-R M.1371-5.</description>
                         <parameter>
                             <name>messageId</name>
                             <dataType>MsgIdEnum</dataType>
-                            <semantics>REQUIRED. Message identifier.</semantics>
+                            <semantics>REQUIRED. Message type identifier.</semantics>
                         </parameter>
                         <parameter>
                             <name>repeatIndicator</name>
@@ -58,7 +66,7 @@ The AIS FOM module content is based on ITU-R M.1371-5.</description>
                         <parameter>
                             <name>mmsi</name>
                             <dataType>MMSI</dataType>
-                            <semantics>REQUIRED. The AIS message is from the vessel identified by this MMSI.</semantics>
+                            <semantics>REQUIRED. The message is from the vessel identified by this MMSI.</semantics>
                         </parameter>
                         <interactionClass>
                             <name>AisNavigationData</name>
@@ -230,7 +238,7 @@ Identical to Message Type 4, with the semantics of a response to inquiry. This m
                             </interactionClass>
                         </interactionClass>
                         <interactionClass>
-                            <name>AisStaticandVoyageData</name>
+                            <name>AisStaticAndVoyageData</name>
                             <sharing>Subscribe</sharing>
                             <transportation>HLAreliable</transportation>
                             <order>Receive</order>
