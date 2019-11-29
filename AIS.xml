@@ -461,7 +461,7 @@ This message type is an addressed point-to-point message with unspecified binary
                                 <transportation>HLAreliable</transportation>
                                 <order>Receive</order>
                                 <semantics>Message Type 8: Binary Broadcast Message. 
-
+ 
 This message type is a broadcast message with a binary payload.</semantics>
                             </interactionClass>
                         </interactionClass>
@@ -584,9 +584,9 @@ Tracking information for search-and-rescue aircraft.</semantics>
                             <sharing>PublishSubscribe</sharing>
                             <transportation>HLAreliable</transportation>
                             <order>Receive</order>
-                            <semantics>Message Type 10: UTC/Date Inquiry.
-
- Request for UTC/Date information from an AIS base station.</semantics>
+                            <semantics>Message Type 10: UTC/Date Inquiry. 
+ 
+Request for UTC/Date information from an AIS base station.</semantics>
                             <parameter>
                                 <name>destination</name>
                                 <dataType>MMSI</dataType>
@@ -641,8 +641,8 @@ This is a broadcast text message. The payload is interpreted as six-bit text.</s
                             <sharing>PublishSubscribe</sharing>
                             <transportation>HLAreliable</transportation>
                             <order>Receive</order>
-                            <semantics>Message Type 17: DGNSS Broadcast Binary Message.
-
+                            <semantics>Message Type 17: DGNSS Broadcast Binary Message. 
+ 
 This message type is used to broadcast differential corrections for GPS. The data in the payload is intended to be passed directly to GPS receivers capable of accepting such corrections.</semantics>
                             <parameter>
                                 <name>position</name>
@@ -660,8 +660,8 @@ This message type is used to broadcast differential corrections for GPS. The dat
                             <sharing>PublishSubscribe</sharing>
                             <transportation>HLAreliable</transportation>
                             <order>Receive</order>
-                            <semantics>Message Type 18: Standard Class B CS Position Report.
-
+                            <semantics>Message Type 18: Standard Class B CS Position Report. 
+ 
 A less detailed report than message types 1-3 for vessels using Class B transmitters. Omits navigational status and rate of turn.</semantics>
                             <parameter>
                                 <name>speedOverGround</name>
@@ -744,8 +744,8 @@ A less detailed report than message types 1-3 for vessels using Class B transmit
                             <sharing>PublishSubscribe</sharing>
                             <transportation>HLAreliable</transportation>
                             <order>Receive</order>
-                            <semantics>Message Type 21: Aid-to-Navigation Report.
-
+                            <semantics>Message Type 21: Aid-to-Navigation Report. 
+ 
 Identification and location message to be emitted by aids to navigation such as buoys and lighthouses.</semantics>
                             <parameter>
                                 <name>aidType</name>
@@ -1595,7 +1595,7 @@ Base station coverage area should be defined by Message 23; If Message 23 is not
             <enumeratedData>
                 <name>PositionSystemStatusEnum</name>
                 <representation>HLAinteger32BE</representation>
-                <semantics>OPTIONS (Default: NormalMode). Indicates the status of the Positioning System. Only if in NormalMode the utcSecond parameter vallue is valid.</semantics>
+                <semantics>OPTIONS (Default: NormalMode). Indicates the status of the Positioning System. Only if in NormalMode the utcSecond parameter value is valid.</semantics>
                 <enumerator>
                     <name>NormalMode</name>
                     <value>0</value>
