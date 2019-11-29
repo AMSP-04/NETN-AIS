@@ -110,9 +110,9 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                                 <semantics>OPTIONAL (Default: not available). True heading.</semantics>
                             </parameter>
                             <parameter>
-                                <name>utcSecond</name>
-                                <dataType>UTCsecond</dataType>
-                                <semantics>OPTIONAL (Default: not available). Second of UTC timestamp. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
+                                <name>utcTime</name>
+                                <dataType>UTCTime</dataType>
+                                <semantics>OPTIONAL (Default: not available). Time of the report. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
                             </parameter>
                             <parameter>
                                 <name>positionSystemStatus</name>
@@ -180,7 +180,7 @@ Message type for a special position report, response to interrogation; Class A s
                             <semantics>Common reporting structure for Message Types 4 and 11 for reporting UTC time and date and, at the same time, position. It is also is used by AIS stations for determining if it is within 120 NM for response to Messages Types 20 and 23.</semantics>
                             <parameter>
                                 <name>utcTime</name>
-                                <dataType>UTCtime</dataType>
+                                <dataType>UTCTime</dataType>
                                 <semantics>OPTIONAL (Default: not available). Time of report.</semantics>
                             </parameter>
                             <parameter>
@@ -303,7 +303,7 @@ This message type is transmitted every 6 minutes and should only be used by Clas
                                 </parameter>
                                 <parameter>
                                     <name>etaTime</name>
-                                    <dataType>UTCtime</dataType>
+                                    <dataType>UTCTime</dataType>
                                     <semantics>OPTIONAL (Default: not available). Time. Not applicable to SAR aircraft.</semantics>
                                 </parameter>
                                 <parameter>
@@ -356,9 +356,9 @@ A slightly more detailed report than Message Type 18 for vessels using Class B t
                                     <semantics>OPTIONAL (Default: not available). True heading.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>utcSecond</name>
-                                    <dataType>UTCsecond</dataType>
-                                    <semantics>OPTIONAL (Default: not available). Second of UTC timestamp. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
+                                    <name>utcTime</name>
+                                    <dataType>UTCTime</dataType>
+                                    <semantics>OPTIONAL (Default: not available). Time of the report. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
                                 </parameter>
                                 <parameter>
                                     <name>positionSystemStatus</name>
@@ -552,9 +552,9 @@ Tracking information for search-and-rescue aircraft.</semantics>
                                 <semantics>OPTIONAL (Default: not available). Course over ground.</semantics>
                             </parameter>
                             <parameter>
-                                <name>utcSec</name>
-                                <dataType>UTCsecond</dataType>
-                                <semantics>OPTIONAL (Default: not available). Second of UTC timestamp. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
+                                <name>utcTime</name>
+                                <dataType>UTCTime</dataType>
+                                <semantics>OPTIONAL (Default: not available). Time of the report. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
                             </parameter>
                             <parameter>
                                 <name>positionSystemStatus</name>
@@ -697,9 +697,9 @@ A less detailed report than message types 1-3 for vessels using Class B transmit
                                 <semantics>OPTIONAL (Default: not available). True heading.</semantics>
                             </parameter>
                             <parameter>
-                                <name>utcSecond</name>
-                                <dataType>UTCsecond</dataType>
-                                <semantics>OPTIONAL (Default: not available). Second of UTC timestamp. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
+                                <name>utcTime</name>
+                                <dataType>UTCTime</dataType>
+                                <semantics>OPTIONAL (Default: not available). Time of the report. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
                             </parameter>
                             <parameter>
                                 <name>positionSystemStatus</name>
@@ -801,9 +801,9 @@ Identification and location message to be emitted by aids to navigation such as 
                                 <semantics>OPTIONAL (Default: undefined). Type of electronic position fixing device.</semantics>
                             </parameter>
                             <parameter>
-                                <name>utcSecond</name>
-                                <dataType>UTCsecond</dataType>
-                                <semantics>OPTIONAL (Default: not available). Second of UTC timestamp. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
+                                <name>utcTime</name>
+                                <dataType>UTCTime</dataType>
+                                <semantics>OPTIONAL (Default: not available). Time of the report. If a value is provided, then the value is only valid if the positionSystemStatus is set to NormalMode.</semantics>
                             </parameter>
                             <parameter>
                                 <name>positionSystemStatus</name>
@@ -942,14 +942,6 @@ This message type is primarily intended for long-range detection of AIS Class A 
                 <resolution>NA</resolution>
                 <accuracy>NA</accuracy>
                 <semantics>The true heading is [0, 360) degrees.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>UTCsecond</name>
-                <representation>HLAinteger64BE</representation>
-                <units>seconds</units>
-                <resolution>NA</resolution>
-                <accuracy>NA</accuracy>
-                <semantics>UTC seconds value in when the report was generated by the electronic position system (EPFS).</semantics>
             </simpleData>
             <simpleData>
                 <name>SlotTimeOut</name>
@@ -1148,12 +1140,12 @@ Bit 1 - Part B.</semantics>
                 <semantics>6 bit unsigned integer.</semantics>
             </simpleData>
             <simpleData>
-                <name>UTCtime</name>
+                <name>UTCTime</name>
                 <representation>HLAinteger64BE</representation>
                 <units>seconds</units>
                 <resolution>NA</resolution>
                 <accuracy>NA</accuracy>
-                <semantics>Number of seconds since 1 Jan 1970.</semantics>
+                <semantics>Number of seconds since 1 Jan 1970 (wallclock time) or since the start of the simulation (logical time).</semantics>
             </simpleData>
             <simpleData>
                 <name>NumberOfSlots</name>

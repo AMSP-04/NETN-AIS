@@ -59,7 +59,7 @@ Other parameters include true heading, course, rate of turn, etc. These are all 
 
 Note that the AIS position in the NETN-AIS FOM module is defined using an `HLAfloat64BE` representation. This is different from ITU-R M.1371-5, where Longitude and Latitude are defined in 1/10 000 min and stored in a 28 and 27 bit field respectively. The purpose of this FOM module is to not bother the user with the message format in ITU-R M.1371-5, but rather let the user focus on the information that is exchanged in the simulation. The message format defined in ITU-R M.1371-5 is not a concern of this FOM module, however the class and parameter structure is such that the mapping between the NETN-AIS FOM and ITU-R M.1371-5 is straightforward.
 
-## Six-bit ASCII character strings
+## Six-bit ASCII character string datatype
 
 Several parameters in the FOM module are typed as six-bit character strings. For example, vessel name and callsign. The parameter datatype of a six-bit character string is `HLAASCIIstring` and the following table shows the ASCII character to be used for a each six-bit character.
 
@@ -80,6 +80,15 @@ Several parameters in the FOM module are typed as six-bit character strings. For
 | 001101 | 13   | "M"  | 011101 | 29   | "]"  | 101101 | 45   | "-"  | 111101 | 61   | "="  |
 | 001110 | 14   | "N"  | 011110 | 30   | "\^" | 101110 | 46   | "."  | 111110 | 62   | ">"  |
 | 001111 | 15   | "O"  | 011111 | 31   | "\_" | 101111 | 47   | "/"  | 111111 | 63   | "?"  |
+
+## UTCTime datatype
+
+The UTC time value in AIS message types is:
+
+- the number of wall clock seconds since 1 Jan 1970 (when using `wall clock time` ) or
+- the number of logical seconds since the start of the simulation (when using `logical time`).
+
+In most cases UTC time is in relation to an AIS position update.
 
 ## RadioTransmitter
 
@@ -105,4 +114,3 @@ As a best practice the vessel callsign (a 7 six-bit character string) should be 
 | `BaseEntity.PhysicalEntity.Platform.SurfaceVessel.Marking`   | `MarkingStruct`      | 11 Octets |
 
 When defining values for entity marking or callsign, the limitation for the vessel callsign should be taken into account.
-

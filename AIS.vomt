@@ -53,6 +53,9 @@
       <void method="add">
        <int>0</int>
       </void>
+      <void method="add">
+       <int>2</int>
+      </void>
      </object>
      <boolean>false</boolean>
      <boolean>false</boolean>
@@ -88,7 +91,7 @@
     </object>
    </void>
    <void method="add">
-    <object class="se.pitch.vomt2.model.PersistentProjectHelper$PersistentModule" id="PersistentProjectHelper$PersistentModule3">
+    <object class="se.pitch.vomt2.model.PersistentProjectHelper$PersistentModule">
      <string>NETN-Physical</string>
      <string>C:\Users\bergtwvd\workspace\GitHubProjects\AMSP-04\NETN-Physical\NETN-Physical.xml</string>
      <boolean>false</boolean>
@@ -124,31 +127,15 @@
      <boolean>true</boolean>
      <object class="java.lang.Enum" method="valueOf">
       <class>se.pitch.vomt2.model.TableType</class>
-      <string>IDENTIFICATION_TABLE</string>
+      <string>SIMPLE_DATATYPE_TABLE</string>
      </object>
      <object idref="PersistentProjectHelper$PersistentModule1"/>
      <int>0</int>
      <int>0</int>
      <int>1715</int>
      <int>694</int>
-     <object class="java.util.Collections" id="Collections$EmptySet0" method="emptySet"/>
+     <object class="java.util.Collections" method="emptySet"/>
      <object class="java.util.LinkedHashSet"/>
-    </object>
-   </void>
-   <void method="add">
-    <object class="se.pitch.vomt2.model.PersistentProjectHelper$PersistentView">
-     <boolean>true</boolean>
-     <object class="java.lang.Enum" method="valueOf">
-      <class>se.pitch.vomt2.model.TableType</class>
-      <string>OBJECT_CLASS_TABLE</string>
-     </object>
-     <object idref="PersistentProjectHelper$PersistentModule3"/>
-     <int>5</int>
-     <int>25</int>
-     <int>1705</int>
-     <int>667</int>
-     <object class="java.util.LinkedHashSet"/>
-     <object idref="Collections$EmptySet0"/>
     </object>
    </void>
   </object>
