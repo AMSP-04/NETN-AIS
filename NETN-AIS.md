@@ -87,7 +87,7 @@ Several parameters in the FOM module are typed as six-bit character strings. For
 The UTC time value in AIS message types is:
 
 - the number of wall clock seconds since 1 Jan 1970 (when using `wall clock time` ) or
-- the number of logical seconds since the start of the simulation (when using `logical time`).
+- the number of logical seconds since the start of the simulation when time is equal to zero (when using `logical time`).
 
 In most cases UTC time is in relation to an AIS position update.
 
@@ -99,8 +99,8 @@ Optionally an AIS Radio Signal can be associated with a `RadioTransmitter` objec
 | ------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | `Frequency`                    | Center frequency of the radio transmissions.                 | `162000000000` Hz (162 MHz)                                  |
 | `FrequencyBandwidth`           | Bandpass of the radio transmissions, specified in hertz.     | `25000` Hz                                                   |
-| `RadioIndex`                   | Specifies the identification number for each radio on a given host. This ID shall not change during an exercise. | Per agreement. If the `RadioTransmitter` is the only radio for the vessel, use `0`. |
-| `RadioSystemType`              | Kind, Country, Domain, Category, Nomenclature Version, and Nomenclature of the DIS Radio Type. This ID shall not change during an exercise. | Kind, Domain, Country, Category, Subcategory, Specific, Extra = `7.3.0.37.0.0.0` |
+| `RadioIndex`                   | Specifies the identification number for each radio on a given host. This value shall not change during a simulation execution. | Per agreement. If the `RadioTransmitter` is the only radio for the vessel, the index `0` should be used. |
+| `RadioSystemType`              | Entity type of the radio transmitter: Kind, Domain, Country, Category, Subcategory, Specific, Extra. This value shall not change during a simulation execution. | `7.3.0.37.0.0.0`                                             |
 | `TransmittedPower`             | The average power being transmitted in units of decibel-milliwatts. | `12500` Milliwatts for class A, or `2000` Milliwatts for class B |
 | `TransmitterOperationalStatus` | On/Off state of the transmitter as an enumeration.           | `Off`, `OnButNotTransmitting` or `OnAndTransmitting`         |
 | `WorldLocation`                | Location of the antenna in world coordinates.                | The vessel position.                                         |
