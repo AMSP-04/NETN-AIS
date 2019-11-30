@@ -16,10 +16,9 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
 
 The purpose of the NETN-AIS FOM module is to:
 
+- represent vessel traffic in a simulation using AIS messages to for example communicate position status reports of vessels;
 - enable the exchange of AIS messages between HLA federate applications in both a real-time and non real-time platform level simulation;
-- enable HLA application developers to focus on the logical data exchanged, rather than on the physical format of messages as defined in ITU-R M.1371-5;
-
-- allow the translation to the physical message format in ITU-R M.1371-5 by for example gateways.
+- allow HLA federate applications to use regular HLA interaction classes and parameters to represent vessel information, and leave the translation to the physical message format in ITU-R M.1371-5 to for example dedicated gateways.
 
 The NETN-AIS FOM module defines almost all of the AIS message types, whose content can be interpreted by applications without extensive knowledge of the ITU-R M.1371-5 standard and the message format defined by that standard.
 
