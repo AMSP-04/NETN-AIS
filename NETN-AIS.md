@@ -63,8 +63,9 @@ Note that the AIS position in the NETN-AIS FOM module is defined using an `HLAfl
 
 Several parameters in the FOM module are typed as six-bit character strings. For example, vessel name and callsign. The parameter datatype of a six-bit character string is `HLAASCIIstring` and the following table shows the ASCII character to be used for a each six-bit character.
 
-| 000000 | 0    | "@"  | 010000 | 16   | "P"  | 100000 | 32   | " "  | 110000 | 48   | "0"  |
+| six-bit | dec  | char | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char |
 | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- |
+| 000000 | 0    | "@"  | 010000 | 16   | "P"  | 100000 | 32   | " "  | 110000 | 48   | "0"  |
 | 000001 | 1    | "A"  | 010001 | 17   | "Q"  | 100001 | 33   | "!"  | 110001 | 49   | "1"  |
 | 000010 | 2    | "B"  | 010010 | 18   | "R"  | 100010 | 34   | """  | 110010 | 50   | "2"  |
 | 000011 | 3    | "C"  | 010011 | 19   | "S"  | 100011 | 35   | "\#" | 110011 | 51   | "3"  |
