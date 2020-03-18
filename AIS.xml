@@ -53,12 +53,12 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                         <order>Receive</order>
                         <semantics>Super class for all AIS message types.</semantics>
                         <parameter>
-                            <name>messageId</name>
+                            <name>MessageId</name>
                             <dataType>MsgIdEnum</dataType>
                             <semantics>REQUIRED. Message type identifier.</semantics>
                         </parameter>
                         <parameter>
-                            <name>mmsi</name>
+                            <name>UserId</name>
                             <dataType>MMSI</dataType>
                             <semantics>REQUIRED. The message is from the vessel identified by this MMSI.</semantics>
                         </parameter>
@@ -69,42 +69,42 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                             <order>Receive</order>
                             <semantics>Message Types 1, 2 and 3 share a common reporting structure for navigational data, captured in this class.</semantics>
                             <parameter>
-                                <name>navigationalStatus</name>
+                                <name>NavigationalStatus</name>
                                 <dataType>NavigationStatusEnum</dataType>
                                 <semantics>OPTIONAL (Default: not defined). Navigational status.</semantics>
                             </parameter>
                             <parameter>
-                                <name>rateOfTurn</name>
-                                <dataType>RateOfTurn</dataType>
+                                <name>RateOfTurn</name>
+                                <dataType>DegreesPerSecondFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Rate of turn.</semantics>
                             </parameter>
                             <parameter>
-                                <name>speedOverGround</name>
-                                <dataType>SpeedOverGround</dataType>
+                                <name>SpeedOverGround</name>
+                                <dataType>VelocityMeterPerSecondFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Speed over ground.</semantics>
                             </parameter>
                             <parameter>
-                                <name>position</name>
-                                <dataType>AisPosition</dataType>
+                                <name>Position</name>
+                                <dataType>GeodeticLocation</dataType>
                                 <semantics>OPTIONAL (Default: not available). AIS (Lat,Lon) position.</semantics>
                             </parameter>
                             <parameter>
-                                <name>courseOverGround</name>
-                                <dataType>CourseOverGround</dataType>
+                                <name>CourseOverGround</name>
+                                <dataType>DirectionDegreesFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Course over ground.</semantics>
                             </parameter>
                             <parameter>
-                                <name>trueHeading</name>
-                                <dataType>TrueHeading</dataType>
+                                <name>TrueHeading</name>
+                                <dataType>DirectionDegreesFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). True heading.</semantics>
                             </parameter>
                             <parameter>
-                                <name>utcTime</name>
-                                <dataType>UTCTime</dataType>
+                                <name>UTCtime</name>
+                                <dataType>EpochTimeSecInt64</dataType>
                                 <semantics>OPTIONAL (Default: not available). Time of the report.</semantics>
                             </parameter>
                             <parameter>
-                                <name>specialManeuverIndicator</name>
+                                <name>SpecialManeuverIndicator</name>
                                 <dataType>ManeuverIndicatorEnum</dataType>
                                 <semantics>OPTIONAL (Default: not available). Maneuver indication.</semantics>
                             </parameter>
@@ -143,13 +143,13 @@ Message type for a special position report, response to interrogation; Class A s
                             <order>Receive</order>
                             <semantics>Common reporting structure for Message Types 4 and 11 for reporting UTC time and date and, at the same time, position. It is also is used by AIS stations for determining if it is within 120 NM for response to Messages Types 20 and 23.</semantics>
                             <parameter>
-                                <name>utcTime</name>
-                                <dataType>UTCTime</dataType>
+                                <name>UTCtime</name>
+                                <dataType>EpochTimeSecInt64</dataType>
                                 <semantics>OPTIONAL (Default: not available). Time of report.</semantics>
                             </parameter>
                             <parameter>
-                                <name>position</name>
-                                <dataType>AisPosition</dataType>
+                                <name>Position</name>
+                                <dataType>GeodeticLocation</dataType>
                                 <semantics>OPTIONAL (Default: not available). AIS (Lat,Lon) position.</semantics>
                             </parameter>
                             <interactionClass>
@@ -178,38 +178,38 @@ Identical to Message Type 4, with the semantics of a response to inquiry. This m
                             <order>Receive</order>
                             <semantics>Common Static and Voyage Data for Message Types 5, 19 and 24.</semantics>
                             <parameter>
-                                <name>callsign</name>
+                                <name>Callsign</name>
                                 <dataType>HLAASCIIstring</dataType>
                                 <semantics>REQUIRED. 7 six-bit characters for the callsign.</semantics>
                             </parameter>
                             <parameter>
-                                <name>name</name>
+                                <name>Name</name>
                                 <dataType>HLAASCIIstring</dataType>
                                 <semantics>REQUIRED. 20 six-bit characters for the name.</semantics>
                             </parameter>
                             <parameter>
-                                <name>shipType</name>
-                                <dataType>ShipType</dataType>
+                                <name>ShipType</name>
+                                <dataType>ShipTypeCode</dataType>
                                 <semantics>OPTIONAL (Default: not available). Ship type.</semantics>
                             </parameter>
                             <parameter>
-                                <name>dimBow</name>
-                                <dataType>Dimension</dataType>
+                                <name>DimensionBow</name>
+                                <dataType>LengthMeterFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). GPS Ant. distance from bow.</semantics>
                             </parameter>
                             <parameter>
-                                <name>dimStern</name>
-                                <dataType>Dimension</dataType>
+                                <name>DimensionStern</name>
+                                <dataType>LengthMeterFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). GPS Ant. distance from stern.</semantics>
                             </parameter>
                             <parameter>
-                                <name>dimPort</name>
-                                <dataType>Dimension</dataType>
+                                <name>DimensionPort</name>
+                                <dataType>LengthMeterFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). GPS Ant. distance from port.</semantics>
                             </parameter>
                             <parameter>
-                                <name>dimStarboard</name>
-                                <dataType>Dimension</dataType>
+                                <name>DimensionStarboard</name>
+                                <dataType>LengthMeterFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). GPS Ant. distance from starboard.</semantics>
                             </parameter>
                             <interactionClass>
@@ -221,22 +221,22 @@ Identical to Message Type 4, with the semantics of a response to inquiry. This m
  
 This message type is transmitted every 6 minutes and should only be used by Class A shipborne and SAR aircraft AIS stations when reporting static or voyage related data.</semantics>
                                 <parameter>
-                                    <name>imo</name>
-                                    <dataType>IMO</dataType>
-                                    <semantics>OPTIONAL (Default: zero). 30 bit value for IMO ship ID number. Not applicable to SAR aircraft.</semantics>
+                                    <name>IMO</name>
+                                    <dataType>IMOcode</dataType>
+                                    <semantics>OPTIONAL (Default: zero). The IMO ship ID number. Not applicable to SAR aircraft.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>etaTime</name>
-                                    <dataType>UTCTime</dataType>
+                                    <name>ETAtime</name>
+                                    <dataType>EpochTimeSecInt64</dataType>
                                     <semantics>OPTIONAL (Default: not available). Time. Not applicable to SAR aircraft.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>draught</name>
-                                    <dataType>Draught</dataType>
+                                    <name>Draught</name>
+                                    <dataType>DraughtMeterFloat32</dataType>
                                     <semantics>OPTIONAL (Default: not available). Maximum present static draught.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>dest</name>
+                                    <name>Destination</name>
                                     <dataType>HLAASCIIstring</dataType>
                                     <semantics>OPTIONAL (Default: not available, @@@@@@@@@@@@@@@@@@@@). 20 six-bit characters for the destination. For SAR aircraft, the use of this field may be decided by the responsible administration.</semantics>
                                 </parameter>
@@ -250,28 +250,28 @@ This message type is transmitted every 6 minutes and should only be used by Clas
  
 A slightly more detailed report than Message Type 18 for vessels using Class B transmitters. Omits navigational status and rate of turn. Fields are as in the common navigation block and the Message Type 5 message.</semantics>
                                 <parameter>
-                                    <name>speedOverGround</name>
-                                    <dataType>SpeedOverGround</dataType>
+                                    <name>SpeedOverGround</name>
+                                    <dataType>VelocityMeterPerSecondFloat32</dataType>
                                     <semantics>OPTIONAL (Default: not available). Speed over ground.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>position</name>
-                                    <dataType>AisPosition</dataType>
+                                    <name>Position</name>
+                                    <dataType>GeodeticLocation</dataType>
                                     <semantics>OPTIONAL (Default: not available). AIS (Lat,Lon) position.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>courseOverGround</name>
-                                    <dataType>CourseOverGround</dataType>
+                                    <name>CourseOverGround</name>
+                                    <dataType>DirectionDegreesFloat32</dataType>
                                     <semantics>OPTIONAL (Default: not available). Course over ground.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>trueHeading</name>
-                                    <dataType>TrueHeading</dataType>
+                                    <name>TrueHeading</name>
+                                    <dataType>DirectionDegreesFloat32</dataType>
                                     <semantics>OPTIONAL (Default: not available). True heading.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>utcTime</name>
-                                    <dataType>UTCTime</dataType>
+                                    <name>UTCtime</name>
+                                    <dataType>EpochTimeSecInt64</dataType>
                                     <semantics>OPTIONAL (Default: not available). Time of the report.</semantics>
                                 </parameter>
                             </interactionClass>
@@ -284,23 +284,23 @@ A slightly more detailed report than Message Type 18 for vessels using Class B t
  
 Equivalent of Message Type 5 for ships using Class B equipment. Also used to associate an MMSI with a name on either class A or class B equipment. This message type may be in part A or part B format. According to the standard, parts A and B are expected to be broadcast in adjacent pairs.</semantics>
                                 <parameter>
-                                    <name>partNumber</name>
-                                    <dataType>PartNumber</dataType>
+                                    <name>PartNumber</name>
+                                    <dataType>PartNumberCode</dataType>
                                     <semantics>REQUIRED. Part number.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>vendorId</name>
+                                    <name>VendorId</name>
                                     <dataType>HLAASCIIchar</dataType>
                                     <semantics>REQUIRED. (Part B) 3 six-bit chars.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>unitModelCode</name>
+                                    <name>UnitModel</name>
                                     <dataType>UnitModelCode</dataType>
                                     <semantics>REQUIRED. (Part B) Unit Model Code.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>serialNumber</name>
-                                    <dataType>SerialNumber</dataType>
+                                    <name>SerialNumber</name>
+                                    <dataType>SerialNumberCode</dataType>
                                     <semantics>REQUIRED. Serial Number.</semantics>
                                 </parameter>
                             </interactionClass>
@@ -314,17 +314,17 @@ Equivalent of Message Type 5 for ships using Class B equipment. Also used to ass
 - The Designated Area Code (DAC), which is a jurisdiction code: 366 for the United States. It uses the same encoding as the area designator in MMMSIs; see [ITU-MID]. 1 designates international (ITU) messages. 
 - The FID, which is the Functional ID for a message subtype. In some sources this is abbreviated FI.</semantics>
                             <parameter>
-                                <name>dac</name>
+                                <name>DesignatedArea</name>
                                 <dataType>DesignatedAreaCode</dataType>
                                 <semantics>REQUIRED. Designated area code (DAC).</semantics>
                             </parameter>
                             <parameter>
-                                <name>fi</name>
-                                <dataType>FunctionID</dataType>
+                                <name>Function</name>
+                                <dataType>FunctionId</dataType>
                                 <semantics>REQUIRED. Functional ID (FID).</semantics>
                             </parameter>
                             <parameter>
-                                <name>data</name>
+                                <name>Data</name>
                                 <dataType>BinArray</dataType>
                                 <semantics>REQUIRED. Binary data up to 920 bits.</semantics>
                             </parameter>
@@ -337,7 +337,7 @@ Equivalent of Message Type 5 for ships using Class B equipment. Also used to ass
  
 This message type is an addressed point-to-point message with a binary payload.</semantics>
                                 <parameter>
-                                    <name>destination</name>
+                                    <name>Destination</name>
                                     <dataType>MMSI</dataType>
                                     <semantics>REQUIRED. Destination MMSI.</semantics>
                                 </parameter>
@@ -359,22 +359,22 @@ This message type is a broadcast message with a binary payload.</semantics>
                             <order>Receive</order>
                             <semantics>Acknowledge data for Message Types 7 and 13.</semantics>
                             <parameter>
-                                <name>dest1</name>
+                                <name>Destination1</name>
                                 <dataType>MMSI</dataType>
                                 <semantics>REQUIRED. MMSI number 1.</semantics>
                             </parameter>
                             <parameter>
-                                <name>dest2</name>
+                                <name>Destination2</name>
                                 <dataType>MMSI</dataType>
                                 <semantics>OPTIONAL (Default: not available). MMSI number 2.</semantics>
                             </parameter>
                             <parameter>
-                                <name>dest3</name>
+                                <name>Destination3</name>
                                 <dataType>MMSI</dataType>
                                 <semantics>OPTIONAL (Default: not available). MMSI number 3.</semantics>
                             </parameter>
                             <parameter>
-                                <name>dest4</name>
+                                <name>Destination4</name>
                                 <dataType>MMSI</dataType>
                                 <semantics>OPTIONAL (Default: not available). MMSI number 4.</semantics>
                             </parameter>
@@ -406,28 +406,28 @@ This message type is a receipt acknowledgement to senders of previous messages o
  
 Tracking information for search-and-rescue aircraft.</semantics>
                             <parameter>
-                                <name>altitude</name>
-                                <dataType>Altitude</dataType>
+                                <name>Altitude</name>
+                                <dataType>AltitudeMeterFloat64</dataType>
                                 <semantics>OPTIONAL (Default: not available). Altitude.</semantics>
                             </parameter>
                             <parameter>
-                                <name>speedOverGround</name>
-                                <dataType>SpeedOverGround</dataType>
+                                <name>SpeedOverGround</name>
+                                <dataType>VelocityMeterPerSecondFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Speed over ground.</semantics>
                             </parameter>
                             <parameter>
-                                <name>position</name>
-                                <dataType>AisPosition</dataType>
+                                <name>Position</name>
+                                <dataType>GeodeticLocation</dataType>
                                 <semantics>OPTIONAL (Default: not available). AIS (Lat,Lon) position.</semantics>
                             </parameter>
                             <parameter>
-                                <name>courseOverGround</name>
-                                <dataType>CourseOverGround</dataType>
+                                <name>CourseOverGround</name>
+                                <dataType>DirectionDegreesFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Course over ground.</semantics>
                             </parameter>
                             <parameter>
-                                <name>utcTime</name>
-                                <dataType>UTCTime</dataType>
+                                <name>UTCtime</name>
+                                <dataType>EpochTimeSecInt64</dataType>
                                 <semantics>OPTIONAL (Default: not available). Time of the report.</semantics>
                             </parameter>
                         </interactionClass>
@@ -440,7 +440,7 @@ Tracking information for search-and-rescue aircraft.</semantics>
  
 Request for UTC/Date information from an AIS base station.</semantics>
                             <parameter>
-                                <name>destination</name>
+                                <name>Destination</name>
                                 <dataType>MMSI</dataType>
                                 <semantics>REQUIRED. Destination MMSI.</semantics>
                             </parameter>
@@ -459,7 +459,7 @@ This is a point-to-point text message. The payload is interpreted as six-bit tex
                                 <semantics>REQUIRED. Destination MMSI.</semantics>
                             </parameter>
                             <parameter>
-                                <name>message</name>
+                                <name>Message</name>
                                 <dataType>HLAASCIIstring</dataType>
                                 <semantics>REQUIRED. 1-156 chars of six-bit text.</semantics>
                             </parameter>
@@ -473,7 +473,7 @@ This is a point-to-point text message. The payload is interpreted as six-bit tex
  
 This is a broadcast text message. The payload is interpreted as six-bit text.</semantics>
                             <parameter>
-                                <name>message</name>
+                                <name>Message</name>
                                 <dataType>HLAASCIIstring</dataType>
                                 <semantics>REQUIRED. 1-161 chars of six-bit text.</semantics>
                             </parameter>
@@ -487,8 +487,8 @@ This is a broadcast text message. The payload is interpreted as six-bit text.</s
  
 This message type is used to broadcast differential corrections for GPS.</semantics>
                             <parameter>
-                                <name>position</name>
-                                <dataType>AisPosition</dataType>
+                                <name>Position</name>
+                                <dataType>GeodeticLocation</dataType>
                                 <semantics>OPTIONAL (Default: not available). Position data.</semantics>
                             </parameter>
                         </interactionClass>
@@ -501,28 +501,28 @@ This message type is used to broadcast differential corrections for GPS.</semant
  
 A less detailed report than message types 1-3 for vessels using Class B transmitters. Omits navigational status and rate of turn.</semantics>
                             <parameter>
-                                <name>speedOverGround</name>
-                                <dataType>SpeedOverGround</dataType>
+                                <name>SpeedOverGround</name>
+                                <dataType>VelocityMeterPerSecondFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Speed over ground.</semantics>
                             </parameter>
                             <parameter>
-                                <name>position</name>
-                                <dataType>AisPosition</dataType>
+                                <name>Position</name>
+                                <dataType>GeodeticLocation</dataType>
                                 <semantics>OPTIONAL (Default: not available). AIS (Lat,Lon) position.</semantics>
                             </parameter>
                             <parameter>
-                                <name>courseOverGround</name>
-                                <dataType>CourseOverGround</dataType>
+                                <name>CourseOverGround</name>
+                                <dataType>DirectionDegreesFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Course over ground.</semantics>
                             </parameter>
                             <parameter>
-                                <name>trueHeading</name>
-                                <dataType>TrueHeading</dataType>
+                                <name>TrueHeading</name>
+                                <dataType>DirectionDegreesFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). True heading.</semantics>
                             </parameter>
                             <parameter>
-                                <name>utcTime</name>
-                                <dataType>UTCTime</dataType>
+                                <name>UTCtime</name>
+                                <dataType>EpochTimeSecInt64</dataType>
                                 <semantics>OPTIONAL (Default: not available). Time of the report.</semantics>
                             </parameter>
                         </interactionClass>
@@ -535,52 +535,52 @@ A less detailed report than message types 1-3 for vessels using Class B transmit
  
 Identification and location message to be emitted by aids to navigation such as buoys and lighthouses.</semantics>
                             <parameter>
-                                <name>aidType</name>
+                                <name>AidType</name>
                                 <dataType>AidTypeEnum</dataType>
                                 <semantics>OPTIONAL (Default: not specified). Type of aid.</semantics>
                             </parameter>
                             <parameter>
-                                <name>name</name>
+                                <name>Name</name>
                                 <dataType>HLAASCIIstring</dataType>
                                 <semantics>OPTIONAL (Default: 34 six-bit @ charachters). Up to max 34 six-bit charachters for the name of the aid.</semantics>
                             </parameter>
                             <parameter>
-                                <name>position</name>
-                                <dataType>AisPosition</dataType>
+                                <name>Position</name>
+                                <dataType>GeodeticLocation</dataType>
                                 <semantics>OPTIONAL (Default: not available). AIS (Lat,Lon) position.</semantics>
                             </parameter>
                             <parameter>
-                                <name>dimBow</name>
-                                <dataType>Dimension</dataType>
+                                <name>DimensionBow</name>
+                                <dataType>LengthMeterFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Distance from bow.</semantics>
                             </parameter>
                             <parameter>
-                                <name>dimStern</name>
-                                <dataType>Dimension</dataType>
+                                <name>DimensionStern</name>
+                                <dataType>LengthMeterFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Distance from stern.</semantics>
                             </parameter>
                             <parameter>
-                                <name>dimPort</name>
-                                <dataType>Dimension</dataType>
+                                <name>DimensionPort</name>
+                                <dataType>LengthMeterFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Distance from port.</semantics>
                             </parameter>
                             <parameter>
-                                <name>dimStarboard</name>
-                                <dataType>Dimension</dataType>
+                                <name>DimensionStarboard</name>
+                                <dataType>LengthMeterFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Distance from starboard.</semantics>
                             </parameter>
                             <parameter>
-                                <name>utcTime</name>
-                                <dataType>UTCTime</dataType>
+                                <name>UTCtime</name>
+                                <dataType>EpochTimeSecInt64</dataType>
                                 <semantics>OPTIONAL (Default: not available). Time of the report.</semantics>
                             </parameter>
                             <parameter>
-                                <name>offPositionFlag</name>
+                                <name>OffPositionFlag</name>
                                 <dataType>HLAboolean</dataType>
                                 <semantics>OPTIONAL (Default: false). Off-Position Indicator. The Off-Position Indicator is for floating Aids-to-Navigation only: false means on position; true means off position. Only valid if UTCsecond is available.</semantics>
                             </parameter>
                             <parameter>
-                                <name>virtualFlag</name>
+                                <name>VirtualFlag</name>
                                 <dataType>HLAboolean</dataType>
                                 <semantics>OPTIONAL (Default: false). Virtual-aid flag. The Virtual Aid flag is interpreted as follows: false = real Aid to Navigation at indicated position; true = virtual Aid to Navigation simulated by nearby AIS station.</semantics>
                             </parameter>
@@ -594,23 +594,23 @@ Identification and location message to be emitted by aids to navigation such as 
  
 This message type is primarily intended for long-range detection of AIS Class A equipped vessels (typically by satellite). This message has a similar content to Messages 1, 2 and 3, but the total number of bits has been compressed to allow for increased propagation delays associated with long-range detection.</semantics>
                             <parameter>
-                                <name>navigationStatus</name>
+                                <name>NavigationStatus</name>
                                 <dataType>NavigationStatusEnum</dataType>
                                 <semantics>OPTIONAL (Default: not defined). Navigational status.</semantics>
                             </parameter>
                             <parameter>
-                                <name>position</name>
-                                <dataType>AisPosition</dataType>
+                                <name>Position</name>
+                                <dataType>GeodeticLocation</dataType>
                                 <semantics>OPTIONAL (Default: not available). AIS (Lat,Lon) position.</semantics>
                             </parameter>
                             <parameter>
-                                <name>speedOverGround</name>
-                                <dataType>SpeedOverGround</dataType>
+                                <name>SpeedOverGround</name>
+                                <dataType>VelocityMeterPerSecondFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Speed over ground.</semantics>
                             </parameter>
                             <parameter>
-                                <name>courseOverGround</name>
-                                <dataType>CourseOverGround</dataType>
+                                <name>CourseOverGround</name>
+                                <dataType>DirectionDegreesFloat32</dataType>
                                 <semantics>OPTIONAL (Default: not available). Course over ground.</semantics>
                             </parameter>
                         </interactionClass>
@@ -643,66 +643,7 @@ This message type is primarily intended for long-range detection of AIS Class A 
                 <semantics>The MMSI number (Maritime Mobile Service Identity) is a unique nine-digit number for identifying a vessel. An MMSI number has the format MIDXXXXXX. The first three digits are called MID (Maritime Identification Digits) and represent the nationality. The last six digits are used for the unique identification of the vessel.</semantics>
             </simpleData>
             <simpleData>
-                <name>RateOfTurn</name>
-                <representation>HLAfloat64BE</representation>
-                <units>degrees/second</units>
-                <resolution>NA</resolution>
-                <accuracy>NA</accuracy>
-                <semantics>The turn rate in degrees per second. 
-- zero value: not turning; 
-- positive value: turning right; 
-- negative value: turning left.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>SpeedOverGround</name>
-                <representation>HLAfloat64BE</representation>
-                <units>m/s</units>
-                <resolution>NA</resolution>
-                <accuracy>NA</accuracy>
-                <semantics>Speed over ground in meters/second.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>CourseOverGround</name>
-                <representation>HLAfloat64BE</representation>
-                <units>degrees</units>
-                <resolution>NA</resolution>
-                <accuracy>NA</accuracy>
-                <semantics>Course over ground in degrees relative to the true north.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>TrueHeading</name>
-                <representation>HLAfloat64BE</representation>
-                <units>degrees</units>
-                <resolution>NA</resolution>
-                <accuracy>NA</accuracy>
-                <semantics>The true heading is [0, 360) degrees.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>ShipType</name>
-                <representation>HLAinteger32BE</representation>
-                <units>NA</units>
-                <resolution>NA</resolution>
-                <accuracy>8 bits</accuracy>
-                <semantics>Type of ship and cargo type. Not applicable to SAR aircraft.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>IMO</name>
-                <representation>HLAinteger32BE</representation>
-                <units>NA</units>
-                <resolution>NA</resolution>
-                <accuracy>30 bits</accuracy>
-                <semantics>IMO ship ID number. Not applicable to SAR aircraft.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>Draught</name>
-                <representation>HLAfloat64BE</representation>
-                <units>meters</units>
-                <resolution>NA</resolution>
-                <accuracy>NA</accuracy>
-                <semantics>The maximum present static draught in meters. Not applicable to SAR aircraft, should be set to 0.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>PartNumber</name>
+                <name>PartNumberCode</name>
                 <representation>HLAinteger32BE</representation>
                 <units>NA</units>
                 <resolution>NA</resolution>
@@ -720,7 +661,7 @@ Bit 1 - Part B.</semantics>
                 <semantics>(Part B) Unit Model Code.</semantics>
             </simpleData>
             <simpleData>
-                <name>SerialNumber</name>
+                <name>SerialNumberCode</name>
                 <representation>HLAinteger32BE</representation>
                 <units>NA</units>
                 <resolution>NA</resolution>
@@ -736,52 +677,12 @@ Bit 1 - Part B.</semantics>
                 <semantics>Designated area code (DAC).</semantics>
             </simpleData>
             <simpleData>
-                <name>FunctionID</name>
+                <name>FunctionId</name>
                 <representation>HLAinteger32BE</representation>
                 <units>NA</units>
                 <resolution>NA</resolution>
                 <accuracy>6 bits</accuracy>
                 <semantics>Functional ID (FID).</semantics>
-            </simpleData>
-            <simpleData>
-                <name>Altitude</name>
-                <representation>HLAfloat64BE</representation>
-                <units>meters</units>
-                <resolution>NA</resolution>
-                <accuracy>NA</accuracy>
-                <semantics>Altitude of SAR aircraft.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>Latitude</name>
-                <representation>HLAfloat64BE</representation>
-                <units>degrees</units>
-                <resolution>NA</resolution>
-                <accuracy>NA</accuracy>
-                <semantics>Latitude in degrees. Values up to plus or minus 90 degrees, North = positive, South = negative.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>Longitude</name>
-                <representation>HLAfloat64BE</representation>
-                <units>degrees</units>
-                <resolution>NA</resolution>
-                <accuracy>NA</accuracy>
-                <semantics>Longitude in degrees (-180,+180). Values up to plus or minus 180 degrees, East = positive, West = negative. A value of 181 degrees indicates that longitude is not available and is the default.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>UTCTime</name>
-                <representation>HLAinteger64BE</representation>
-                <units>seconds</units>
-                <resolution>NA</resolution>
-                <accuracy>NA</accuracy>
-                <semantics>Number of seconds since 1 Jan 1970 (wallclock time) or since the start of the simulation (logical time).</semantics>
-            </simpleData>
-            <simpleData>
-                <name>Dimension</name>
-                <representation>HLAinteger16BE</representation>
-                <units>meters</units>
-                <resolution>NA</resolution>
-                <accuracy>NA</accuracy>
-                <semantics>Defines the dimension.</semantics>
             </simpleData>
         </simpleDataTypes>
         <enumeratedDataTypes>
@@ -1011,23 +912,7 @@ Bit 1 - Part B.</semantics>
                 <semantics>Binary data.</semantics>
             </arrayData>
         </arrayDataTypes>
-        <fixedRecordDataTypes>
-            <fixedRecordData>
-                <name>AisPosition</name>
-                <encoding>HLAfixedRecord</encoding>
-                <semantics>Lat-Lon position.</semantics>
-                <field>
-                    <name>latitude</name>
-                    <dataType>Latitude</dataType>
-                    <semantics>Latitude.</semantics>
-                </field>
-                <field>
-                    <name>longitude</name>
-                    <dataType>Longitude</dataType>
-                    <semantics>Longitude.</semantics>
-                </field>
-            </fixedRecordData>
-        </fixedRecordDataTypes>
+        <fixedRecordDataTypes/>
         <variantRecordDataTypes/>
     </dataTypes>
     <notes/>
