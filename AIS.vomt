@@ -53,9 +53,6 @@
       <void method="add">
        <int>0</int>
       </void>
-      <void method="add">
-       <int>2</int>
-      </void>
      </object>
      <boolean>false</boolean>
      <boolean>false</boolean>
@@ -63,55 +60,6 @@
       <int>177</int>
       <int>221</int>
       <int>250</int>
-      <int>255</int>
-     </object>
-    </object>
-   </void>
-   <void method="add">
-    <object class="se.pitch.vomt2.model.PersistentProjectHelper$PersistentModule" id="PersistentProjectHelper$PersistentModule2">
-     <string>RPR_FOM_v2.0_1516-2010</string>
-     <string>C:\Users\bergtwvd\workspace\GitLabDVProjects\simhub\components\oorti\oorti\beanconfig\foms\RPR_FOM_v2.0_1516-2010.xml</string>
-     <boolean>false</boolean>
-     <boolean>false</boolean>
-     <boolean>true</boolean>
-     <boolean>true</boolean>
-     <object class="java.util.ArrayList">
-      <void method="add">
-       <int>0</int>
-      </void>
-     </object>
-     <boolean>false</boolean>
-     <boolean>false</boolean>
-     <object class="java.awt.Color">
-      <int>255</int>
-      <int>255</int>
-      <int>179</int>
-      <int>255</int>
-     </object>
-    </object>
-   </void>
-   <void method="add">
-    <object class="se.pitch.vomt2.model.PersistentProjectHelper$PersistentModule">
-     <string>NETN-Physical</string>
-     <string>C:\Users\bergtwvd\workspace\GitHubProjects\AMSP-04\NETN-Physical\NETN-Physical.xml</string>
-     <boolean>false</boolean>
-     <boolean>false</boolean>
-     <boolean>true</boolean>
-     <boolean>true</boolean>
-     <object class="java.util.ArrayList">
-      <void method="add">
-       <int>0</int>
-      </void>
-      <void method="add">
-       <int>2</int>
-      </void>
-     </object>
-     <boolean>false</boolean>
-     <boolean>false</boolean>
-     <object class="java.awt.Color">
-      <int>204</int>
-      <int>235</int>
-      <int>197</int>
       <int>255</int>
      </object>
     </object>
@@ -132,8 +80,8 @@
      <object idref="PersistentProjectHelper$PersistentModule1"/>
      <int>0</int>
      <int>0</int>
-     <int>1715</int>
-     <int>694</int>
+     <int>1318</int>
+     <int>515</int>
      <object class="java.util.Collections" method="emptySet"/>
      <object class="java.util.LinkedHashSet"/>
     </object>
@@ -142,9 +90,6 @@
   <object class="java.util.LinkedHashSet">
    <void method="add">
     <object idref="PersistentProjectHelper$PersistentModule0"/>
-   </void>
-   <void method="add">
-    <object idref="PersistentProjectHelper$PersistentModule2"/>
    </void>
   </object>
   <boolean>false</boolean>
