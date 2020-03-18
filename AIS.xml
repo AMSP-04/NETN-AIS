@@ -454,7 +454,7 @@ Request for UTC/Date information from an AIS base station.</semantics>
  
 This is a point-to-point text message. The payload is interpreted as six-bit text.</semantics>
                             <parameter>
-                                <name>destination</name>
+                                <name>Destination</name>
                                 <dataType>MMSI</dataType>
                                 <semantics>REQUIRED. Destination MMSI.</semantics>
                             </parameter>
