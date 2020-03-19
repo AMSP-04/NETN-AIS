@@ -45,19 +45,19 @@ For example, to transmit a **Position Report Class A** message only the followin
 
 | Parameter name | Semantics                                               |
 | -------------- | ------------------------------------------------------- |
-| `messageId`    | Message type identifier.                                |
-| `mmsi`         | The message is from the vessel identified by this MMSI. |
+| `MessageId`    | Message type identifier.                                |
+| `UserId`       | The message is from the vessel identified by this MMSI. |
 
 All other parameters are optional. However, to include a minimum amount of navigation data in the message and make the message useful, the following parameters should also be provided:
 
-| Parameter name | Semantics                                                    |
-| -------------- | ------------------------------------------------------------ |
-| `position`     | OPTIONAL (Default: not available). AIS (Lat,Lon) position.   |
-| `utcTime`      | OPTIONAL (Default: not available). Time of the report. The value is only valid if the `positionSystemStatus` is set to `NormalMode`. |
+| Parameter name | Semantics                                                  |
+| -------------- | ---------------------------------------------------------- |
+| `Position`     | OPTIONAL (Default: not available). AIS (Lat,Lon) position. |
+| `UTCtime`      | OPTIONAL (Default: not available). Time of the report.     |
 
-The `positionSystemStatus` parameter is also optional with default `NormalMode`, so `utcTime` is by default valid. Other parameters include true heading, course, rate of turn, etc. These are all optional, but can be provided when available.
+Other parameters include true heading, course, rate of turn, etc. These are all optional, but can be provided when available.
 
-Note that the AIS position in the NETN-AIS FOM module is defined using an `HLAfloat64BE` representation. This is different from ITU-R M.1371-5, where Longitude and Latitude are defined in 1/10 000 min and stored in a 28 and 27 bit field respectively. The purpose of this FOM module is to not bother the user with the message format in ITU-R M.1371-5, but rather let the user focus on the information that is exchanged in the simulation. The message format defined in ITU-R M.1371-5 is not a concern of this FOM module, however the class and parameter structure is such that the mapping between the NETN-AIS FOM and ITU-R M.1371-5 is straightforward.
+Note that the AIS position in the NETN-AIS FOM module is defined as a `GeodeticLocation` datatype. This is different from ITU-R M.1371-5, where Longitude and Latitude are defined in 1/10 000 min and stored in a 28 and 27 bit field respectively. The purpose of this FOM module is to not bother the user with the message format in ITU-R M.1371-5, but rather let the user focus on the information that is exchanged in the simulation. The physical message format is not a concern of this FOM module, however the class and parameter structure is such that the mapping between the NETN-AIS FOM and ITU-R M.1371-5 is straightforward.
 
 ## Six-bit ASCII character string datatype
 
@@ -82,14 +82,15 @@ Several parameters in the FOM module are typed as six-bit character strings. For
 | 001110 | 14   | "N"  | 011110 | 30   | "\^" | 101110 | 46   | "."  | 111110 | 62   | ">"  |
 | 001111 | 15   | "O"  | 011111 | 31   | "\_" | 101111 | 47   | "/"  | 111111 | 63   | "?"  |
 
-## UTCTime datatype
+## EpochTimeSecInt64 datatype
 
-The UTC time value in AIS message types is:
+Time in AIS messages is represented as `EpochTimeSecInt64`. This value represents the number of seconds since the Epoch. The Epoch is:
 
-- the number of wall clock seconds since 1 Jan 1970 (when using `wall clock time` ) or
-- the number of logical seconds since the start of the simulation when time is equal to zero (when using `logical time`).
+- 1 Jan 1970 (when using `wall clock time` ) or
 
-In most cases UTC time is in relation to an AIS position update.
+- the value `0` (when using `logical time`).
+
+In most messages time is in relation to an AIS position update.
 
 ## RadioTransmitter
 
@@ -97,8 +98,8 @@ Optionally an AIS Radio Signal can be associated with a `RadioTransmitter` objec
 
 | Attribute name                 | Description                                                  | Value                                                        |
 | ------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `Frequency`                    | Center frequency of the radio transmissions.                 | `162000000000` Hz (162 MHz)                                  |
-| `FrequencyBandwidth`           | Bandpass of the radio transmissions, specified in hertz.     | `25000` Hz                                                   |
+| `Frequency`                    | Center frequency of the radio transmissions.                 |  Channel A `161.975 MHz` (87B), or Channel B `162.025 MHz` (88B)  |
+| `FrequencyBandwidth`           | Bandpass of the radio transmissions, specified in hertz.     | `25` kHz                                                     |
 | `RadioIndex`                   | Specifies the identification number for each radio on a given host. This value shall not change during a simulation execution. | Per agreement. If the `RadioTransmitter` is the only radio for the vessel, the index `0` should be used. |
 | `RadioSystemType`              | Entity type of the radio transmitter: Kind, Domain, Country, Category, Subcategory, Specific, Extra. This value shall not change during a simulation execution. | `7.3.0.37.0.0.0`                                             |
 | `TransmittedPower`             | The average power being transmitted in units of decibel-milliwatts. | `12500` Milliwatts for class A, or `2000` Milliwatts for class B |
