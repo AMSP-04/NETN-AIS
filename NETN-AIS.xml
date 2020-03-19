@@ -54,12 +54,12 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                         <semantics>Super class for all AIS message types.</semantics>
                         <parameter>
                             <name>MessageId</name>
-                            <dataType>MsgIdEnum</dataType>
+                            <dataType>MsgIdEnumType</dataType>
                             <semantics>REQUIRED. Message type identifier.</semantics>
                         </parameter>
                         <parameter>
                             <name>UserId</name>
-                            <dataType>MMSI</dataType>
+                            <dataType>MMSIType</dataType>
                             <semantics>REQUIRED. The message is from the vessel identified by this MMSI.</semantics>
                         </parameter>
                         <interactionClass>
@@ -70,7 +70,7 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                             <semantics>Message Types 1, 2 and 3 share a common reporting structure for navigational data, captured in this class.</semantics>
                             <parameter>
                                 <name>NavigationalStatus</name>
-                                <dataType>NavigationStatusEnum</dataType>
+                                <dataType>NavigationStatusEnumType</dataType>
                                 <semantics>OPTIONAL (Default: not defined). Navigational status.</semantics>
                             </parameter>
                             <parameter>
@@ -105,7 +105,7 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                             </parameter>
                             <parameter>
                                 <name>SpecialManeuverIndicator</name>
-                                <dataType>ManeuverIndicatorEnum</dataType>
+                                <dataType>ManeuverIndicatorEnumType</dataType>
                                 <semantics>OPTIONAL (Default: not available). Maneuver indication.</semantics>
                             </parameter>
                             <interactionClass>
@@ -189,7 +189,7 @@ Identical to Message Type 4, with the semantics of a response to inquiry. This m
                             </parameter>
                             <parameter>
                                 <name>ShipType</name>
-                                <dataType>ShipTypeCode</dataType>
+                                <dataType>ShipTypeType</dataType>
                                 <semantics>OPTIONAL (Default: not available). Ship type.</semantics>
                             </parameter>
                             <parameter>
@@ -222,7 +222,7 @@ Identical to Message Type 4, with the semantics of a response to inquiry. This m
 This message type is transmitted every 6 minutes and should only be used by Class A shipborne and SAR aircraft AIS stations when reporting static or voyage related data.</semantics>
                                 <parameter>
                                     <name>IMO</name>
-                                    <dataType>IMOcode</dataType>
+                                    <dataType>IMOType</dataType>
                                     <semantics>OPTIONAL (Default: zero). The IMO ship ID number. Not applicable to SAR aircraft.</semantics>
                                 </parameter>
                                 <parameter>
@@ -285,23 +285,23 @@ A slightly more detailed report than Message Type 18 for vessels using Class B t
 Equivalent of Message Type 5 for ships using Class B equipment. Also used to associate an MMSI with a name on either class A or class B equipment. This message type may be in part A or part B format. According to the standard, parts A and B are expected to be broadcast in adjacent pairs.</semantics>
                                 <parameter>
                                     <name>PartNumber</name>
-                                    <dataType>PartNumberCode</dataType>
+                                    <dataType>PartNumberEnumType</dataType>
                                     <semantics>REQUIRED. Part number.</semantics>
                                 </parameter>
                                 <parameter>
-                                    <name>VendorId</name>
-                                    <dataType>HLAASCIIchar</dataType>
+                                    <name>ManufacturerId</name>
+                                    <dataType>ManufacturerIdType</dataType>
                                     <semantics>REQUIRED. (Part B) 3 six-bit chars.</semantics>
                                 </parameter>
                                 <parameter>
                                     <name>UnitModel</name>
-                                    <dataType>UnitModelCode</dataType>
+                                    <dataType>UnitModelType</dataType>
                                     <semantics>REQUIRED. (Part B) Unit Model Code.</semantics>
                                 </parameter>
                                 <parameter>
                                     <name>SerialNumber</name>
-                                    <dataType>SerialNumberCode</dataType>
-                                    <semantics>REQUIRED. Serial Number.</semantics>
+                                    <dataType>SerialNumberType</dataType>
+                                    <semantics>REQUIRED. (Part B) Serial Number.</semantics>
                                 </parameter>
                             </interactionClass>
                         </interactionClass>
@@ -314,18 +314,18 @@ Equivalent of Message Type 5 for ships using Class B equipment. Also used to ass
 - The Designated Area Code (DAC), which is a jurisdiction code: 366 for the United States. It uses the same encoding as the area designator in MMMSIs; see [ITU-MID]. 1 designates international (ITU) messages. 
 - The FID, which is the Functional ID for a message subtype. In some sources this is abbreviated FI.</semantics>
                             <parameter>
-                                <name>DesignatedArea</name>
-                                <dataType>DesignatedAreaCode</dataType>
+                                <name>DesignatedAreaCode</name>
+                                <dataType>DesignatedAreaCodeType</dataType>
                                 <semantics>REQUIRED. Designated area code (DAC).</semantics>
                             </parameter>
                             <parameter>
-                                <name>Function</name>
-                                <dataType>FunctionId</dataType>
+                                <name>FunctionId</name>
+                                <dataType>FunctionIdType</dataType>
                                 <semantics>REQUIRED. Functional ID (FID).</semantics>
                             </parameter>
                             <parameter>
                                 <name>Data</name>
-                                <dataType>BinArray</dataType>
+                                <dataType>BinArrayType</dataType>
                                 <semantics>REQUIRED. Binary data up to 920 bits.</semantics>
                             </parameter>
                             <interactionClass>
@@ -338,7 +338,7 @@ Equivalent of Message Type 5 for ships using Class B equipment. Also used to ass
 This message type is an addressed point-to-point message with a binary payload.</semantics>
                                 <parameter>
                                     <name>Destination</name>
-                                    <dataType>MMSI</dataType>
+                                    <dataType>MMSIType</dataType>
                                     <semantics>REQUIRED. Destination MMSI.</semantics>
                                 </parameter>
                             </interactionClass>
@@ -360,22 +360,22 @@ This message type is a broadcast message with a binary payload.</semantics>
                             <semantics>Acknowledge data for Message Types 7 and 13.</semantics>
                             <parameter>
                                 <name>Destination1</name>
-                                <dataType>MMSI</dataType>
+                                <dataType>MMSIType</dataType>
                                 <semantics>REQUIRED. MMSI number 1.</semantics>
                             </parameter>
                             <parameter>
                                 <name>Destination2</name>
-                                <dataType>MMSI</dataType>
+                                <dataType>MMSIType</dataType>
                                 <semantics>OPTIONAL (Default: not available). MMSI number 2.</semantics>
                             </parameter>
                             <parameter>
                                 <name>Destination3</name>
-                                <dataType>MMSI</dataType>
+                                <dataType>MMSIType</dataType>
                                 <semantics>OPTIONAL (Default: not available). MMSI number 3.</semantics>
                             </parameter>
                             <parameter>
                                 <name>Destination4</name>
-                                <dataType>MMSI</dataType>
+                                <dataType>MMSIType</dataType>
                                 <semantics>OPTIONAL (Default: not available). MMSI number 4.</semantics>
                             </parameter>
                             <interactionClass>
@@ -441,7 +441,7 @@ Tracking information for search-and-rescue aircraft.</semantics>
 Request for UTC/Date information from an AIS base station.</semantics>
                             <parameter>
                                 <name>Destination</name>
-                                <dataType>MMSI</dataType>
+                                <dataType>MMSIType</dataType>
                                 <semantics>REQUIRED. Destination MMSI.</semantics>
                             </parameter>
                         </interactionClass>
@@ -455,7 +455,7 @@ Request for UTC/Date information from an AIS base station.</semantics>
 This is a point-to-point text message. The payload is interpreted as six-bit text.</semantics>
                             <parameter>
                                 <name>Destination</name>
-                                <dataType>MMSI</dataType>
+                                <dataType>MMSIType</dataType>
                                 <semantics>REQUIRED. Destination MMSI.</semantics>
                             </parameter>
                             <parameter>
@@ -536,7 +536,7 @@ A less detailed report than message types 1-3 for vessels using Class B transmit
 Identification and location message to be emitted by aids to navigation such as buoys and lighthouses.</semantics>
                             <parameter>
                                 <name>AidType</name>
-                                <dataType>AidTypeEnum</dataType>
+                                <dataType>AidTypeEnumType</dataType>
                                 <semantics>OPTIONAL (Default: not specified). Type of aid.</semantics>
                             </parameter>
                             <parameter>
@@ -595,7 +595,7 @@ Identification and location message to be emitted by aids to navigation such as 
 This message type is primarily intended for long-range detection of AIS Class A equipped vessels (typically by satellite). This message has a similar content to Messages 1, 2 and 3, but the total number of bits has been compressed to allow for increased propagation delays associated with long-range detection.</semantics>
                             <parameter>
                                 <name>NavigationStatus</name>
-                                <dataType>NavigationStatusEnum</dataType>
+                                <dataType>NavigationStatusEnumType</dataType>
                                 <semantics>OPTIONAL (Default: not defined). Navigational status.</semantics>
                             </parameter>
                             <parameter>
@@ -635,7 +635,7 @@ This message type is primarily intended for long-range detection of AIS Class A 
     <dataTypes>
         <simpleDataTypes>
             <simpleData>
-                <name>MMSI</name>
+                <name>MMSIType</name>
                 <representation>HLAinteger32BE</representation>
                 <units>NA</units>
                 <resolution>NA</resolution>
@@ -643,25 +643,15 @@ This message type is primarily intended for long-range detection of AIS Class A 
                 <semantics>The MMSI number (Maritime Mobile Service Identity) is a unique nine-digit number for identifying a vessel. An MMSI number has the format MIDXXXXXX. The first three digits are called MID (Maritime Identification Digits) and represent the nationality. The last six digits are used for the unique identification of the vessel.</semantics>
             </simpleData>
             <simpleData>
-                <name>PartNumberCode</name>
-                <representation>HLAinteger32BE</representation>
-                <units>NA</units>
-                <resolution>NA</resolution>
-                <accuracy>2 bits</accuracy>
-                <semantics>Part number: 
-Bit 0 - Part A. 
-Bit 1 - Part B.</semantics>
-            </simpleData>
-            <simpleData>
-                <name>UnitModelCode</name>
-                <representation>HLAinteger32BE</representation>
+                <name>UnitModelType</name>
+                <representation>HLAoctet</representation>
                 <units>NA</units>
                 <resolution>NA</resolution>
                 <accuracy>4 bits</accuracy>
                 <semantics>(Part B) Unit Model Code.</semantics>
             </simpleData>
             <simpleData>
-                <name>SerialNumberCode</name>
+                <name>SerialNumberType</name>
                 <representation>HLAinteger32BE</representation>
                 <units>NA</units>
                 <resolution>NA</resolution>
@@ -669,7 +659,7 @@ Bit 1 - Part B.</semantics>
                 <semantics>(Part B) Serial Number.</semantics>
             </simpleData>
             <simpleData>
-                <name>DesignatedAreaCode</name>
+                <name>DesignatedAreaCodeType</name>
                 <representation>HLAinteger32BE</representation>
                 <units>NA</units>
                 <resolution>NA</resolution>
@@ -677,7 +667,7 @@ Bit 1 - Part B.</semantics>
                 <semantics>Designated area code (DAC).</semantics>
             </simpleData>
             <simpleData>
-                <name>FunctionId</name>
+                <name>FunctionIdType</name>
                 <representation>HLAinteger32BE</representation>
                 <units>NA</units>
                 <resolution>NA</resolution>
@@ -687,8 +677,8 @@ Bit 1 - Part B.</semantics>
         </simpleDataTypes>
         <enumeratedDataTypes>
             <enumeratedData>
-                <name>MsgIdEnum</name>
-                <representation>HLAinteger32BE</representation>
+                <name>MsgIdEnumType</name>
+                <representation>HLAoctet</representation>
                 <semantics>Enumeration value for the message type.</semantics>
                 <enumerator>
                     <name>MSG1</name>
@@ -764,101 +754,101 @@ Bit 1 - Part B.</semantics>
                 </enumerator>
             </enumeratedData>
             <enumeratedData>
-                <name>NavigationStatusEnum</name>
-                <representation>HLAinteger32BE</representation>
+                <name>NavigationStatusEnumType</name>
+                <representation>HLAoctet</representation>
                 <semantics>Enumeration value to indicate the navigational status.</semantics>
                 <enumerator>
-                    <name>Under_way_using_engine</name>
+                    <name>UNDER_WAY_USING_ENGINE</name>
                     <value>0</value>
                 </enumerator>
                 <enumerator>
-                    <name>At_anchor</name>
+                    <name>AT_ANCHOR</name>
                     <value>1</value>
                 </enumerator>
                 <enumerator>
-                    <name>Not_under_command</name>
+                    <name>NOT_UNDER_COMMAND</name>
                     <value>2</value>
                 </enumerator>
                 <enumerator>
-                    <name>Restricted_manoeuverability</name>
+                    <name>RESTRICTED_MANOEUVERABILITY</name>
                     <value>3</value>
                 </enumerator>
                 <enumerator>
-                    <name>Constrained_by_her_draught</name>
+                    <name>CONSTRAINED_BY_HER_DRAUGHT</name>
                     <value>4</value>
                 </enumerator>
                 <enumerator>
-                    <name>Moored</name>
+                    <name>MOORED</name>
                     <value>5</value>
                 </enumerator>
                 <enumerator>
-                    <name>Aground</name>
+                    <name>AGROUND</name>
                     <value>6</value>
                 </enumerator>
                 <enumerator>
-                    <name>Engaged_in_Fishing</name>
+                    <name>ENGAGED_IN_FISHING</name>
                     <value>7</value>
                 </enumerator>
                 <enumerator>
-                    <name>Under_way_sailing</name>
+                    <name>UNDER_WAY_SAILING</name>
                     <value>8</value>
                 </enumerator>
                 <enumerator>
-                    <name>Reserved1</name>
+                    <name>RESERVED1</name>
                     <value>9</value>
                 </enumerator>
                 <enumerator>
-                    <name>Reserved2</name>
+                    <name>RESERVED2</name>
                     <value>10</value>
                 </enumerator>
                 <enumerator>
-                    <name>Reserved3</name>
+                    <name>RESERVED3</name>
                     <value>11</value>
                 </enumerator>
                 <enumerator>
-                    <name>Reserved4</name>
+                    <name>RESERVED4</name>
                     <value>12</value>
                 </enumerator>
                 <enumerator>
-                    <name>Reserved5</name>
+                    <name>RESERVED5</name>
                     <value>13</value>
                 </enumerator>
                 <enumerator>
-                    <name>AIS_SART_is_active</name>
+                    <name>AIS_SART_IS_ACTIVE</name>
                     <value>14</value>
                 </enumerator>
                 <enumerator>
-                    <name>Not_Defined</name>
+                    <name>NOT_DEFINED</name>
                     <value>15</value>
                 </enumerator>
             </enumeratedData>
             <enumeratedData>
-                <name>ManeuverIndicatorEnum</name>
-                <representation>HLAinteger32BE</representation>
+                <name>ManeuverIndicatorEnumType</name>
+                <representation>HLAoctet</representation>
                 <semantics>Enumeration value to indicate a maneuver.</semantics>
                 <enumerator>
-                    <name>Not_available</name>
+                    <name>NOT_AVAILABLE</name>
                     <value>0</value>
                 </enumerator>
                 <enumerator>
-                    <name>No_special_maneuver</name>
+                    <name>NO_SPACIAL_MANEUVER</name>
                     <value>1</value>
                 </enumerator>
                 <enumerator>
-                    <name>Special_maneuver</name>
+                    <name>SPECIAL_MANEUVER</name>
                     <value>2</value>
                 </enumerator>
             </enumeratedData>
             <enumeratedData>
-                <name>AidTypeEnum</name>
-                <representation>HLAinteger32BE</representation>
+                <name>AidTypeEnumType</name>
+                <representation>HLAoctet</representation>
                 <semantics>Enumeration value for the aid type. According to [IALA], the aid type field has values 1-15 for fixed and 16-31 for floating aids to navigation.</semantics>
                 <enumerator>
-                    <name>Not_specified</name>
+                    <name>NOT_SPECIFIED</name>
                     <value>0</value>
                 </enumerator>
                 <enumerator>
-                    <name>Reference_point</name>
+                    <name>REFERENCE_POINT</name>
                     <value>1</value>
                 </enumerator>
                 <enumerator>
@@ -866,50 +856,86 @@ Bit 1 - Part B.</semantics>
                     <value>2</value>
                 </enumerator>
                 <enumerator>
-                    <name>Fixed_structure_off_shore</name>
+                    <name>FIXED_STRUCTURE_OFF_SHORE</name>
                     <value>3</value>
                 </enumerator>
                 <enumerator>
-                    <name>Spare1</name>
+                    <name>SPARE1</name>
                     <value>4</value>
                 </enumerator>
                 <enumerator>
-                    <name>Light_without_sectors</name>
+                    <name>LIGHT_WITHOUT_SECTORS</name>
                     <value>5</value>
                 </enumerator>
                 <enumerator>
-                    <name>Light_with_sectors</name>
+                    <name>LIGHT_WITH_SECTORS</name>
                     <value>6</value>
                 </enumerator>
                 <enumerator>
-                    <name>Leading_Light_Front</name>
+                    <name>LEADING_LIGHT_FRONT</name>
                     <value>7</value>
                 </enumerator>
                 <enumerator>
-                    <name>Leading_Light_Rear</name>
+                    <name>LEADING_LIGHT_REAR</name>
                     <value>8</value>
                 </enumerator>
                 <enumerator>
-                    <name>Beacon_Cardinal_N</name>
+                    <name>BEACON_CARDINAL_N</name>
                     <value>9</value>
                 </enumerator>
                 <enumerator>
-                    <name>Beacon_Cardinal_E</name>
+                    <name>BEACON_CARDINAL_E</name>
                     <value>10</value>
                 </enumerator>
                 <enumerator>
-                    <name>Light_Vessel</name>
+                    <name>BEACON_CARDINAL_S</name>
+                    <value>11</value>
+                </enumerator>
+                <enumerator>
+                    <name>BEACON_CARDINAL_W</name>
+                    <value>12</value>
+                </enumerator>
+                <enumerator>
+                    <name>BEACON_STARBOARD_HAND</name>
+                    <value>14</value>
+                </enumerator>
+                <enumerator>
+                    <name>BEACON_PREFERRED_CHANNEL_PORT_HAND</name>
+                    <value>15</value>
+                </enumerator>
+                <enumerator>
+                    <name>LIGHT_VESSEL</name>
                     <value>31</value>
+                </enumerator>
+            </enumeratedData>
+            <enumeratedData>
+                <name>PartNumberEnumType</name>
+                <representation>HLAoctet</representation>
+                <semantics>Identifier for the message part number.</semantics>
+                <enumerator>
+                    <name>PARTA</name>
+                    <value>0</value>
+                </enumerator>
+                <enumerator>
+                    <name>PARTB</name>
+                    <value>1</value>
                 </enumerator>
             </enumeratedData>
         </enumeratedDataTypes>
         <arrayDataTypes>
             <arrayData>
-                <name>BinArray</name>
+                <name>BinArrayType</name>
                 <dataType>HLAboolean</dataType>
                 <cardinality>Dynamic</cardinality>
                 <encoding>HLAvariableArray</encoding>
                 <semantics>Binary data.</semantics>
+            </arrayData>
+            <arrayData>
+                <name>ManufacturerIdType</name>
+                <dataType>HLAASCIIchar</dataType>
+                <cardinality>3</cardinality>
+                <encoding>HLAfixedArray</encoding>
+                <semantics>The Manufacturer’s ID bits indicate the manufacture’s mnemonic code consisting of three 6 bit ASCII characters.</semantics>
             </arrayData>
         </arrayDataTypes>
         <fixedRecordDataTypes/>
