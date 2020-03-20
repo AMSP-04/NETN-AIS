@@ -237,7 +237,7 @@ This message type is transmitted every 6 minutes and should only be used by Clas
                                 <parameter>
                                     <name>ETAtime</name>
                                     <dataType>EpochTimeSecInt64</dataType>
-                                    <semantics>OPTIONAL (Default: not available). Time. Not applicable to SAR aircraft.</semantics>
+                                    <semantics>OPTIONAL (Default: not available). Estimated time of arrival. Not applicable to SAR aircraft.</semantics>
                                 </parameter>
                                 <parameter>
                                     <name>Draught</name>

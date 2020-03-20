@@ -75,15 +75,15 @@
      <boolean>true</boolean>
      <object class="java.lang.Enum" method="valueOf">
       <class>se.pitch.vomt2.model.TableType</class>
-      <string>IDENTIFICATION_TABLE</string>
+      <string>INTERACTION_CLASS_TABLE</string>
      </object>
      <object idref="PersistentProjectHelper$PersistentModule1"/>
      <int>0</int>
      <int>0</int>
      <int>1318</int>
      <int>491</int>
-     <object class="java.util.Collections" id="Collections$EmptySet0" method="emptySet"/>
-     <object idref="Collections$EmptySet0"/>
+     <object class="java.util.Collections" method="emptySet"/>
+     <object class="java.util.LinkedHashSet"/>
     </object>
    </void>
   </object>
