@@ -3,8 +3,8 @@
     <modelIdentification>
         <name>NETN AIS</name>
         <type>FOM</type>
-        <version>1.0</version>
-        <modificationDate>2019-11-11</modificationDate>
+        <version>1.0 (Baseline MAR 2020)</version>
+        <modificationDate>2020-03-21</modificationDate>
         <securityClassification>Not Classified</securityClassification>
         <purpose>The purpose of the NETN-AIS FOM module is to:
 		
@@ -23,6 +23,19 @@ The AIS FOM module defines all of the messages types specified in ITU-R M.1371-5
 
 The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteristics for an automatic identification system using time division multiple access in the VHF maritime mobile frequency band (https://www.itu.int).</description>
         <useLimitation>The NETN-AIS FOM module is simulation oriented and does not focus on the physical message format as defined by ITU-R M.1371-5. However, the FOM is aligned well with ITU-R M.1371-5, enabling relatively easy mapping to/from the message format defined in ITU-R M.1371-5.</useLimitation>
+        <useHistory>v1.0.0 - Developed by MSG-163 for NETN-FOM v3.0</useHistory>
+        <poc>
+            <pocType>Release authority</pocType>
+            <pocName>NATO Modelling and Simulation Group</pocName>
+            <pocOrg>NATO Science and Technology Organization</pocOrg>
+            <pocEmail>msg@cso.nato.int</pocEmail>
+        </poc>
+        <poc>
+            <pocType>Primary author</pocType>
+            <pocName>MSG-163 Evolution of NATO Standards for Federated Simulation</pocName>
+            <pocOrg>NATO Modelling and Simulation Group</pocOrg>
+            <pocEmail>msg@cso.nato.int</pocEmail>
+        </poc>
         <poc>
             <pocType>Primary author</pocType>
             <pocName>Tom van den Berg</pocName>
@@ -30,9 +43,10 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
         </poc>
         <reference>
             <type>Dependency</type>
-            <identification>NETN-BASE, RPR</identification>
+            <identification>NETN-BASE</identification>
         </reference>
         <other></other>
+        <glyph type="png" height="64" width="64" alt="">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</glyph>
     </modelIdentification>
     <objects>
         <objectClass>
