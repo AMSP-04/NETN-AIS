@@ -858,7 +858,7 @@ This message type is primarily intended for long-range detection of AIS Class A 
                     <value>0</value>
                 </enumerator>
                 <enumerator>
-                    <name>NO_SPACIAL_MANEUVER</name>
+                    <name>NO_SPECIAL_MANEUVER</name>
                     <value>1</value>
                 </enumerator>
                 <enumerator>

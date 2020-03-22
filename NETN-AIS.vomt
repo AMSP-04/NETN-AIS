@@ -75,7 +75,7 @@
      <boolean>true</boolean>
      <object class="java.lang.Enum" method="valueOf">
       <class>se.pitch.vomt2.model.TableType</class>
-      <string>INTERACTION_CLASS_TABLE</string>
+      <string>ENUMERATED_DATATYPE_TABLE</string>
      </object>
      <object idref="PersistentProjectHelper$PersistentModule1"/>
      <int>0</int>
