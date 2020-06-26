@@ -1,5 +1,7 @@
 # NETN-AIS
 
+NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module
+
 Copyright (C) 2020 NATO/OTAN.
 This work is licensed under a [Creative Commons Attribution-NoDerivatives 4.0 International License](LICENCE.md).
 

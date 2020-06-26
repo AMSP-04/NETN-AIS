@@ -1,5 +1,7 @@
 # NETN-AIS
 
+NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module
+
 ![overview](./images/overview.png)
 
 ## Introduction
