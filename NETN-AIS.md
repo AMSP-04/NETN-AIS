@@ -5,12 +5,34 @@ NATO Education and Training Network (NETN) Automatic Identification System (AIS)
 Copyright (C) 2020 NATO/OTAN.
 This work is licensed under a [Creative Commons Attribution-NoDerivatives 4.0 International License](LICENCE.md).
 
+## Introduction
+
+The Automatic Identification System (AIS) is a world-wide automated  tracking system used on vessels and by Vessel Traffic Services (VTS) for identifying and locating vessels by electronically exchanging messages  with other nearby vessels and VTS stations. 27 message types are defined in ITU-R M.1371-5 annex 8 (see https://www.itu.int). Most commonly used message types are the Position Report Class A  (Message types 1, 2, and 3) and the Static and Voyage Related Data  (Message type 5). And a commonly used live protocol to exchange AIS  messages is NMEA-0183. This is an electrical and data specification for  communication between marine electronics (see https://www.nmea.org).
+
+The AIS FOM module defines all of the messages types specified in  ITU-R M.1371-5 annex 8, with the exception of rarely used message types  or message types that are more related to traffic analysis in an AIS  network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure is closely aligned with the message type specification in ITU-R M.1371-5  annex 8, enabling easy translation to/from NMEA 0183. The message types  are modelled as interaction classes and most of the class parameters are optional. The root class - AisMessage - is integrated in the RPR-FOM by subclassing RadioSignal, using the concept of HostRadioIndex to refer  to the RadioTransmitter object instance on board of the vessel.
+
+The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteristics for an automatic identification system using time  division multiple access in the VHF maritime mobile frequency band (https://www.itu.int).
+
+## Purpose
+
+The purpose of the NETN-AIS FOM module is to:
+
+- represent vessel traffic in a simulation using AIS messages to for example communicate position status reports of vessels;
+- enable the exchange of AIS messages between HLA federate  applications in both a real-time and non real-time platform level  simulation;
+- allow HLA federate applications to use regular HLA interaction  classes and parameters to represent vessel information, and leave the  translation to the physical message format in ITU-R M.1371-5 to for  example dedicated gateways.
+
+The NETN-AIS FOM module defines almost all of the AIS message types,  whose content can be interpreted by applications without extensive  knowledge of the ITU-R M.1371-5 standard and the message format defined  by that standard.
+
+## Scope
+
+The NETN-AIS FOM module is simulation oriented and does not focus on  the physical message format as defined by ITU-R M.1371-5. However, the  FOM is aligned well with ITU-R M.1371-5, enabling relatively easy  mapping to/from the message format defined in ITU-R M.1371-5.
+
 ## Overview
 
 All AIS message types are modelled as HLA Interaction Classes. The following figure shows the class structure, with the following two classes at the root of the structure:
 
-- `AisRadioSignal` is sub-classed from the RPR-FOM 2.0 class `RadioSignal` and represents an AIS radio signal. `AisRadioSignal` optionally includes a reference to a Transmitter object instance.
-- `AisMessage` is sub-classed from `AisRadioSignal` and is the super class for all AIS message types. This class defines the AIS message parameters that are common across all sub-classes.
+- `AIS_RadioSignal` is sub-classed from the RPR-FOM 2.0 class `RadioSignal` and represents an AIS radio signal. `AIS_RadioSignal` optionally includes a reference to a Transmitter object instance.
+- `AisMessage` is sub-classed from `AIS_RadioSignal` and is the super class for all AIS message types. This class defines the AIS message parameters that are common across all sub-classes.
 
 <img src="./images/AIS Interaction Class Tree.png" width="75%"/>
 
@@ -63,7 +85,7 @@ Note that the AIS position in the NETN-AIS FOM module is defined as a `GeodeticL
 
 ## Six-bit ASCII character string datatype
 
-Several parameters in the FOM module are typed as six-bit character strings. For example, vessel name and callsign. The parameter datatype of a six-bit character string is `HLAASCIIstring` and the following table shows the ASCII character to be used for a each six-bit character.
+Several parameters in the FOM module are typed as six-bit character strings. For example, vessel name and callsign. The parameter datatype of a six-bit character string is `HLAASCIIstring` and the following table shows the ASCII character to be used for each six-bit character.
 
 | six-bit | dec  | char | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char |
 | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- |

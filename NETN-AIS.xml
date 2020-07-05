@@ -63,7 +63,7 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
             <interactionClass>
                 <name>RadioSignal</name>
                 <interactionClass>
-                    <name>AisRadioSignal</name>
+                    <name>AIS_RadioSignal</name>
                     <sharing>Subscribe</sharing>
                     <transportation>HLAreliable</transportation>
                     <order>Receive</order>
@@ -168,7 +168,7 @@ Message type for a special position report, response to interrogation; Class A s
                             <sharing>Subscribe</sharing>
                             <transportation>HLAreliable</transportation>
                             <order>Receive</order>
-                            <semantics>Common reporting structure for Message Types 4 and 11 for reporting UTC time and date and, at the same time, position. It is also is used by AIS stations for determining if it is within 120 NM for response to Messages Types 20 and 23.</semantics>
+                            <semantics>Common reporting structure for Message Types 4 and 11 for reporting UTC time and date and, at the same time, position. It is also used by AIS stations for determining if the station is within 120 NM for response to Messages Types 20 and 23.</semantics>
                             <parameter>
                                 <name>UTCtime</name>
                                 <dataType>EpochTimeSecInt64</dataType>
@@ -748,6 +748,10 @@ This message type is primarily intended for long-range detection of AIS Class A 
                     <value>10</value>
                 </enumerator>
                 <enumerator>
+                    <name>MSG11</name>
+                    <value>11</value>
+                </enumerator>
+                <enumerator>
                     <name>MSG12</name>
                     <value>12</value>
                 </enumerator>
@@ -778,6 +782,10 @@ This message type is primarily intended for long-range detection of AIS Class A 
                 <enumerator>
                     <name>MSG24</name>
                     <value>24</value>
+                </enumerator>
+                <enumerator>
+                    <name>MSG27</name>
+                    <value>27</value>
                 </enumerator>
             </enumeratedData>
             <enumeratedData>
@@ -962,7 +970,7 @@ This message type is primarily intended for long-range detection of AIS Class A 
                 <dataType>HLAASCIIchar</dataType>
                 <cardinality>3</cardinality>
                 <encoding>HLAfixedArray</encoding>
-                <semantics>The Manufacturer’s ID bits indicate the manufacture’s mnemonic code consisting of three 6 bit ASCII characters.</semantics>
+                <semantics>The manufacturer mnemonic code consisting of three 6 bit ASCII characters.</semantics>
             </arrayData>
         </arrayDataTypes>
         <fixedRecordDataTypes/>
