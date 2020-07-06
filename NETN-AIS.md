@@ -108,11 +108,7 @@ Several parameters in the FOM module are typed as six-bit character strings. For
 
 ## EpochTimeSecInt64 datatype
 
-Time in AIS messages is represented as `EpochTimeSecInt64`. This value represents the number of seconds since the Epoch. The Epoch is:
-
-- 1 Jan 1970 (when using `wall clock time` ) or
-
-- the value `0` (when using `logical time`).
+Time in AIS messages is represented as `EpochTimeSecInt64`. This value represents the number of simulation seconds since the Epoch, 1 Jan 1970.
 
 In most messages time is in relation to an AIS position update.
 
