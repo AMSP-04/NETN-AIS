@@ -6,11 +6,11 @@ NATO Education and Training Network (NETN) Automatic Identification System (AIS)
 
 ## Introduction
 
-NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module.
+The Automatic Identification System (AIS) is a world-wide automated tracking system used on vessels and by Vessel Traffic Services (VTS) for identifying and locating vessels by electronically exchanging messages with other nearby vessels and VTS stations. Twenty-seven (27) message types are defined in ITU-R M.1371-5 annex 8 (see https://www.itu.int). 
 
-The Automatic Identification System (AIS) is a world-wide automated tracking system used on vessels and by Vessel Traffic Services (VTS) for identifying and locating vessels by electronically exchanging messages with other nearby vessels and VTS stations. 27 message types are defined in ITU-R M.1371-5 annex 8 (see https://www.itu.int). Most commonly used message types are the Position Report Class A (Message types 1, 2, and 3) and the Static and Voyage Related Data (Message type 5). And a commonly used live protocol to exchange AIS messages is NMEA-0183. This is an electrical and data specification for communication between marine electronics (see https://www.nmea.org).
+Common message types include the Position Report Class A (Message types 1, 2, and 3) and the Static and Voyage Related Data (Message type 5). A common standard protocol for live AIS messages exchange is NMEA-0183, an electrical and data specification for communication between marine electronics (see https://www.nmea.org).
 
-The AIS FOM module defines all of the messages types specified in ITU-R M.1371-5 annex 8, with the exception of rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure is closely aligned with the message type specification in ITU-R M.1371-5 annex 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes and most of the class parameters are optional. The root class - AisMessage - is integrated in the RPR-FOM by subclassing RadioSignal, using the concept of HostRadioIndex to refer to the RadioTransmitter object instance on board of the vessel.
+The AIS FOM module defines all of the messages types specified in ITU-R M.1371-5 annex 8, except rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure aligns with the message type specification in ITU-R M.1371-5 annex 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes, and most parameters are optional. The root class `AIS_RadioSignal` extends the RPR-FOM interaction class `RadioSignal`, and use the parameter `HostRadioIndex` to refer to the `RadioTransmitter` object instance on board of the vessel.
 
 The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteristics for an automatic identification system using time division multiple access in the VHF maritime mobile frequency band (https://www.itu.int).
 
@@ -19,7 +19,7 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
 The purpose of the NETN-AIS FOM module is to:
 
 - represent vessel traffic in a simulation using AIS messages to for example communicate position status reports of vessels;
-- enable the exchange of AIS messages between HLA federate applications in both a real-time and non real-time platform level simulation;
+- enable the exchange of AIS messages between HLA federate applications in both a real-time and non-real-time platform level simulation;
 - allow HLA federate applications to use regular HLA interaction classes and parameters to represent vessel information, and leave the translation to the physical message format in ITU-R M.1371-5 to for example dedicated gateways.
 
 The NETN-AIS FOM module defines almost all of the AIS message types, whose content can be interpreted by applications without extensive knowledge of the ITU-R M.1371-5 standard and the message format defined by that standard.
