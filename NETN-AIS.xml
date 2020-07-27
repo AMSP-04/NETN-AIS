@@ -924,12 +924,76 @@ This message type is primarily intended for long-range detection of AIS Class A 
                     <value>12</value>
                 </enumerator>
                 <enumerator>
+                    <name>BEACON_PORT_HAND</name>
+                    <value>13</value>
+                </enumerator>
+                <enumerator>
                     <name>BEACON_STARBOARD_HAND</name>
                     <value>14</value>
                 </enumerator>
                 <enumerator>
                     <name>BEACON_PREFERRED_CHANNEL_PORT_HAND</name>
                     <value>15</value>
+                </enumerator>
+                <enumerator>
+                    <name>BEACON_PREFERRED_CHANNEL_STARBOARD_HAND</name>
+                    <value>16</value>
+                </enumerator>
+                <enumerator>
+                    <name>BEACON_ISOLATED_DANGER</name>
+                    <value>17</value>
+                </enumerator>
+                <enumerator>
+                    <name>BEACON_SAFE_WATER</name>
+                    <value>18</value>
+                </enumerator>
+                <enumerator>
+                    <name>BEACON_SPECIAL_MARK</name>
+                    <value>19</value>
+                </enumerator>
+                <enumerator>
+                    <name>CARDINAL_MARK_N</name>
+                    <value>20</value>
+                </enumerator>
+                <enumerator>
+                    <name>CARDINAL_MARK_E</name>
+                    <value>21</value>
+                </enumerator>
+                <enumerator>
+                    <name>CARDINAL_MARK_S</name>
+                    <value>22</value>
+                </enumerator>
+                <enumerator>
+                    <name>CARDINAL_MARK_W</name>
+                    <value>23</value>
+                </enumerator>
+                <enumerator>
+                    <name>PORT_HAND_MARK</name>
+                    <value>24</value>
+                </enumerator>
+                <enumerator>
+                    <name>STARBOARD_HAND_MARK</name>
+                    <value>25</value>
+                </enumerator>
+                <enumerator>
+                    <name>PREFERRED_CHANNEL_PORT_HAND</name>
+                    <value>26</value>
+                </enumerator>
+                <enumerator>
+                    <name>PREFERRED_CHANNEL_STARBOARD_HAND</name>
+                    <value>27</value>
+                </enumerator>
+                <enumerator>
+                    <name>ISOLATED_DANGER</name>
+                    <value>28</value>
+                </enumerator>
+                <enumerator>
+                    <name>SAFE_WATER</name>
+                    <value>29</value>
+                </enumerator>
+                <enumerator>
+                    <name>SPECIAL_MARK</name>
+                    <value>30</value>
                 </enumerator>
                 <enumerator>
                     <name>LIGHT_VESSEL</name>
