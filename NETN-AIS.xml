@@ -248,7 +248,8 @@ This message type is transmitted every 6 minutes and should only be used by Clas
                                 <parameter>
                                     <name>ETAtime</name>
                                     <dataType>EpochTimeSecInt64</dataType>
-                                    <semantics>OPTIONAL (Default: not available). Estimated time of arrival. Not applicable to SAR aircraft.</semantics>
+                                    <semantics>OPTIONAL (Default: not available). Estimated time of arrival. Not applicable to SAR aircraft.
+If a zero value is provided then this shall be interpreted as not available.</semantics>
                                 </parameter>
                                 <parameter>
                                     <name>Draught</name>
@@ -258,7 +259,7 @@ This message type is transmitted every 6 minutes and should only be used by Clas
                                 <parameter>
                                     <name>Destination</name>
                                     <dataType>HLAASCIIstring</dataType>
-                                    <semantics>OPTIONAL (Default: not available, @@@@@@@@@@@@@@@@@@@@). 20 six-bit characters for the destination. For SAR aircraft, the use of this field may be decided by the responsible administration.</semantics>
+                                    <semantics>OPTIONAL (Default: not available, 20 six-bit "@" value). 20 six-bit characters for the destination. For SAR aircraft, the use of this field may be decided by the responsible administration.</semantics>
                                 </parameter>
                             </interactionClass>
                             <interactionClass>
