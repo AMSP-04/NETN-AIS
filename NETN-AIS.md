@@ -31,12 +31,24 @@ The NETN-AIS FOM module is simulation oriented and does not focus on the physica
 
 ## Overview
 
-All AIS message types are modelled as HLA Interaction Classes. The following figure shows the class structure, with the following two classes at the root of the structure:
+The NETN-AIS FOM module defines:
+
+- The AIS message types.
+- Several extensions to NETN-ETR tasks for instructing simulated entities to send specific AIS message types.
+- Several extensions to NETN-ORG equipment items for instantiating AIS stations in the simulation.
+
+All AIS message types are modelled as HLA Interaction Classes. The NETN-ETR extensions are modelled as HLA Interaction Classes and the NETN-ORG extensions are modelled as HLA Object Classes.
+
+The following figure shows the interaction class structure, with two classes at the top of the AIS message type hierarchy:
 
 - `AIS_RadioSignal` is sub-classed from the RPR-FOM 2.0 class `RadioSignal` and represents an AIS radio signal. `AIS_RadioSignal` optionally includes a reference to a Transmitter object instance.
 - `AisMessage` is sub-classed from `AIS_RadioSignal` and is the super class for all AIS message types. This class defines the AIS message parameters that are common across all sub-classes.
 
-<img src="./images/AIS Interaction Class Tree.png" width="75%"/>
+<img src="./images/NETN-AIS Interaction Class Tree.png" width="75%"/>
+
+The following figure shows the object class structure, with extensions to the NETN-ORG EquipmentItem class. These extensions provide information for instantiating AIS stations in the simulation.
+
+<img src="./images/NETN-AIS Object Class Tree.png" width="75%"/>
 
 The modelled AIS message types are:
 
@@ -63,9 +75,9 @@ The modelled AIS message types are:
 | 24 | **Static Data Report**. The equivalent of Message Type 5 for ships using Class B equipment. They are also used to associate an MMSI with a name on either class A or class B equipment. This message type may be in part A or part B format. According to the standard, parts A and B are expected to be broadcast in adjacent pairs. |
 | 27 | **Long Range AIS Broadcast message**. This message type is primarily intended for long-range detection of AIS Class A equipped vessels (typically by satellite). This message has similar content to Messages 1, 2 and 3, but the total number of bits is compressed to allow for increased propagation delays associated with long-range detection. |
 
-## Class parameters
+## AIS Message Class parameters
 
-Many of the class parameters in the NETN-AIS FOM module are optional. For each optional parameter, a default value is defined that can be assumed by the receiving HLA federate application if no parameter value is provided.
+Many of the `AisMessage` class parameters in the NETN-AIS FOM module are optional. For each optional parameter, a default value is defined that can be assumed by the receiving HLA federate application if no parameter value is provided.
 
 For example, to transmit a **Position Report Class A** message, only the following parameters are required:
 

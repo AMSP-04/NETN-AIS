@@ -48,6 +48,125 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
     <objects>
         <objectClass>
             <name>HLAobjectRoot</name>
+            <objectClass>
+                <name>ORG_Root</name>
+                <objectClass>
+                    <name>EquipmentItem</name>
+                    <objectClass>
+                        <name>AisEquipmentItem</name>
+                        <sharing>Neither</sharing>
+                        <semantics>This class defines additional attributes for AIS equipment.</semantics>
+                        <attribute>
+                            <name>MMSI</name>
+                            <dataType>MMSIType</dataType>
+                            <updateType>Static</updateType>
+                            <updateCondition>Init</updateCondition>
+                            <ownership>NoTransfer</ownership>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>REQUIRED. The MMSI number (Maritime Mobile Service Identity) of the AIS station.</semantics>
+                        </attribute>
+                        <attribute>
+                            <name>TransmitterStatus</name>
+                            <dataType>TransmitterOperationalStatusEnum8</dataType>
+                            <updateType>Conditional</updateType>
+                            <updateCondition>When the tansmitter status updated</updateCondition>
+                            <ownership>NoTransfer</ownership>
+                            <sharing>PublishSubscribe</sharing>
+                            <transportation>HLAreliable</transportation>
+                            <order>Receive</order>
+                            <semantics>OPTIONAL. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall assumed to be ON.</semantics>
+                        </attribute>
+                        <objectClass>
+                            <name>Vessel</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <semantics>This class defines additional attributes to an equipment item in order to instantiate a vessel in a simulation.</semantics>
+                            <attribute>
+                                <name>IMO</name>
+                                <dataType>IMOType</dataType>
+                                <updateType>Static</updateType>
+                                <updateCondition>Init</updateCondition>
+                                <ownership>NoTransfer</ownership>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>OPTIONAL. The International Maritime Organization (IMO) number to identify the vessel. If the value is not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
+                            </attribute>
+                            <attribute>
+                                <name>ShipType</name>
+                                <dataType>ShipTypeType</dataType>
+                                <updateType>Static</updateType>
+                                <updateCondition>Init</updateCondition>
+                                <ownership>NoTransfer</ownership>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>OPTIONAL. Type of ship. If the value is not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
+                            </attribute>
+                            <attribute>
+                                <name>DimensionStern</name>
+                                <dataType>LengthMeterFloat32</dataType>
+                                <updateType>Static</updateType>
+                                <updateCondition>Init</updateCondition>
+                                <ownership>NoTransfer</ownership>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>OPTIONAL. Distance from stern. Reference point for the reported position. If the value is zero or not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
+                            </attribute>
+                            <attribute>
+                                <name>DimensionPort</name>
+                                <dataType>LengthMeterFloat32</dataType>
+                                <updateType>Static</updateType>
+                                <updateCondition>Init</updateCondition>
+                                <ownership>NoTransfer</ownership>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>OPTIONAL. Distance from port. Reference point for the reported position. If the value is zero or not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
+                            </attribute>
+                            <attribute>
+                                <name>DimensionStarboard</name>
+                                <dataType>LengthMeterFloat32</dataType>
+                                <updateType>Static</updateType>
+                                <updateCondition>Init</updateCondition>
+                                <ownership>NoTransfer</ownership>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>OPTIONAL. Distance from straboard. Reference point for the reported position. If the value is zero or not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
+                            </attribute>
+                            <attribute>
+                                <name>DimensionBow</name>
+                                <dataType>LengthMeterFloat32</dataType>
+                                <updateType>Static</updateType>
+                                <updateCondition>Init</updateCondition>
+                                <ownership>NoTransfer</ownership>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>OPTIONAL. Distance from bow. Reference point for the reported position. If the value is zero or not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
+                            </attribute>
+                        </objectClass>
+                        <objectClass>
+                            <name>SARaircraft</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <semantics>This class defines additional attributes for a SAR Aircraft equipment  in order to instantiate a SAR aircraft in a simulation.</semantics>
+                        </objectClass>
+                        <objectClass>
+                            <name>Basestation</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <semantics>This class defines additional attributes for basestation equipment.</semantics>
+                        </objectClass>
+                        <objectClass>
+                            <name>AidToNavigation</name>
+                            <sharing>PublishSubscribe</sharing>
+                            <semantics>This class defines additional attributes for aid to navigation equipment.</semantics>
+                        </objectClass>
+                    </objectClass>
+                </objectClass>
+            </objectClass>
         </objectClass>
     </objects>
     <interactions>
@@ -248,7 +367,7 @@ This message type is transmitted every 6 minutes and should only be used by Clas
                                 <parameter>
                                     <name>ETAtime</name>
                                     <dataType>EpochTimeSecInt64</dataType>
-                                    <semantics>OPTIONAL (Default: not available). Estimated time of arrival. Not applicable to SAR aircraft.
+                                    <semantics>OPTIONAL (Default: not available). Estimated time of arrival. Not applicable to SAR aircraft. 
 If a zero value is provided then this shall be interpreted as not available.</semantics>
                                 </parameter>
                                 <parameter>
@@ -638,6 +757,45 @@ This message type is primarily intended for long-range detection of AIS Class A 
                     </interactionClass>
                 </interactionClass>
             </interactionClass>
+            <interactionClass>
+                <name>ETR_Root</name>
+                <interactionClass>
+                    <name>ETR_Task</name>
+                    <interactionClass>
+                        <name>SendSafetyRelatedMessage</name>
+                        <sharing>PublishSubscribe</sharing>
+                        <transportation>HLAreliable</transportation>
+                        <order>Receive</order>
+                        <semantics>Tasks entity (the source) to send a safety related message (AIS message type 12) to another entity (the destination).
+
+Both source and destination must represent an AIS station (vessel, SAR aircraft, etc).</semantics>
+                        <parameter>
+                            <name>Entity</name>
+                            <dataType>UuidArrayOfHLAbyte16</dataType>
+                            <semantics>REQUIRED. The entity that represents the destination. This must be an AIS station.</semantics>
+                        </parameter>
+                        <parameter>
+                            <name>Message</name>
+                            <dataType>HLAASCIIstring</dataType>
+                            <semantics>REQUIRED. 1-156 chars of six-bit text.</semantics>
+                        </parameter>
+                    </interactionClass>
+                    <interactionClass>
+                        <name>SendSafetyRelatedBroadcastMessage</name>
+                        <sharing>PublishSubscribe</sharing>
+                        <transportation>HLAreliable</transportation>
+                        <order>Receive</order>
+                        <semantics>Tasks entity (the source) to send a safety related broadcast message (AIS message type 14).
+
+The source must represent an AIS station (vessel, SAR aircraft, etc).</semantics>
+                        <parameter>
+                            <name>Message</name>
+                            <dataType>HLAASCIIstring</dataType>
+                            <semantics>REQUIRED. 1-161 chars of six-bit text.</semantics>
+                        </parameter>
+                    </interactionClass>
+                </interactionClass>
+            </interactionClass>
         </interactionClass>
     </interactions>
     <switches>
@@ -661,7 +819,7 @@ This message type is primarily intended for long-range detection of AIS Class A 
                 <units>NA</units>
                 <resolution>NA</resolution>
                 <accuracy>30 bits</accuracy>
-                <semantics>The MMSI number (Maritime Mobile Service Identity) is a unique nine-digit number for identifying a vessel. An MMSI number has the format MIDXXXXXX. The first three digits are called MID (Maritime Identification Digits) and represent the nationality. The last six digits are used for the unique identification of the vessel.</semantics>
+                <semantics>The MMSI number (Maritime Mobile Service Identity) is a unique nine-digit number for identifying an AIS station.</semantics>
             </simpleData>
             <simpleData>
                 <name>UnitModelType</name>
@@ -694,6 +852,42 @@ This message type is primarily intended for long-range detection of AIS Class A 
                 <resolution>NA</resolution>
                 <accuracy>6 bits</accuracy>
                 <semantics>Functional ID (FID).</semantics>
+            </simpleData>
+            <simpleData>
+                <name>IMOType</name>
+                <representation>HLAinteger32BE</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>30 bits</accuracy>
+                <semantics>The International Maritime Organization (IMO) number is a unique identifier for vessels. See https://www.itu.int/en/ITU-R. 
+ 
+The IMO number is made of the three letters "IMO" followed by a seven-digit number. This number consists of a six-digit sequential unique number followed by a check digit. The integrity of an IMO number can be verified using its check digit.This is done by multiplying each of the first six digits by a factor of 2 to 7 corresponding to their position from right to left. The rightmost digit of this sum is the check digit. For example, for IMO 9074729: (9×7) + (0×6) + (7×5) + (4×4) + (7×3) + (2×2) = 139. 
+ 
+This attribute represents the 7 digits value of the IMO number. The value shall be zero for not available (default). The value shall also be zero for inland vessels.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>ShipTypeType</name>
+                <representation>HLAoctet</representation>
+                <units>NA</units>
+                <resolution>NA</resolution>
+                <accuracy>8 bits</accuracy>
+                <semantics>The type of ship and cargo. See https://www.itu.int/en/ITU-R.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>DegreesPerSecondFloat32</name>
+                <representation>HLAfloat32BE</representation>
+                <units>Degrees/second</units>
+                <resolution>NA</resolution>
+                <accuracy>NA</accuracy>
+                <semantics>The turn rate in degrees per second, where: (a) zero value: not turning; (b) positive value: turning right; (c) negative value: turning left.</semantics>
+            </simpleData>
+            <simpleData>
+                <name>DraughtMeterFloat32</name>
+                <representation>HLAfloat32BE</representation>
+                <units>Meter</units>
+                <resolution>NA</resolution>
+                <accuracy>NA</accuracy>
+                <semantics>The vertical distance between the waterline and the bottom of the hull (keel), with the thickness of the hull included; Draught determines the minimum depth of water a ship or boat can safely navigate.</semantics>
             </simpleData>
         </simpleDataTypes>
         <enumeratedDataTypes>
