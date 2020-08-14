@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?purpose description="Schema for AIS extensions to NETN-ORG MSDL files." ?>
+<?version number="1.1" date="August 7, 2020"?>
+<!-- 	
+-->
+<xs:schema  
+    xmlns:ais="urn:nato:nmsg:ms3:netn:ais:1"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="urn:nato:nmsg:ms3:netn:ais:1" 
+    version="1.0">
+
+
+
+
+	<xs:complexType name="VesselDataType">
+		<xs:annotation>
+			<xs:documentation>Specifies vessel data sent with AIS message for a Unit.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MID" type="xs:short" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Maritime Identification Digits (MID) for an individual vessel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IMO" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The International Maritime Organization (IMO) number is a unique identifier for vessels.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ShipType" type="xs:byte" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type of ship. See ITU-R M.1371-5 for values. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DimBow" type="xs:short" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Distance from bow. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DimStern" type="xs:short" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Distance from stern. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DimPort" type="xs:short" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Distance from port. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DimStarboard" type="xs:short" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Distance from straboard. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransmitterStatus" type="xs:byte" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The initial status of the AIS Transmitter(s) on board of the vessel.  ON=0; OFF=1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SARDataType">
+		<xs:annotation>
+			<xs:documentation>Specifies SAR data for identification from an aircraft.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MID" type="xs:short" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Maritime Identification Digits (MID) for an individual aircraft.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:element name="VesselData" type="ais:VesselDataType"/>
+    <xs:element name="SARData" type="ais:VesselDataType"/>
+	
+</xs:schema>
