@@ -35,20 +35,24 @@ The NETN-AIS FOM module defines:
 
 - The AIS message types.
 - Several extensions to NETN-ETR tasks for instructing simulated entities to send specific AIS message types.
-- Several extensions to NETN-ORG equipment items for instantiating AIS stations in the simulation.
+- Several extensions to NETN-ORG equipment items for creating AIS stations in a simulation.
 
 All AIS message types are modelled as HLA Interaction Classes. The NETN-ETR extensions are modelled as HLA Interaction Classes and the NETN-ORG extensions are modelled as HLA Object Classes.
 
-The following figure shows the interaction class structure, with two classes at the top of the AIS message type hierarchy:
+The following figure shows the interaction class structure, where: 
 
-- `AIS_RadioSignal` is sub-classed from the RPR-FOM 2.0 class `RadioSignal` and represents an AIS radio signal. `AIS_RadioSignal` optionally includes a reference to a Transmitter object instance.
-- `AisMessage` is sub-classed from `AIS_RadioSignal` and is the super class for all AIS message types. This class defines the AIS message parameters that are common across all sub-classes.
+- The AIS message-related classes are located under the RPR-FOM `RadioSignal` class. The `AIS_RadioSignal` class is a sub-class of the class `RadioSignal` and represents an AIS radio signal. `AIS_RadioSignal` optionally includes a reference to a Transmitter object instance. `AisMessage` on its turn is a sub-class of `AIS_RadioSignal`, which is the super class for all AIS message types. This class defines the AIS message parameters that are common across all sub-classes.
+- The NETN-ETR extensions are located under the  NETN-ETR `ETR_Task` class. AIS-specific task definitions are sub-classes of `ETR_Task`. Although the extensions are located in this FOM module, the agreements as described in the NETN-ETR FOM module shall be followed in processing these extensions.
 
 <img src="./images/NETN-AIS Interaction Class Tree.png" width="75%"/>
 
-The following figure shows the object class structure, with extensions to the NETN-ORG EquipmentItem class. These extensions provide information for instantiating AIS stations in the simulation.
+The following figure shows the object class structure, where:
+
+- The NETN-ORG extensions are located under the NETN-ORG `EquipmentItem` class. These extensions provide additional information for creating AIS stations in a simulation. The agreements as described in the NETN-ORG FOM module shall be followed in processing these extensions.
 
 <img src="./images/NETN-AIS Object Class Tree.png" width="75%"/>
+
+### AIS message types
 
 The modelled AIS message types are:
 
@@ -75,9 +79,40 @@ The modelled AIS message types are:
 | 24 | **Static Data Report**. The equivalent of Message Type 5 for ships using Class B equipment. They are also used to associate an MMSI with a name on either class A or class B equipment. This message type may be in part A or part B format. According to the standard, parts A and B are expected to be broadcast in adjacent pairs. |
 | 27 | **Long Range AIS Broadcast message**. This message type is primarily intended for long-range detection of AIS Class A equipped vessels (typically by satellite). This message has similar content to Messages 1, 2 and 3, but the total number of bits is compressed to allow for increased propagation delays associated with long-range detection. |
 
-## AIS Message Class parameters
+### NETN-ETR extensions
 
-Many of the `AisMessage` class parameters in the NETN-AIS FOM module are optional. For each optional parameter, a default value is defined that can be assumed by the receiving HLA federate application if no parameter value is provided.
+The NETN-ETR `ETR_Task` extensions are summarized in the following table. These extensions may be useful in SAR vignettes for example.
+
+| Task                                | Description                                                  |
+| ----------------------------------- | ------------------------------------------------------------ |
+| `SendSafetyRelatedMessage`          | Tasks entity (the source) to send a safety related message (AIS message type 12) to another entity (the destination). Both source and destination must represent an AIS station (vessel, SAR aircraft, etc). |
+| `SendSafetyRelatedBroadcastMessage` | Tasks entity (the source) to send a safety related broadcast message (AIS message type 14). The source must represent an AIS station (vessel, SAR aircraft, etc). |
+
+### NETN-ORG extensions
+
+The NETN-ORG `EquipmentItem` extensions are summarized in the following table.
+
+| EquipmentItem sub-classes          | Description                                                  |
+| ---------------------------------- | ------------------------------------------------------------ |
+| `AisEquipmentItem`                 | This class defines additional attributes for AIS equipment. Depending on the kind of AIS equipment, further attributes are added in sub-classes. |
+| `AisEquipmentItem.Vessel`          | This class defines additional attributes for vessel equipment. |
+| `AisEquipmentItem.SARaircraft`     | This class defines additional attributes for SAR aircraft equipment. |
+| `AisEquipmentItem.Basestation`     | This class defines additional attributes for basestation equipment. |
+| `AisEquipmentItem.AidToNavigation` | This class defines additional attributes for aid to navigation (ATON) equipment. |
+
+The `AisEquipmentItem` defines amongst others the `RadioSystemType` of the AIS station. The `RadioSystemType` should be used by the federate to initialize the `RadioTransmitter` object instance. Entity type values that should be used for the `RadioSystemType` are:
+
+- `7.3.0.37.0.0.0` (default transmitter, class A)
+- `7.3.0.37.1.0.0` (class A transmitter)
+- `7.3.0.37.2.0.0` (class B transmitter)
+
+By adding a subcategory (i.e. `1` or `2`, not defined in the SISO enumerations), it is possible to identify the specific type of transmitter, namely class A or B in this example. Additional subcategories may be defined as part of the federation agreements. The country code in this example is left as `0`. 
+
+## AisMessage class parameters
+
+### Optional and required parameters
+
+Many of the `AisMessage` class parameters are optional. For each optional parameter, a default value is defined that can be assumed by the receiving HLA federate if no parameter value is provided.
 
 For example, to transmit a **Position Report Class A** message, only the following parameters are required:
 
@@ -97,9 +132,9 @@ Other parameters include true heading, course, rate of turn, etc. These are all 
 
 Note that the AIS position in the NETN-AIS FOM module is defined as a `GeodeticLocation` datatype. This is different from ITU-R M.1371-5, where Longitude and Latitude are represented in 1/10 000 min and stored in a 28 and 27-bit field, respectively. The purpose of this FOM module is to not bother the user with the message format in ITU-R M.1371-5, but rather let the user focus on the information that is exchanged in the simulation. The physical message format is not a concern of this FOM module. However, the class and parameter structure is such that the mapping between the NETN-AIS FOM and ITU-R M.1371-5 is straightforward.
 
-## Six-bit ASCII character string datatype
+### Six-bit ASCII character string datatype
 
-Several parameters in the FOM module are typed as six-bit character strings. For example, vessel name and callsign. The parameter data type of a six-bit character string is `HLAASCIIstring`, and the following table shows the ASCII character to be used for each six-bit character.
+Several parameters are typed as six-bit character strings. For example, vessel name and callsign. The parameter data type of a six-bit character string is `HLAASCIIstring`, and the following table shows the ASCII character to be used for each six-bit character.
 
 | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char |
 | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- |
@@ -120,11 +155,9 @@ Several parameters in the FOM module are typed as six-bit character strings. For
 | 001110 | 14 | "N" | 011110 | 30 | "\^" | 101110 | 46 | "." | 111110 | 62 | ">" |
 | 001111 | 15 | "O" | 011111 | 31 | "\_" | 101111 | 47 | "/" | 111111 | 63 | "?" |
 
-## EpochTimeSecInt64 datatype
+### EpochTimeSecInt64 datatype
 
-Time in AIS messages is represented as `EpochTimeSecInt64`. This value represents the number of simulation seconds since the Epoch, 1 Jan 1970.
-
-In most messages, time is in relation to an AIS position update.
+Time is represented as `EpochTimeSecInt64`. This value represents the number of simulation seconds since the Epoch, 1 Jan 1970. In most messages, time is in relation to an AIS position update in an AIS message type.
 
 ## RadioTransmitter
 
@@ -135,7 +168,7 @@ Optionally an AIS Radio Signal can be associated with a `RadioTransmitter` objec
 | `Frequency` | Center frequency of the radio transmissions. | Channel A `161.975 MHz` (87B), or Channel B `162.025 MHz` (88B) |
 | `FrequencyBandwidth` | Bandpass of the radio transmissions, specified in hertz. | `25` kHz |
 | `RadioIndex` | Specifies the identification number for each radio on a given host. This value shall not change during simulation execution. | Per agreement. If the `RadioTransmitter` is the only radio for the vessel, the index `0` should be used. |
-| `RadioSystemType` | Entity type of the radio transmitter: Kind, Domain, Country, Category, Subcategory, Specific, Extra. This value shall not change during simulation execution. | `7.3.0.37.0.0.0` |
+| `RadioSystemType` | Entity type of the radio transmitter: Kind, Domain, Country, Category, Subcategory, Specific, Extra. This value shall not change during simulation execution. | `7.3.0.37.0.0.0` for class A, `7.3.0.37.1.0.0` for class A, `7.3.0.37.2.0.0` for class B |
 | `TransmittedPower` | The average power being transmitted in units of decibel-milliwatts. | `12500` Milliwatts for class A, or `2000` Milliwatts for class B |
 | `TransmitterOperationalStatus` | On/Off state of the transmitter as an enumeration. | `Off`, `OnButNotTransmitting` or `OnAndTransmitting` |
 | `WorldLocation` | Location of the antenna in world coordinates. | The vessel position. |
@@ -150,3 +183,8 @@ As a best practice the vessel callsign (a seven (7) six-bit character string) sh
 | `BaseEntity.PhysicalEntity.Platform.SurfaceVessel.Marking` | `MarkingStruct` | 11 Octets |
 
 When defining values for entity marking or callsign, the limitation for the vessel callsign should be taken into account.
+
+## NETN-ORG MSDL extension
+
+The MSDL schema has been extended with an AIS schema to persist the AIS-related ORBAT data in a file, together with the rest of the ORBAT data. The AIS schema is located in this repository and the MSDL schema is located in the NETN-ORG repository. For more information about the MSDL schema and extensions, see the NETN-ORG repository.
+
