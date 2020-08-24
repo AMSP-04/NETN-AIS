@@ -63,7 +63,7 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                     <objectClass>
                         <name>AisEquipmentItem</name>
                         <sharing>Neither</sharing>
-                        <semantics>This class defines additional attributes for AIS equipment.</semantics>
+                        <semantics>This class defines additional attributes for AIS equipment. Depending on the kind of AIS equipment, further attributes are added in sub-classes.</semantics>
                         <attribute>
                             <name>MMSI</name>
                             <dataType>MMSIType</dataType>
@@ -73,7 +73,7 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                             <sharing>PublishSubscribe</sharing>
                             <transportation>HLAreliable</transportation>
                             <order>Receive</order>
-                            <semantics>Required. The MMSI number (Maritime Mobile Service Identity) of the AIS station.</semantics>
+                            <semantics>Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each individual AIS station must be  unique across all AIS stations in the simulation. Recycling MMSI numbers is not adviced since some systems may retain dead tracks for some time.</semantics>
                         </attribute>
                         <attribute>
                             <name>TransmitterStatus</name>
@@ -95,12 +95,12 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                             <sharing>PublishSubscribe</sharing>
                             <transportation>HLAreliable</transportation>
                             <order>Receive</order>
-                            <semantics>Optional. The type of transmitter. If the value is not provided then the type is assumed to be a class A transmitter.</semantics>
+                            <semantics>Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.</semantics>
                         </attribute>
                         <objectClass>
                             <name>Vessel</name>
                             <sharing>PublishSubscribe</sharing>
-                            <semantics>This class defines additional attributes to an equipment item in order to instantiate a vessel in a simulation.</semantics>
+                            <semantics>This class defines additional attributes for vessel equipment.</semantics>
                             <attribute>
                                 <name>IMO</name>
                                 <dataType>IMOType</dataType>
@@ -121,7 +121,7 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                                 <sharing>PublishSubscribe</sharing>
                                 <transportation>HLAreliable</transportation>
                                 <order>Receive</order>
-                                <semantics>Optional. Type of ship. If the value is not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
+                                <semantics>Optional. Type of ship. If the value is not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value. This value should be based on the entity type of the equipment item.</semantics>
                             </attribute>
                             <attribute>
                                 <name>DimensionStern</name>
@@ -171,7 +171,7 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                         <objectClass>
                             <name>SARaircraft</name>
                             <sharing>PublishSubscribe</sharing>
-                            <semantics>This class defines additional attributes for a SAR Aircraft equipment  in order to instantiate a SAR aircraft in a simulation.</semantics>
+                            <semantics>This class defines additional attributes for SAR aircraft equipment.</semantics>
                         </objectClass>
                         <objectClass>
                             <name>Basestation</name>
@@ -181,7 +181,18 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                         <objectClass>
                             <name>AidToNavigation</name>
                             <sharing>PublishSubscribe</sharing>
-                            <semantics>This class defines additional attributes for aid to navigation equipment.</semantics>
+                            <semantics>This class defines additional attributes for aid to navigation (ATON) equipment.</semantics>
+                            <attribute>
+                                <name>AidType</name>
+                                <dataType>AidTypeEnumType</dataType>
+                                <updateType>NA</updateType>
+                                <updateCondition></updateCondition>
+                                <ownership>NoTransfer</ownership>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Optional. If the value is not provided then the subscribing federate that is responsible for the modelling of the ATON shall generate a value. This value should be based on the entity type of the equipment item.</semantics>
+                            </attribute>
                         </objectClass>
                     </objectClass>
                 </objectClass>
