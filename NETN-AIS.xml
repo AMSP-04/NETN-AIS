@@ -186,7 +186,7 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                                 <name>AidType</name>
                                 <dataType>AidTypeEnumType</dataType>
                                 <updateType>Static</updateType>
-                                <updateCondition></updateCondition>
+                                <updateCondition>Init</updateCondition>
                                 <ownership>NoTransfer</ownership>
                                 <sharing>PublishSubscribe</sharing>
                                 <transportation>HLAreliable</transportation>
