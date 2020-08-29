@@ -170,7 +170,7 @@ Optionally an AIS Radio Signal can be associated with a `RadioTransmitter` objec
 | `FrequencyBandwidth` | Bandpass of the radio transmissions, specified in Hertz. | `25 kHz` |
 | `RadioIndex` | Specifies the identification number for each radio on a given host. This value shall not change during simulation execution. | Per agreement. If the `RadioTransmitter` is the only radio for the vessel, the index `0` should be used. |
 | `RadioSystemType` | Entity type of the radio transmitter: Kind, Domain, Country, Category. This value shall not change during simulation execution. Note that no further refinement of the type (subcategory etc.) is defined. The country value `0` should be replaced by the actual value. | `7.3.0.37` |
-| `TransmittedPower` | The average power being transmitted in units of decibel-milliwatts. | `12500` Milliwatts for class A, `5000` Milliwatts for class B/SO, and `2000` Milliwatts for class B/CS. |
+| `TransmittedPower` | The average power being transmitted in units of decibel-milliwatts. | Value should be in `dBm`. For simplicity the following values may be used: `12500` Milliwatts for class A, `5000` Milliwatts for class B/SO, and `2000` Milliwatts for class B/CS. |
 | `TransmitterOperationalStatus` | On/Off state of the transmitter as an enumeration. | `Off`, `OnButNotTransmitting` or `OnAndTransmitting` |
 | `WorldLocation` | Location of the antenna in world coordinates. | The vessel position. |
 
