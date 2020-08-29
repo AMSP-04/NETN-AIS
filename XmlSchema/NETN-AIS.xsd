@@ -37,7 +37,7 @@
 			</xs:element>
 			<xs:element name="transmitterStatus" type="ais:TransmitterStatusType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>The initial status of the AIS Transmitter(s) of the AIS station.</xs:documentation>
+					<xs:documentation>The initial status of the transmitter of the AIS station.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -52,31 +52,6 @@
 					<xs:element name="IMO" type="xs:integer" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>The International Maritime Organization (IMO) number is a unique identifier for vessels.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="shipType" type="xs:byte" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Type of ship. See ITU-R M.1371-5. </xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="dimBow" type="xs:short" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Distance from bow. See ITU-R M.1371-5.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="dimStern" type="xs:short" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Distance from stern. See ITU-R M.1371-5.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="dimPort" type="xs:short" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Distance from port. See ITU-R M.1371-5.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="dimStarboard" type="xs:short" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Distance from starboard. See ITU-R M.1371-5.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
 				</xs:sequence>
@@ -104,15 +79,7 @@
 			<xs:documentation>Additional equipment attributes for AIS aid to navigation.</xs:documentation>
 		</xs:annotation>
 		<xs:complexContent>
-			<xs:extension base="ais:AisEquipmentItemType">
-				<xs:sequence>
-					<xs:element name="aidType" type="xs:byte" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Type of aid. See ITU-R M.1371-5.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-				</xs:sequence>
-			</xs:extension>
+			<xs:extension base="ais:AisEquipmentItemType"/>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:element name="AisEquipmentItem">

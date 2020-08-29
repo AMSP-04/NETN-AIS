@@ -6,10 +6,9 @@
     
     <vessel>
         <MMSI>244159000</MMSI>
-        <radioSystemType>7.3.153.37.0.0.0</radioSystemType> <!-- NLD AIS transmitter -->
+        <radioSystemType>7.3.153.37.0.0.0</radioSystemType>
         <transmitterStatus>ON_AND_TRANSMITTING</transmitterStatus>
         <IMO>9109756</IMO>
-        <shipType>35</shipType> <!-- engaged in military operations or other types of restricted operations -->
     </vessel>
 
 </ais:AisEquipmentItem>

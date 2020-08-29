@@ -112,61 +112,6 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                                 <order>Receive</order>
                                 <semantics>Optional. The International Maritime Organization (IMO) number to identify the vessel. If the value is not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
                             </attribute>
-                            <attribute>
-                                <name>ShipType</name>
-                                <dataType>ShipTypeType</dataType>
-                                <updateType>Static</updateType>
-                                <updateCondition>Init</updateCondition>
-                                <ownership>NoTransfer</ownership>
-                                <sharing>PublishSubscribe</sharing>
-                                <transportation>HLAreliable</transportation>
-                                <order>Receive</order>
-                                <semantics>Optional. Type of ship. If the value is not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value. This value should be based on the entity type of the equipment item.</semantics>
-                            </attribute>
-                            <attribute>
-                                <name>DimensionStern</name>
-                                <dataType>LengthMeterFloat32</dataType>
-                                <updateType>Static</updateType>
-                                <updateCondition>Init</updateCondition>
-                                <ownership>NoTransfer</ownership>
-                                <sharing>PublishSubscribe</sharing>
-                                <transportation>HLAreliable</transportation>
-                                <order>Receive</order>
-                                <semantics>Optional. Distance from stern. Reference point for the reported position. If the value is zero or not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
-                            </attribute>
-                            <attribute>
-                                <name>DimensionPort</name>
-                                <dataType>LengthMeterFloat32</dataType>
-                                <updateType>Static</updateType>
-                                <updateCondition>Init</updateCondition>
-                                <ownership>NoTransfer</ownership>
-                                <sharing>PublishSubscribe</sharing>
-                                <transportation>HLAreliable</transportation>
-                                <order>Receive</order>
-                                <semantics>Optional. Distance from port. Reference point for the reported position. If the value is zero or not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
-                            </attribute>
-                            <attribute>
-                                <name>DimensionStarboard</name>
-                                <dataType>LengthMeterFloat32</dataType>
-                                <updateType>Static</updateType>
-                                <updateCondition>Init</updateCondition>
-                                <ownership>NoTransfer</ownership>
-                                <sharing>PublishSubscribe</sharing>
-                                <transportation>HLAreliable</transportation>
-                                <order>Receive</order>
-                                <semantics>Optional. Distance from straboard. Reference point for the reported position. If the value is zero or not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
-                            </attribute>
-                            <attribute>
-                                <name>DimensionBow</name>
-                                <dataType>LengthMeterFloat32</dataType>
-                                <updateType>Static</updateType>
-                                <updateCondition>Init</updateCondition>
-                                <ownership>NoTransfer</ownership>
-                                <sharing>PublishSubscribe</sharing>
-                                <transportation>HLAreliable</transportation>
-                                <order>Receive</order>
-                                <semantics>Optional. Distance from bow. Reference point for the reported position. If the value is zero or not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
-                            </attribute>
                         </objectClass>
                         <objectClass>
                             <name>SARaircraft</name>
@@ -182,17 +127,6 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
                             <name>AidToNavigation</name>
                             <sharing>PublishSubscribe</sharing>
                             <semantics>This class defines additional attributes for aid to navigation (ATON) equipment.</semantics>
-                            <attribute>
-                                <name>AidType</name>
-                                <dataType>AidTypeEnumType</dataType>
-                                <updateType>Static</updateType>
-                                <updateCondition>Init</updateCondition>
-                                <ownership>NoTransfer</ownership>
-                                <sharing>PublishSubscribe</sharing>
-                                <transportation>HLAreliable</transportation>
-                                <order>Receive</order>
-                                <semantics>Optional. If the value is not provided then the subscribing federate that is responsible for the modelling of the ATON shall generate a value. This value should be based on the entity type of the equipment item.</semantics>
-                            </attribute>
                         </objectClass>
                     </objectClass>
                 </objectClass>
