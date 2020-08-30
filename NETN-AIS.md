@@ -107,7 +107,7 @@ The `AisEquipmentItem` defines amongst others the `RadioSystemType` of the AIS s
 - `7.3.0.37.2.0.0` (class B "SO" transmitter)
 - `7.3.0.37.3.0.0` (class B "CS" transmitter)
 
-By adding a subcategory (i.e. `1` ,`2` and `3`, not defined in the SISO enumerations), it is possible to identify the specific type of transmitter, namely class A or B in this example. These non-standard subcategory values should be defined as part of the federation agreements. The country code value `0` in this example should be replaced by the appropriate value.
+See Radio Kind in the SISO Enumerations, [UID 22] for categories. By adding a subcategory (i.e. `1` ,`2` and `3`, not defined in the SISO Enumerations), it is possible to identify the specific type of transmitter, namely class A, B/SO, or B/CS in this example. These non-standard subcategory values should be defined as part of the federation agreements. The country code value `0` in this example should be replaced by the appropriate value.
 
 ## AisMessage class parameters
 
@@ -166,11 +166,11 @@ Optionally an AIS Radio Signal can be associated with a `RadioTransmitter` objec
 
 | Attribute name | Description | Value |
 | ------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `Frequency` | Center frequency of the radio transmissions, specified in Herz. | `162 MHz` |
-| `FrequencyBandwidth` | Bandpass of the radio transmissions, specified in Hertz. | `25 kHz` |
+| `Frequency` | Center frequency of the radio transmissions, specified in Herz. | `162000000` Hz |
+| `FrequencyBandwidth` | Bandpass of the radio transmissions, specified in Hertz. | `25000` Hz |
 | `RadioIndex` | Specifies the identification number for each radio on a given host. This value shall not change during simulation execution. | Per agreement. If the `RadioTransmitter` is the only radio for the vessel, the index `0` should be used. |
 | `RadioSystemType` | Entity type of the radio transmitter: Kind, Domain, Country, Category. This value shall not change during simulation execution. Note that no further refinement of the type (subcategory etc.) is defined. The country value `0` should be replaced by the actual value. | `7.3.0.37` |
-| `TransmittedPower` | The average power being transmitted in units of decibel-milliwatts. | Value should be in `dBm`. For simplicity the following values may be used: `12500` Milliwatts for class A, `5000` Milliwatts for class B/SO, and `2000` Milliwatts for class B/CS. |
+| `TransmittedPower` | The average power being transmitted in units of decibel-milliwatts. | `12500` Milliwatts for class A (`41` dBm), `5000` Milliwatts for class B/SO (`37` dBm), and `2000` Milliwatts for class B/CS (`33` dBm). |
 | `TransmitterOperationalStatus` | On/Off state of the transmitter as an enumeration. | `Off`, `OnButNotTransmitting` or `OnAndTransmitting` |
 | `WorldLocation` | Location of the antenna in world coordinates. | The vessel position. |
 
