@@ -6,11 +6,11 @@ NATO Education and Training Network (NETN) Automatic Identification System (AIS)
 
 ## Introduction
 
-The Automatic Identification System (AIS) is a world-wide automated tracking system used on vessels and by Vessel Traffic Services (VTS) for identifying and locating vessels by electronically exchanging messages with other nearby vessels and VTS stations. Twenty-seven (27) message types are defined in ITU-R M.1371-5 annex 8 (see https://www.itu.int). 
+The Automatic Identification System (AIS) is a world-wide automated tracking system used on vessels and by Vessel Traffic Services (VTS) for identifying and locating vessels by electronically exchanging messages with other nearby vessels and VTS stations. Twenty-seven (27) message types are defined in ITU-R M.1371-5 annexe 8 (see https://www.itu.int). 
 
 Common message types include the Position Report Class A (Message types 1, 2, and 3) and the Static and Voyage Related Data (Message type 5). A common standard protocol for live AIS messages exchange is NMEA-0183, an electrical and data specification for communication between marine electronics (see https://www.nmea.org).
 
-The AIS FOM module defines all of the messages types specified in ITU-R M.1371-5 annex 8, except rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure aligns with the message type specification in ITU-R M.1371-5 annex 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes, and most parameters are optional. The root class `AIS_RadioSignal` extends the RPR-FOM interaction class `RadioSignal`, and use the parameter `HostRadioIndex` to refer to the `RadioTransmitter` object instance on board of the vessel.
+The AIS FOM module defines all of the messages types specified in ITU-R M.1371-5 annexe 8, except rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure aligns with the message type specification in ITU-R M.1371-5 annexe 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes, and most parameters are optional. The root class `AIS_RadioSignal` extends the RPR-FOM interaction class `RadioSignal`, and use the parameter `HostRadioIndex` to refer to the `RadioTransmitter` object instance on board of the vessel.
 
 The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteristics for an automatic identification system using time division multiple access in the VHF maritime mobile frequency band (https://www.itu.int).
 
@@ -45,11 +45,11 @@ Feedback on the use of this work, suggestions for improvements and identified is
 
 Version numbering of this FOM Module and associated documentation is based on the following principles:
 
-* New official version number is assigned and in effect only when new release is made in the Master branch.
-* Updates in the Develop branch will not change version number.
-* In the FOM Module useHistory information include only information on official releases.
-* Update of the major version number is made if the change constitute a major restructuring, merging, addition or redefinition of semantics that breaks backward compatibility or cover entirely new concepts.
-* Update of the minor version number is made if the change constitute a minor additions to existing concepts and editorial changes that do not break backward compatibility but may require updates of software to use new concepts.
+* New official version number is assigned and in effect only when a new release is made in the Master branch.
+* Updates in the Develop branch will not change the version number.
+* In the FOM Module `useHistory` information includes only information on official releases.
+* Update of the major version number is made if the change constitutes a major restructuring, merging, addition or redefinition of semantics that breaks backward compatibility or cover entirely new concepts.
+* Update of the minor version number is made if the change constitutes a minor addition to existing concepts and editorial changes that do not break backward compatibility but may require updates of software to use new concepts.
 * Patches are released to fix minor issues that do not break backward compatibility.
 
 ## Documentation
