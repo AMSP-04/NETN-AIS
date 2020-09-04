@@ -11,7 +11,7 @@ The Automatic Identification System (AIS) is a world-wide automated tracking sys
 
 Common message types include the Position Report Class A (Message types 1, 2, and 3) and the Static and Voyage Related Data (Message type 5). A common standard protocol for live AIS messages exchange is NMEA-0183, an electrical and data specification for communication between marine electronics (see https://www.nmea.org).
 
-The AIS FOM module defines all of the messages types specified in ITU-R M.1371-5 annexe 8, except rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure aligns with the message type specification in ITU-R M.1371-5 annexe 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes, and most parameters are optional. The root class `AIS_RadioSignal` extends the RPR-FOM interaction class `RadioSignal`, and use the parameter `HostRadioIndex` to refer to the `RadioTransmitter` object instance on board of the vessel.
+The AIS FOM module defines all of the messages types specified in ITU-R M.1371-5 annexe 8, except for rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure aligns with the message type specification in ITU-R M.1371-5 annexe 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes, and most parameters are optional. The root class `AIS_RadioSignal` extends the RPR-FOM interaction class `RadioSignal`, and uses the parameter `HostRadioIndex` to refer to the `RadioTransmitter` object instance of the AIS station.
 
 The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteristics for an automatic identification system using time division multiple access in the VHF maritime mobile frequency band (https://www.itu.int).
 
@@ -102,12 +102,12 @@ The NETN-ORG `EquipmentItem` extensions are summarized in the following table.
 
 The `AisEquipmentItem` defines amongst others the `RadioSystemType` of the AIS station. The `RadioSystemType` should be used by the federate to initialize the `RadioTransmitter` object instance. Entity type values that may be used for the `RadioSystemType` are:
 
-- `7.3.0.37.0.0.0` (default transmitter)
-- `7.3.0.37.1.0.0` (class A transmitter)
-- `7.3.0.37.2.0.0` (class B "SO" transmitter)
-- `7.3.0.37.3.0.0` (class B "CS" transmitter)
+- `7.3.0.37.0.0.0` for a default AIS transmitter that relates to the AIS station modelled
+- `7.3.0.37.1.0.0` for a class A transmitter
+- `7.3.0.37.2.0.0` for a class B/SO (Self-Organizing) transmitter
+- `7.3.0.37.3.0.0` for a class B/CS (Carrier-Sense) transmitter
 
-See Radio Kind in the SISO Enumerations, [UID 22] for categories. By adding a subcategory (i.e. `1` ,`2` and `3`, not defined in the SISO Enumerations), it is possible to identify the specific type of transmitter, namely class A, B/SO, or B/CS in this example. These non-standard subcategory values should be defined as part of the federation agreements. The country code value `0` in this example should be replaced by the appropriate value.
+See Radio Kind in the SISO Enumerations, [UID 22] for categories. By adding a subcategory (i.e. `1` ,`2`, etc., not defined in the SISO Enumerations), it is possible to identify the specific type of transmitter, namely class A, B/SO, or B/CS in this example. These non-standard subcategory values should be defined as part of the federation agreements. The country code value `0` in this example should be replaced by the appropriate value.
 
 ## AisMessage class parameters
 
@@ -170,7 +170,7 @@ Optionally an AIS Radio Signal can be associated with a `RadioTransmitter` objec
 | `FrequencyBandwidth` | Bandpass of the radio transmissions, specified in Hertz. | `25000` Hz |
 | `RadioIndex` | Specifies the identification number for each radio on a given host. This value shall not change during simulation execution. | Per agreement. If the `RadioTransmitter` is the only radio for the vessel, the index `0` should be used. |
 | `RadioSystemType` | Entity type of the radio transmitter: Kind, Domain, Country, Category. This value shall not change during simulation execution. Note that no further refinement of the type (subcategory etc.) is defined. The country value `0` should be replaced by the actual value. | `7.3.0.37` |
-| `TransmittedPower` | The average power being transmitted in units of decibel-milliwatts. | `12500` Milliwatts for class A (`41` dBm), `5000` Milliwatts for class B/SO (`37` dBm), and `2000` Milliwatts for class B/CS (`33` dBm). |
+| `TransmittedPower` | The average power being transmitted in units of decibel-milliwatts. | `12.5` watt for class A (`41` dBm), `5` watt for class B/SO (`37` dBm), and `2` watt for class B/CS (`33` dBm). |
 | `TransmitterOperationalStatus` | On/Off state of the transmitter as an enumeration. | `Off`, `OnButNotTransmitting` or `OnAndTransmitting` |
 | `WorldLocation` | Location of the antenna in world coordinates. | The vessel position. |
 
