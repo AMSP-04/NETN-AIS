@@ -11,7 +11,7 @@ The Automatic Identification System (AIS) is a world-wide automated tracking sys
 
 Common message types include the Position Report Class A (Message types 1, 2, and 3) and the Static and Voyage Related Data (Message type 5). A common standard protocol for live AIS messages exchange is NMEA-0183, an electrical and data specification for communication between marine electronics (see https://www.nmea.org).
 
-The AIS FOM module defines all of the messages types specified in ITU-R M.1371-5 annexe 8, except for rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure aligns with the message type specification in ITU-R M.1371-5 annexe 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes, and most parameters are optional. The root class `AIS_RadioSignal` extends the RPR-FOM interaction class `RadioSignal`, and uses the parameter `HostRadioIndex` to refer to the `RadioTransmitter` object instance of the AIS station.
+The AIS FOM module defines all of the message types specified in ITU-R M.1371-5 annexe 8, except for rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure aligns with the message type specification in ITU-R M.1371-5 annexe 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes, and most parameters are optional. The root class `AIS_RadioSignal` extends the RPR-FOM interaction class `RadioSignal`, and uses the parameter `HostRadioIndex` to refer to the `RadioTransmitter` object instance of the AIS station.
 
 The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteristics for an automatic identification system using time division multiple access in the VHF maritime mobile frequency band (https://www.itu.int).
 
@@ -41,10 +41,12 @@ All AIS message types are modelled as HLA Interaction Classes. The NETN-ETR exte
 
 The following figure shows the interaction class structure, where: 
 
-- The AIS message-related classes are located under the RPR-FOM `RadioSignal` class. The `AIS_RadioSignal` class is a sub-class of the class `RadioSignal` and represents an AIS radio signal. `AIS_RadioSignal` optionally includes a reference to a Transmitter object instance. `AisMessage` on its turn is a sub-class of `AIS_RadioSignal`, which is the super class for all AIS message types. This class defines the AIS message parameters that are common across all sub-classes.
+- The AIS message-related classes are located under the RPR-FOM `RadioSignal` class. The `AIS_RadioSignal` class is a sub-class of the class `RadioSignal` and represents an AIS radio signal. `AIS_RadioSignal` optionally includes a reference to a Transmitter object instance. `AisMessage` is a sub-class of `AIS_RadioSignal`, which is the super class for all AIS message types. This class defines the AIS message parameters that are common across all sub-classes.
 - The NETN-ETR extensions are located under the  NETN-ETR `ETR_Task` class. AIS-specific task definitions are sub-classes of `ETR_Task`. Although the extensions are located in this FOM module, the agreements as described in the NETN-ETR FOM module shall be followed in processing these extensions.
 
 <img src="./images/NETN-AIS Interaction Class Tree.png" width="75%"/>
+
+Figure: Interaction Class Structure
 
 The following figure shows the object class structure, where:
 
