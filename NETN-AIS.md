@@ -21,7 +21,7 @@ The purpose of the NETN-AIS FOM module is to:
 
 - represent vessel traffic in a simulation using AIS messages to for example communicate position status reports of vessels;
 - enable the exchange of AIS messages between HLA federate applications in both a real-time and non-real-time platform level simulation;
-- allow HLA federate applications to use regular HLA interaction classes and parameters to represent vessel information, and leave the translation to the physical message format in ITU-R M.1371-5 to for example dedicated gateways.
+- allow HLA federate applications to use regular HLA interaction classes and parameters to represent vessel information, and leave the translation to the physical message format in ITU-R M.1371-5 to, for example, dedicated gateways.
 
 The NETN-AIS FOM module defines almost all of the AIS message types, whose content can be interpreted by applications without extensive knowledge of the ITU-R M.1371-5 standard and the message format defined by that standard.
 
@@ -37,7 +37,7 @@ The NETN-AIS FOM module defines:
 - Several extensions to NETN-ETR tasks for instructing simulated entities to send specific AIS message types.
 - Several extensions to NETN-ORG equipment items for creating AIS stations in a simulation.
 
-All AIS message types are modelled as HLA Interaction Classes. The NETN-ETR extensions are modelled as HLA Interaction Classes and the NETN-ORG extensions are modelled as HLA Object Classes.
+All AIS message types are modelled as HLA Interaction Classes. The NETN-ETR extensions are modelled as HLA Interaction Classes, and the NETN-ORG extensions are modelled as HLA Object Classes.
 
 The following figure shows the interaction class structure, where: 
 
@@ -48,7 +48,7 @@ The following figure shows the interaction class structure, where:
 
 The following figure shows the object class structure, where:
 
-- The NETN-ORG extensions are located under the NETN-ORG `EquipmentItem` class. These extensions provide additional information for creating AIS stations in a simulation. The agreements as described in the NETN-ORG FOM module shall be followed in processing these extensions.
+- The NETN-ORG extensions are located under the NETN-ORG `EquipmentItem` class. These extensions provide additional information for creating AIS stations in a simulation. The agreements, as described in the NETN-ORG FOM module, shall be followed in processing these extensions.
 
 <img src="./images/NETN-AIS Object Class Tree.png" width="75%"/>
 
@@ -81,7 +81,7 @@ The modelled AIS message types are:
 
 ### NETN-ETR extensions
 
-The NETN-ETR `ETR_Task` extensions are summarized in the following table. These extensions may be useful in SAR vignettes for example.
+The NETN-ETR `ETR_Task` extensions are summarized in the following table. These extensions may be useful in SAR vignettes, for example.
 
 | Task                                | Description                                                  |
 | ----------------------------------- | ------------------------------------------------------------ |
@@ -100,7 +100,7 @@ The NETN-ORG `EquipmentItem` extensions are summarized in the following table.
 | `AisEquipmentItem.Basestation`     | This class defines additional attributes for basestation equipment. |
 | `AisEquipmentItem.AidToNavigation` | This class defines additional attributes for aid to navigation (ATON) equipment. |
 
-The `AisEquipmentItem` defines amongst others the `RadioSystemType` of the AIS station. The `RadioSystemType` should be used by the federate to initialize the `RadioTransmitter` object instance. Entity type values that may be used for the `RadioSystemType` are:
+The `AisEquipmentItem` defines, amongst others, the `RadioSystemType` of the AIS station. The `RadioSystemType` should be used by the federate to initialize the `RadioTransmitter` object instance. Entity type values that may be used for the `RadioSystemType` are:
 
 - `7.3.0.37.0.0.0` for a default AIS transmitter that relates to the AIS station modelled
 - `7.3.0.37.1.0.0` for a class A transmitter
@@ -135,7 +135,7 @@ Note that the AIS position in the NETN-AIS FOM module is defined as a `GeodeticL
 
 ### Six-bit ASCII character string datatype
 
-Several parameters are typed as six-bit character strings. For example, vessel name and callsign. The parameter data type of a six-bit character string is `HLAASCIIstring`, and the following table shows the ASCII character to be used for each six-bit character.
+Several parameters are typed as six-bit character strings—for example, vessel name and callsign. The parameter data type of a six-bit character string is `HLAASCIIstring`, and the following table shows the ASCII character to be used for each six-bit character.
 
 | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char |
 | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- |
@@ -187,5 +187,5 @@ When defining values for entity marking or callsign, the limitation for the vess
 
 ## NETN-ORG MSDL extension
 
-The MSDL schema has been extended with an AIS schema to persist the AIS-related ORBAT data in a file, together with the rest of the ORBAT data. The AIS schema is located in this repository and the MSDL schema is located in the NETN-ORG repository. For more information about the MSDL schema and extensions, see the NETN-ORG repository.
+The MSDL schema has been extended with an AIS schema to persist the AIS-related ORBAT data in a file, together with the rest of the ORBAT data. The AIS schema is located in this repository, and the MSDL schema is located in the NETN-ORG repository. For more information about the MSDL schema and extensions, see the NETN-ORG repository.
 
