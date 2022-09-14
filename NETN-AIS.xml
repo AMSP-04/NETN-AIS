@@ -735,7 +735,7 @@ This message type is primarily intended for long-range detection of AIS Class A 
 Both source and destination must represent an AIS station (vessel, SAR aircraft, etc).</semantics>
                         <parameter>
                             <name>Entity</name>
-                            <dataType>UuidArrayOfHLAbyte16</dataType>
+                            <dataType>UUID</dataType>
                             <semantics>Required. The entity that represents the destination. This must be an AIS station.</semantics>
                         </parameter>
                         <parameter>
