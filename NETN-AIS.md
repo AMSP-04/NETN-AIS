@@ -71,15 +71,14 @@ The modelled AIS message types are:
 
 The NETN-ETR `ETR_Task` extensions are summarized in the following table. These extensions may be useful in SAR vignettes, for example.
 
-| Task                                | Description                                                  |
-| ----------------------------------- | ------------------------------------------------------------ |
-| `SendSafetyRelatedMessage`          | Tasks entity (the source) to send a safety related message (AIS message type 12) to another entity (the destination). Both source and destination must represent an AIS station (vessel, SAR aircraft, etc). |
-| `SendSafetyRelatedBroadcastMessage` | Tasks entity (the source) to send a safety related broadcast message (AIS message type 14). The source must represent an AIS station (vessel, SAR aircraft, etc). |
+| Name | Semantics |
+| --- | --- |
+| SendSafetyRelatedMessage | Tasks entity (the source) to send a safety related message (AIS message type 12) to another entity (the destination). Both source and destination must represent an AIS station (vessel, SAR aircraft, etc). |
+| SendSafetyRelatedBroadcastMessage | Tasks entity (the source) to send a safety related broadcast message (AIS message type 14). The source must represent an AIS station (vessel, SAR aircraft, etc). |
 
 ### NETN-ORG extensions
 
 The NETN-ORG `EquipmentItem` extensions are summarized in the following table.
-
 
 |Name|Semantics|
 |---|---|
