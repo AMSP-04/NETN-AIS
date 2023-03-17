@@ -399,7 +399,7 @@ A slightly more detailed report than Message Type 18 for vessels using Class B t
                                 <sharing>PublishSubscribe</sharing>
                                 <transportation>HLAreliable</transportation>
                                 <order>Receive</order>
-                                <semantics>Message Type 24: Static Data Report.
+                                <semantics>Message Type 24: Static Data Report. 
  
 The equivalent of Message Type 5 for ships using Class B equipment. Also used to associate an MMSI with a name on either class A or class B equipment. This message type may be in part A or part B format. According to the standard, parts A and B are expected to be broadcast in adjacent pairs.</semantics>
                                 <parameter>

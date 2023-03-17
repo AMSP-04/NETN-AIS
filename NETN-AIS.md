@@ -7,9 +7,9 @@ The purpose of the NATO Education and Training Network (NETN) Automatic Identifi
 
 The NETN-AIS FOM module defines most of the AIS message types, whose content can be interpreted by applications without extensive knowledge of the ITU-R M.1371-5 standard and the message format defined by that standard. 
 
-The Automatic Identification System (AIS) is a worldwide automated tracking system used on vessels and by Vessel Traffic Services (VTS) for identifying and locating vessels by electronically exchanging messages with other nearby vessels and VTS stations. 27 message types are defined in ITU-R M.1371-5 annex 8 (see https://www.itu.int). The most commonly used message types are the Position Report Class A (Message types 1,2, and 3) and the Static and Voyage Related Data (Message type 5). And a commonly used live protocol to exchange AIS messages is NMEA-0183. This is an electrical and data specification for communication between marine electronics (see https://www.nmea.org).
+The Automatic Identification System (AIS) is a worldwide automated tracking system used on vessels and by Vessel Traffic Services (VTS) for identifying and locating vessels by electronically exchanging messages with other nearby vessels and VTS stations. 27 message types are defined in ITU-R M.1371-5 Annex 8 (see https://www.itu.int). The most commonly used message types are the Position Report Class A (Message types 1,2, and 3) and the Static and Voyage Related Data (Message type 5). And a commonly used live protocol to exchange AIS messages is NMEA-0183. This is an electrical and data specification for communication between marine electronics (see https://www.nmea.org).
 
-The NETN-AIS FOM module defines all of the messages types specified in ITU-R M.1371-5 annex 8, except for rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure is closely aligned with the message type specification in ITU-R M.1371-5 annex 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes and most of the class parameters are optional. The root class `AisMessage` is integrated with the RPR-FOM by subclassing `RadioSignal`, using the concept of `HostRadioIndex` to refer to the `RadioTransmitter` object instance on board the vessel.
+The NETN-AIS FOM module defines all of the messages types specified in ITU-R M.1371-5 Annex 8, except for rarely used message types or message types that are more related to traffic analysis in an AIS network (i.e. 15, 16, 20, 22, 23, 25 and 26). The FOM class structure is closely aligned with the message type specification in ITU-R M.1371-5 Annex 8, enabling easy translation to/from NMEA 0183. The message types are modelled as interaction classes and most of the class parameters are optional. The root class `AisMessage` is integrated with the RPR-FOM by subclassing `RadioSignal`, using the concept of `HostRadioIndex` to refer to the `RadioTransmitter` object instance on board the vessel.
 
 The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteristics for an automatic identification system using time division multiple access in the VHF maritime mobile frequency band (https://www.itu.int).
 
@@ -27,7 +27,7 @@ All AIS message types are modelled as HLA Interaction Classes. The NETN-ETR exte
 
 The following figure shows the interaction class structure, where: 
 
-- The AIS message-related classes are located under the RPR-FOM `RadioSignal` class. The `AIS_RadioSignal` class is a sub-class of the class `RadioSignal` and represents an AIS radio signal. `AIS_RadioSignal` optionally includes a reference to a Transmitter object instance. `AisMessage` is a sub-class of `AIS_RadioSignal`, which is the super class for all AIS message types. This class defines the AIS message parameters that are common across all sub-classes.
+- The AIS message-related classes are located under the RPR-FOM `RadioSignal` class. The `AIS_RadioSignal` class is a subclass of the class `RadioSignal` and represents an AIS radio signal. `AIS_RadioSignal` optionally includes a reference to a Transmitter object instance. `AisMessage` is a sub-class of `AIS_RadioSignal`, which is the superclass for all AIS message types. This class defines the AIS message parameters that are common across all sub-classes.
 - The NETN-ETR extensions are located under the  NETN-ETR `ETR_Task` class. AIS-specific task definitions are sub-classes of `ETR_Task`. Although the extensions are located in this FOM module, the agreements as described in the NETN-ETR FOM module shall be followed in processing these extensions.
 
 <img src="./images/NETN-AIS Interaction Class Tree.png" width="75%"/>
@@ -80,13 +80,14 @@ The NETN-ETR `ETR_Task` extensions are summarized in the following table. These 
 
 The NETN-ORG `EquipmentItem` extensions are summarized in the following table.
 
-| EquipmentItem sub-classes          | Description                                                  |
-| ---------------------------------- | ------------------------------------------------------------ |
-| `AisEquipmentItem`                 | This class defines additional attributes for AIS equipment. Depending on the kind of AIS equipment, further attributes are added in sub-classes. |
-| `AisEquipmentItem.Vessel`          | This class defines additional attributes for vessel equipment. |
-| `AisEquipmentItem.SARaircraft`     | This class defines additional attributes for SAR aircraft equipment. |
-| `AisEquipmentItem.Basestation`     | This class defines additional attributes for basestation equipment. |
-| `AisEquipmentItem.AidToNavigation` | This class defines additional attributes for aid to navigation (ATON) equipment. |
+
+|Name|Semantics|
+|---|---|
+|AisEquipmentItem|This class defines additional attributes for AIS equipment. Depending on the kind of AIS equipment, further attributes are added in sub-classes.|
+|AisEquipmentItem.Vessel|This class defines additional attributes for vessel equipment.|
+|AisEquipmentItem.SARaircraft|This class defines additional attributes for SAR aircraft equipment.|
+|AisEquipmentItem.Basestation|This class defines additional attributes for basestation equipment.|
+|AisEquipmentItem.AidToNavigation|This class defines additional attributes for aid to navigation (ATON) equipment.|
 
 The `AisEquipmentItem` defines, amongst others, the `RadioSystemType` of the AIS station. The `RadioSystemType` should be used by the federate to initialize the `RadioTransmitter` object instance. Entity type values that may be used for the `RadioSystemType` are:
 
@@ -95,7 +96,7 @@ The `AisEquipmentItem` defines, amongst others, the `RadioSystemType` of the AIS
 - `7.3.0.37.2.0.0` for a class B/SO (Self-Organizing) transmitter
 - `7.3.0.37.3.0.0` for a class B/CS (Carrier-Sense) transmitter
 
-See Radio Kind in the SISO Enumerations, [UID 22] for categories. By adding a subcategory (i.e. `1` ,`2`, etc., not defined in the SISO Enumerations), it is possible to identify the specific type of transmitter, namely class A, B/SO, or B/CS in this example. These non-standard subcategory values should be defined as part of the federation agreements. The country code value `0` in this example should be replaced by the appropriate value.
+See Radio Kind in the SISO Enumerations, [UID 22] for categories. By adding a subcategory (i.e. `1`,`2`, etc., not defined in the SISO Enumerations), it is possible to identify the specific type of transmitter, namely class A, B/SO, or B/CS in this example. These non-standard subcategory values should be defined as part of the federation agreements. The country code value `0` in this example should be replaced by the appropriate value.
 
 ## AisMessage class parameters
 
@@ -105,19 +106,19 @@ Many of the `AisMessage` class parameters are optional. For each optional parame
 
 For example, to transmit a **Position Report Class A** message, only the following parameters are required:
 
-| Parameter name | Semantics |
-| -------------- | ------------------------------------------------------- |
-| `MessageId` | Message type identifier. |
-| `UserId` | The message is from the vessel identified by this MMSI. |
+|Parameter|Semantics|
+|---|---|
+|MessageId|Required. Message type identifier.|
+|UserId|Required. The message is from the vessel identified by this MMSI.|
 
 All other parameters are optional. However, to include a minimum amount of navigation data in the message and make the message useful, the following parameters should also be provided:
 
-| Parameter name | Semantics |
-| -------------- | ---------------------------------------------------------- |
-| `Position` | OPTIONAL (Default: not available). AIS (Lat,Lon) position. |
-| `UTCtime` | OPTIONAL (Default: not available). Time of the report. |
+|Parameter|Semantics|
+|---|---|
+|Position|Optional (Default: not available). AIS (Lat,Lon) position.|
+|UTCtime|Optional (Default: not available). Time of report.|
 
-Other parameters include true heading, course, rate of turn, etc. These are all optional but can be provided when available.
+Other parameters include the true heading, course, rate of turn, etc. These are all optional but can be provided when available.
 
 Note that the AIS position in the NETN-AIS FOM module is defined as a `GeodeticLocation` datatype. This is different from ITU-R M.1371-5, where Longitude and Latitude are represented in 1/10 000 min and stored in a 28 and 27-bit field, respectively. The purpose of this FOM module is to not bother the user with the message format in ITU-R M.1371-5, but rather let the user focus on the information that is exchanged in the simulation. The physical message format is not a concern of this FOM module. However, the class and parameter structure is such that the mapping between the NETN-AIS FOM and ITU-R M.1371-5 is straightforward.
 
@@ -146,30 +147,30 @@ Several parameters are typed as six-bit character strings—for example, vessel 
 
 ### EpochTimeSecInt64 datatype
 
-Time is represented as `EpochTimeSecInt64`. This value represents the number of simulation seconds since the Epoch, 1 Jan 1970. In most messages, time is in relation to an AIS position update in an AIS message type.
+Time is represented as `EpochTimeSecInt64`. This value represents the number of simulation seconds since the Epoch, 1 Jan 1970. In most messages, the time is related to an AIS position update in an AIS message type.
 
 ## RadioTransmitter
 
 Optionally an AIS Radio Signal can be associated with a `RadioTransmitter` object instance. The non-optional attributes of the `RadioTransmitter` object instance may be assigned the following values:
 
-| Attribute name | Description | Value |
-| ------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `Frequency` | Center frequency of the radio transmissions, specified in Herz. | `162000000` Hz |
-| `FrequencyBandwidth` | Bandpass of the radio transmissions, specified in Hertz. | `25000` Hz |
-| `RadioIndex` | Specifies the identification number for each radio on a given host. This value shall not change during simulation execution. | Per agreement. If the `RadioTransmitter` is the only radio for the vessel, the index `0` should be used. |
-| `RadioSystemType` | Entity type of the radio transmitter: Kind, Domain, Country, Category. This value shall not change during simulation execution. Note that no further refinement of the type (subcategory etc.) is defined. The country value `0` should be replaced by the actual value. | `7.3.0.37` |
-| `TransmittedPower` | The average power being transmitted in units of decibel-milliwatts. | `12.5` watt for class A (`41` dBm), `5` watt for class B/SO (`37` dBm), and `2` watt for class B/CS (`33` dBm). |
-| `TransmitterOperationalStatus` | On/Off state of the transmitter as an enumeration. | `Off`, `OnButNotTransmitting` or `OnAndTransmitting` |
-| `WorldLocation` | Location of the antenna in world coordinates. | The vessel position. |
+| Attribute | Semantics | Value |
+| --- | --- | --- |
+| Frequency | Center frequency of the radio transmissions, specified in Herz. | `162000000` Hz |
+| FrequencyBandwidth | Bandpass of the radio transmissions, specified in Hertz. | `25000` Hz |
+| RadioIndex | Specifies the identification number for each radio on a given host. This value shall not change during simulation execution. | Per agreement. If the `RadioTransmitter` is the only radio for the vessel, the index `0` should be used. |
+| RadioSystemType | Entity type of the radio transmitter: Kind, Domain, Country, Category. This value shall not change during simulation execution. Note that no further refinement of the type (subcategory etc.) is defined. The country value `0` should be replaced by the actual value. | `7.3.0.37` |
+| TransmittedPower | The average power being transmitted in units of decibel-milliwatts. | `12.5` watt for class A (`41` dBm), `5` watt for class B/SO (`37` dBm), and `2` watt for class B/CS (`33` dBm). |
+| TransmitterOperationalStatus | On/Off state of the transmitter as an enumeration. | `Off`, `OnButNotTransmitting` or `OnAndTransmitting` |
+| WorldLocation | Location of the antenna in world coordinates. | The vessel position. |
 
 ## Entity marking and callsign
 
-As a best practice the vessel callsign (a seven (7) six-bit character string) should be based on (a) the `Callsign` attribute of the `NETN_SurfaceVessel` class or (b) the `Marking` attribute of the `SurfaceVessel` class, depending on what class is used. The size of these attributes is, however, different, as summarized in the following table:
+As a best practice, the vessel callsign (a seven (7) six-bit character string) should be based on (a) the `Callsign` attribute of the `NETN_SurfaceVessel` class or (b) the `Marking` attribute of the `SurfaceVessel` class, depending on what class is used. The size of these attributes is, however, different, as summarized in the following table:
 
 | Attribute | Datatype | Size |
-| ------------------------------------------------------------ | -------------------- | --------- |
-| `BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel.Callsign` | ` HLAunicodeString ` | Unlimited |
-| `BaseEntity.PhysicalEntity.Platform.SurfaceVessel.Marking` | `MarkingStruct` | 11 Octets |
+| --- | --- | --- |
+| BaseEntity. PhysicalEntity. Platform. SurfaceVessel. NETN_SurfaceVessel. Callsign | ` HLAunicodeString ` | Unlimited |
+| BaseEntity. PhysicalEntity. Platform. SurfaceVessel. Marking | `MarkingStruct` | 11 Octets |
 
 When defining values for entity marking or callsign, the limitation for the vessel callsign should be taken into account.
 
