@@ -4,7 +4,13 @@
 |---|---|---|
 |1.1|2023-03-18|NETN-BASE, RPR-Communication, NETN-ORG, NETN-ETR|
 
-The purpose of the NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module is to:   * represent vessel traffic in a simulation using AIS messages to for example communicate position status reports of vessels  * enable the exchange of AIS messages between HLA Federate Applications in both a real-time and non-real-time platform-level simulation  * allow HLA Federate Applications to use regular HLA interaction classes and parameters to represent vessel information, and leave the translation to the physical message format in ITU-R M.1371-5 to for example dedicated gateways.   The NETN-AIS FOM module defines most of the AIS message types, whose content can be interpreted by applications without extensive knowledge of the ITU-R M.1371-5 standard and the message format defined by that standard. 
+The purpose of the NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module is to:   
+
+* represent vessel traffic in a simulation using AIS messages to for example communicate position status reports of vessels  
+* enable the exchange of AIS messages between HLA Federate Applications in both a real-time and non-real-time platform-level simulation  
+* allow HLA Federate Applications to use regular HLA interaction classes and parameters to represent vessel information, and leave the translation to the physical message format in ITU-R M.1371-5 to for example dedicated gateways.   
+
+The NETN-AIS FOM module defines most of the AIS message types, whose content can be interpreted by applications without extensive knowledge of the ITU-R M.1371-5 standard and the message format defined by that standard. 
 
 The Automatic Identification System (AIS) is a worldwide automated tracking system used on vessels and by Vessel Traffic Services (VTS) for identifying and locating vessels by electronically exchanging messages with other nearby vessels and VTS stations. 27 message types are defined in ITU-R M.1371-5 Annex 8 (see https://www.itu.int). The most commonly used message types are the Position Report Class A (Message types 1,2, and 3) and the Static and Voyage Related Data (Message type 5). And a commonly used live protocol to exchange AIS messages is NMEA-0183. This is an electrical and data specification for communication between marine electronics (see https://www.nmea.org).
 
@@ -16,35 +22,19 @@ The NETN-AIS FOM module is simulation oriented and does not focus on the physica
 
 ## Overview
 
-The NETN-AIS FOM module defines:
+The NETN-AIS FOM module can represent the following:
 
-- The AIS message types.
-- Several extensions to NETN-ETR tasks for instructing simulated entities to send specific AIS message types.
-- Several extensions to NETN-ORG equipment items for creating AIS stations in a simulation.
+* AIS messages of different types are represented as `AisMessage` interactions that extend `RadioSignal` defined in the RPR-Communication FOM module.
+* AIS-specific simulation tasks are interactions that extend `ETR_Task` defined in the NETN-ETR FOM module.
+* AIS stations are represented as `AisEquipmentItem` objects that extend `EquipmentItem` defined in the NETN-ORG FOM module.
 
-All AIS message types are modelled as HLA Interaction Classes. The NETN-ETR extensions are modelled as HLA Interaction Classes, and the NETN-ORG extensions are modelled as HLA Object Classes.
-
-The following figure shows the interaction class structure, where: 
-
-- The AIS message-related classes are located under the RPR-FOM `RadioSignal` class. The `AIS_RadioSignal` class is a subclass of the class `RadioSignal` and represents an AIS radio signal. `AIS_RadioSignal` optionally includes a reference to a Transmitter object instance. `AisMessage` is a sub-class of `AIS_RadioSignal`, which is the superclass for all AIS message types. This class defines the AIS message parameters that are common across all sub-classes.
-- The NETN-ETR extensions are located under the  NETN-ETR `ETR_Task` class. AIS-specific task definitions are sub-classes of `ETR_Task`. Although the extensions are located in this FOM module, the agreements as described in the NETN-ETR FOM module shall be followed in processing these extensions.
-
-<img src="./images/NETN-AIS Interaction Class Tree.png" width="75%"/>
-
-Figure: Interaction Class Structure
-
-The following figure shows the object class structure, where:
-
-- The NETN-ORG extensions are located under the NETN-ORG `EquipmentItem` class. These extensions provide additional information for creating AIS stations in a simulation. The agreements, as described in the NETN-ORG FOM module, shall be followed in processing these extensions.
-
-<img src="./images/NETN-AIS Object Class Tree.png" width="75%"/>
 
 ### AIS message types
 
 The modelled AIS message types are:
 
 | Message type | Description |
-| ------------ | ------------------------------------------------------------ |
+| --- | --- |
 | 1 | **Position Report Class A**. Message type for a scheduled position report; Class A shipborne mobile equipment. This message transmits information about the navigation of a ship: Longitude and latitude, time, heading, speed, ships navigation status, e.g. under power, at anchor. This message is transmitted every 2 to 10 seconds while underway, and every 3 minutes while at anchor. |
 | 2 | Idem. |
 | 3 | Idem. |
