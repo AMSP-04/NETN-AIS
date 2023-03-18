@@ -1,6 +1,10 @@
 ## Changelog NETN-AIS
 
-### Changes for v1.1
-Version 1.1 was developed by MSG-191 and included in NETN-FOM v4.0.
+### v1.0 - Developed by MSG-163 for NETN-FOM v3.0
 
-#### Minor text updates
+
+
+### v1.1 - Developed by MSG-191 for NATO-FOM v4.0
+
+* Minor text updates
+

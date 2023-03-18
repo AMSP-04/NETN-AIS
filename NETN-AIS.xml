@@ -4,15 +4,9 @@
         <name>NETN-AIS</name>
         <type>FOM</type>
         <version>1.1</version>
-        <modificationDate>2023-03-12</modificationDate>
+        <modificationDate>2023-03-18</modificationDate>
         <securityClassification>Not Classified</securityClassification>
-        <purpose>The purpose of the NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module is to:
-
- * represent vessel traffic in a simulation using AIS messages to for example communicate position status reports of vessels
- * enable the exchange of AIS messages between HLA Federate Applications in both a real-time and non-real-time platform-level simulation
- * allow HLA Federate Applications to use regular HLA interaction classes and parameters to represent vessel information, and leave the translation to the physical message format in ITU-R M.1371-5 to for example dedicated gateways. 
-
-The NETN-AIS FOM module defines most of the AIS message types, whose content can be interpreted by applications without extensive knowledge of the ITU-R M.1371-5 standard and the message format defined by that standard. </purpose>
+        <purpose>The purpose of the NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module is to:   * represent vessel traffic in a simulation using AIS messages to for example communicate position status reports of vessels  * enable the exchange of AIS messages between HLA Federate Applications in both a real-time and non-real-time platform-level simulation  * allow HLA Federate Applications to use regular HLA interaction classes and parameters to represent vessel information, and leave the translation to the physical message format in ITU-R M.1371-5 to for example dedicated gateways.   The NETN-AIS FOM module defines most of the AIS message types, whose content can be interpreted by applications without extensive knowledge of the ITU-R M.1371-5 standard and the message format defined by that standard. </purpose>
         <applicationDomain>Training, analysis</applicationDomain>
         <description>The Automatic Identification System (AIS) is a worldwide automated tracking system used on vessels and by Vessel Traffic Services (VTS) for identifying and locating vessels by electronically exchanging messages with other nearby vessels and VTS stations. 27 message types are defined in ITU-R M.1371-5 Annex 8 (see https://www.itu.int). The most commonly used message types are the Position Report Class A (Message types 1,2, and 3) and the Static and Voyage Related Data (Message type 5). And a commonly used live protocol to exchange AIS messages is NMEA-0183. This is an electrical and data specification for communication between marine electronics (see https://www.nmea.org).
 
@@ -20,8 +14,8 @@ The NETN-AIS FOM module defines all of the messages types specified in ITU-R M.1
 
 The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteristics for an automatic identification system using time division multiple access in the VHF maritime mobile frequency band (https://www.itu.int).</description>
         <useLimitation>The NETN-AIS FOM module is simulation oriented and does not focus on the physical message format as defined by ITU-R M.1371-5. However, the FOM is aligned well with ITU-R M.1371-5, enabling relatively easy mapping to/from the message format defined in ITU-R M.1371-5.</useLimitation>
-        <useHistory>v1.0.0 - Developed by MSG-163 for NETN-FOM v3.0</useHistory>
-        <useHistory>v1.1.0 - Developed by MSG-191 for NATO-FOM v4.0</useHistory>
+        <useHistory>v1.0 - Developed by MSG-163 for NETN-FOM v3.0</useHistory>
+        <useHistory notes="netn-ais_1">v1.1 - Developed by MSG-191 for NATO-FOM v4.0</useHistory>
         <poc>
             <pocType>Release authority</pocType>
             <pocName>NATO Modelling and Simulation Group</pocName>
@@ -1192,4 +1186,10 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
             </arrayData>
         </arrayDataTypes>
     </dataTypes>
+    <notes>
+        <note>
+            <label>netn-ais_1</label>
+            <semantics>* Minor text updates</semantics>
+        </note>
+    </notes>
 </objectModel>
