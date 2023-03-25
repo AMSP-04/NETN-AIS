@@ -171,7 +171,17 @@ The MSDL schema has been extended with an AIS schema to persist the AIS-related 
 
 Note that inherited and dependency parameters are not explicitly listed for each interaction class below. Only parameters defined in this FOM Module are listed. 
 
-<img src="./images/objectclasses.png">
+```mermaid
+graph RL
+ORG_Root-->HLAobjectRoot
+EquipmentItem-->ORG_Root
+AisEquipmentItem-->EquipmentItem
+Vessel-->AisEquipmentItem
+SARaircraft-->AisEquipmentItem
+Basestation-->AisEquipmentItem
+AidToNavigation-->AisEquipmentItem
+
+```
 
 
 ### AisEquipmentItem
@@ -204,7 +214,42 @@ This class defines additional attributes for aid to navigation (ATON) equipment.
 
 Note that inherited and dependency parameters are not explicitly listed for each interaction class below. Only parameters defined in this FOM Module are listed. 
 
-<img src="./images/interactionclasses.png">
+```mermaid
+graph RL
+RadioSignal-->HLAinteractionRoot
+ETR_Root-->HLAinteractionRoot
+AIS_RadioSignal-->RadioSignal
+AisMessage-->AIS_RadioSignal
+AisNavigationData-->AisMessage
+AisBaseStationReportAndUTCDateResponseData-->AisMessage
+AisStaticAndVoyageData-->AisMessage
+AisBinaryMessageData-->AisMessage
+AcknowledgeData-->AisMessage
+AisMessage9-->AisMessage
+AisMessage10-->AisMessage
+AisMessage12-->AisMessage
+AisMessage14-->AisMessage
+AisMessage17-->AisMessage
+AisMessage18-->AisMessage
+AisMessage21-->AisMessage
+AisMessage27-->AisMessage
+AisMessage1-->AisNavigationData
+AisMessage2-->AisNavigationData
+AisMessage3-->AisNavigationData
+AisMessage4-->AisBaseStationReportAndUTCDateResponseData
+AisMessage11-->AisBaseStationReportAndUTCDateResponseData
+AisMessage5-->AisStaticAndVoyageData
+AisMessage19-->AisStaticAndVoyageData
+AisMessage24-->AisStaticAndVoyageData
+AisMessage6-->AisBinaryMessageData
+AisMessage8-->AisBinaryMessageData
+AisMessage7-->AcknowledgeData
+AisMessage13-->AcknowledgeData
+ETR_Task-->ETR_Root
+SendSafetyRelatedMessage-->ETR_Task
+SendSafetyRelatedBroadcastMessage-->ETR_Task
+
+```
 
 
 
