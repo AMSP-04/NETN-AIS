@@ -3,7 +3,7 @@
 
 |Version| Date| Dependencies|
 |---|---|---|
-|1.1|2023-03-18|NETN-BASE, RPR-Communication, NETN-ORG, NETN-ETR|
+|1.1|2023-03-25|NETN-BASE, RPR-Communication, NETN-ORG, NETN-ETR|
 
 > [Full Documentation](NETN-AIS.md)
 
