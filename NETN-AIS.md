@@ -188,7 +188,7 @@ This class defines additional attributes for aid to navigation (ATON) equipment.
 
 ## Interaction Classes
 
-Note that inherited and dependency parameters are not not included in the description of interaction classes.
+Note that inherited and dependency parameters are not included in the description of interaction classes.
 
 ```mermaid
 graph RL
