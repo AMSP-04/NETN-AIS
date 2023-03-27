@@ -133,9 +133,7 @@ Several parameters are typed as six-bit character strings—for example, vessel 
 | 001110 | 14 | "N" | 011110 | 30 | "\^" | 101110 | 46 | "." | 111110 | 62 | ">" |
 | 001111 | 15 | "O" | 011111 | 31 | "\_" | 101111 | 47 | "/" | 111111 | 63 | "?" |
 
-### EpochTimeSecInt64 datatype
 
-Time is represented as `EpochTimeSecInt64`. This value represents the number of simulation seconds since the Epoch, 1 Jan 1970. In most messages, the time is related to an AIS position update in an AIS message type.
 
 ## RadioTransmitter
 
@@ -164,7 +162,7 @@ When defining values for entity marking or callsign, the limitation for the vess
 
 ## NETN-ORG MSDL extension
 
-The MSDL schema has been extended with an AIS schema to persist the AIS-related ORBAT data in a file, together with the rest of the ORBAT data. The AIS schema is located in this repository, and the MSDL schema is located in the NETN-ORG repository. For more information about the MSDL schema and extensions, see the NETN-ORG repository.
+The NETN-ORG MSDL schema is extended with an AIS schema. This enables persistent storage of AIS-related ORBAT data in the same file as the rest of the ORBAT data.
 
 
 ## Object Classes
