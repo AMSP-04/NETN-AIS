@@ -1164,23 +1164,7 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
                     <value>31</value>
                 </enumerator>
             </enumeratedData>
-            <enumeratedData>
-                <name>TransmitterOperationalStatusEnum8</name>
-                <representation>HLAoctet</representation>
-                <semantics>The current operational state of a radio transmitter.</semantics>
-                <enumerator>
-                    <name>Off</name>
-                    <value>0</value>
-                </enumerator>
-                <enumerator>
-                    <name>OnButNotTransmitting</name>
-                    <value>1</value>
-                </enumerator>
-                <enumerator>
-                    <name>OnAndTransmitting</name>
-                    <value>2</value>
-                </enumerator>
-            </enumeratedData>
+         
             <enumeratedData>
                 <name>PartNumberEnumType</name>
                 <representation>HLAoctet</representation>
