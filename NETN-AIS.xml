@@ -221,7 +221,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                             </parameter>
                             <parameter>
                                 <name>UTCtime</name>
-                                <dataType>ScenarioTime</dataType>
+                                <dataType>EpochTime</dataType>
                                 <semantics>Optional (Default: not available). Time of the report.</semantics>
                             </parameter>
                             <parameter>
@@ -265,7 +265,7 @@ Message type for a special position report, response to interrogation; Class A s
                             <semantics>Common reporting structure for Message Types 4 and 11 for reporting UTC time and date and, at the same time, position. It is also used by AIS stations for determining if the station is within 120 NM for response to Messages Types 20 and 23.</semantics>
                             <parameter>
                                 <name>UTCtime</name>
-                                <dataType>ScenarioTime</dataType>
+                                <dataType>EpochTime</dataType>
                                 <semantics>Optional (Default: not available). Time of report.</semantics>
                             </parameter>
                             <parameter>
@@ -348,7 +348,7 @@ This message type is transmitted every 6 minutes and should only be used by Clas
                                 </parameter>
                                 <parameter>
                                     <name>ETAtime</name>
-                                    <dataType>ScenarioTime</dataType>
+                                    <dataType>EpochTime</dataType>
                                     <semantics>Optional (Default: not available). Estimated time of arrival. Not applicable to SAR aircraft. 
 If a zero value is provided then this shall be interpreted as not available.</semantics>
                                 </parameter>
@@ -393,7 +393,7 @@ A slightly more detailed report than Message Type 18 for vessels using Class B t
                                 </parameter>
                                 <parameter>
                                     <name>UTCtime</name>
-                                    <dataType>ScenarioTime</dataType>
+                                    <dataType>EpochTime</dataType>
                                     <semantics>Optional (Default: not available). Time of the report.</semantics>
                                 </parameter>
                             </interactionClass>
@@ -549,7 +549,7 @@ Tracking information for search-and-rescue aircraft.</semantics>
                             </parameter>
                             <parameter>
                                 <name>UTCtime</name>
-                                <dataType>ScenarioTime</dataType>
+                                <dataType>EpochTime</dataType>
                                 <semantics>Optional (Default: not available). Time of the report.</semantics>
                             </parameter>
                         </interactionClass>
@@ -644,7 +644,7 @@ A less detailed report than message types 1-3 for vessels using Class B transmit
                             </parameter>
                             <parameter>
                                 <name>UTCtime</name>
-                                <dataType>ScenarioTime</dataType>
+                                <dataType>EpochTime</dataType>
                                 <semantics>Optional (Default: not available). Time of the report.</semantics>
                             </parameter>
                         </interactionClass>
@@ -693,7 +693,7 @@ Identification and location message to be emitted by aids to navigation such as 
                             </parameter>
                             <parameter>
                                 <name>UTCtime</name>
-                                <dataType>ScenarioTime</dataType>
+                                <dataType>EpochTime</dataType>
                                 <semantics>Optional (Default: not available). Time of the report.</semantics>
                             </parameter>
                             <parameter>
@@ -1164,7 +1164,6 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
                     <value>31</value>
                 </enumerator>
             </enumeratedData>
-         
             <enumeratedData>
                 <name>PartNumberEnumType</name>
                 <representation>HLAoctet</representation>
