@@ -55,11 +55,11 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
         </reference>
         <reference>
             <type>Dependency</type>
-            <identification>NETN-ORG</identification>
+            <identification>NETN-ETR</identification>
         </reference>
         <reference>
             <type>Dependency</type>
-            <identification>NETN-ETR</identification>
+            <identification>NETN-ORG</identification>
         </reference>
         <other>
 Copyright © 2020 by NATO/OTAN. All rights reserved.
