@@ -3,15 +3,15 @@
 
 |Version| Date| Dependencies|
 |---|---|---|
-|1.1|2023-03-25|NETN-BASE, RPR-Communication, NETN-ORG, NETN-ETR|
+|1.1|2023-11-19|NETN-BASE, RPR-Communication, NETN-ETR, NETN-ORG, NETN-SMC|
 
 > [Full Documentation](NETN-AIS.md)
 
-The purpose of the NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module is to:  
-
-* represent vessel traffic in a simulation using AIS messages to for example communicate position status reports of vessels  
-* enable the exchange of AIS messages between HLA Federate Applications in both a real-time and non-real-time platform-level simulation  
-* allow HLA Federate Applications to use regular HLA interaction classes and parameters to represent vessel information, and leave the translation to the physical message format in ITU-R M.1371-5 to for example dedicated gateways.   
+The purpose of the NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module is to:     
+        
+* represent vessel traffic in a simulation using AIS messages to for example communicate position status reports of vessels   
+* enable the exchange of AIS messages between HLA Federate Applications in both a real-time and non-real-time platform-level simulation   
+* allow HLA Federate Applications to use regular HLA interaction classes and parameters to represent vessel information, and leave the translation to the physical message format in ITU-R M.1371-5 to for example dedicated gateways.  
 
 The NETN-AIS FOM module defines most of the AIS message types, whose content can be interpreted by applications without extensive knowledge of the ITU-R M.1371-5 standard and the message format defined by that standard. 
 

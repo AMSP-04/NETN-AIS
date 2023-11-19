@@ -4,7 +4,7 @@
         <name>NETN-AIS</name>
         <type>FOM</type>
         <version>1.1</version>
-        <modificationDate>2023-03-25</modificationDate>
+        <modificationDate>2023-11-19</modificationDate>
         <securityClassification>Not Classified</securityClassification>
         <purpose>The purpose of the NATO Education and Training Network (NETN) Automatic Identification System (AIS) Module is to:     
         
@@ -60,6 +60,10 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
         <reference>
             <type>Dependency</type>
             <identification>NETN-ORG</identification>
+        </reference>
+        <reference>
+            <type>Dependency</type>
+            <identification>NETN-SMC</identification>
         </reference>
         <other>
 Copyright © 2020 by NATO/OTAN. All rights reserved.
@@ -740,23 +744,9 @@ This message type is primarily intended for long-range detection of vessels equi
                 </interactionClass>
             </interactionClass>
             <interactionClass>
-                <name>ETR_Task</name>
+                <name>SMC_EntityControl</name>
                 <interactionClass>
-                    <name>RequestTask</name>
-                    <interactionClass>
-                        <name>SendSafetyRelatedBroadcastMessage</name>
-                        <sharing>PublishSubscribe</sharing>
-                        <transportation>HLAreliable</transportation>
-                        <order>Receive</order>
-                        <semantics>Tasks entity (the source) to send a safety-related broadcast message (AIS message type 14). 
- 
-The source must represent an AIS station (vessel, SAR aircraft, etc).</semantics>
-                        <parameter>
-                            <name>Message</name>
-                            <dataType>HLAASCIIstring</dataType>
-                            <semantics>Required. 1-161 chars of six-bit text.</semantics>
-                        </parameter>
-                    </interactionClass>
+                    <name>Task</name>
                     <interactionClass>
                         <name>SendSafetyRelatedMessage</name>
                         <sharing>PublishSubscribe</sharing>
@@ -774,6 +764,20 @@ Both source and destination must represent an AIS station (vessel, SAR aircraft,
                             <name>Message</name>
                             <dataType>HLAASCIIstring</dataType>
                             <semantics>Required. 1-156 chars of six-bit text.</semantics>
+                        </parameter>
+                    </interactionClass>
+                    <interactionClass>
+                        <name>SendSafetyRelatedBroadcastMessage</name>
+                        <sharing>PublishSubscribe</sharing>
+                        <transportation>HLAreliable</transportation>
+                        <order>Receive</order>
+                        <semantics>Tasks entity (the source) to send a safety-related broadcast message (AIS message type 14). 
+ 
+The source must represent an AIS station (vessel, SAR aircraft, etc).</semantics>
+                        <parameter>
+                            <name>Message</name>
+                            <dataType>HLAASCIIstring</dataType>
+                            <semantics>Required. 1-161 chars of six-bit text.</semantics>
                         </parameter>
                     </interactionClass>
                 </interactionClass>
@@ -1178,9 +1182,9 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
                 </enumerator>
             </enumeratedData>
             <enumeratedData>
-                <name>TaskTypeEnum</name>
+                <name>EntityControlActionEnum</name>
                 <representation>HLAinteger32BE</representation>
-                <semantics>Task types.</semantics>
+                <semantics>Control actions for entities.</semantics>
                 <enumerator>
                     <name>SendSafetyRelatedMessage</name>
                     <value>300</value>
@@ -1220,7 +1224,7 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
 The NETN-AIS FOM module covers the following: 
  
 * AIS messages are represented as `AisMessage` interactions extending the RPR-Communication FOM Module `RadioSignal` interaction class. 
-* AIS-specific entity tasking interactions that extend the NETN-ETR FOM module `ETR_Task` interaction class. 
+* AIS-specific entity tasking interactions that extend the NETN-ETR FOM module `Task` interaction class. 
 * AIS stations are represented as `AisEquipmentItem` objects that extend `EquipmentItem` defined in the NETN-ORG FOM module. 
  
  
@@ -1302,7 +1306,7 @@ An AIS Radio Signal can be associated with a `RadioTransmitter` object instance.
  
 ### NETN-ETR extensions 
  
-The NETN-ETR `ETR_Task` extensions are summarized in the following table. 
+The NETN-ETR `Task` extensions are summarized in the following table. 
  
 | Name | Semantics | 
 | --- | --- | 
