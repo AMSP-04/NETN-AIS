@@ -140,29 +140,23 @@ In addition, the NETN-ORG MSDL schema is extended with an AIS schema. This enabl
 
 ## Object Classes
 
-Note that inherited and dependency attributes are not included in the description of object classes.
-
 ```mermaid
-graph RL
-ORG_Root-->HLAobjectRoot
-OrganizationElement-->ORG_Root
-Equipment-->OrganizationElement
-AIS_Equipment-->Equipment
-Vessel-->AIS_Equipment
-SARaircraft-->AIS_Equipment
-Basestation-->AIS_Equipment
-AidToNavigation-->AIS_Equipment
+classDiagram 
+direction LR
+
+HLAobjectRoot <|-- ORG_Root
+ORG_Root <|-- OrganizationElement
+OrganizationElement <|-- Equipment
+Equipment <|-- AIS_Equipment
+AIS_Equipment <|-- Vessel
+AIS_Equipment <|-- SARaircraft
+AIS_Equipment <|-- Basestation
+AIS_Equipment <|-- AidToNavigation
+AIS_Equipment : MMSI
+AIS_Equipment : RadioSystemType
+AIS_Equipment : TransmitterStatus
+Vessel : IMO
 ```
-
-### AIS_Equipment
-
-This class defines additional attributes for AIS equipment. Depending on the kind of AIS equipment, further attributes are added in sub-classes.
-
-|Attribute|Datatype|Semantics|
-|---|---|---|
-|MMSI|MMSIType|Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.|
-|TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
-|RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
 
 ### Vessel
 
@@ -171,98 +165,156 @@ This class defines additional attributes for vessel equipment.
 |Attribute|Datatype|Semantics|
 |---|---|---|
 |IMO|IMOType|Optional. The International Maritime Organization (IMO) number to identify the vessel. If the value is not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.|
+|MMSI|MMSIType|Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.|
+|RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
+|TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
 
 ### SARaircraft
 
 This class defines additional attributes for SAR aircraft equipment.
 
+|Attribute|Datatype|Semantics|
+|---|---|---|
+|MMSI|MMSIType|Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.|
+|RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
+|TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
 
 ### Basestation
 
 This class defines additional attributes for basestation equipment.
 
+|Attribute|Datatype|Semantics|
+|---|---|---|
+|MMSI|MMSIType|Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.|
+|RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
+|TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
 
 ### AidToNavigation
 
 This class defines additional attributes for aid to navigation (ATON) equipment.
 
+|Attribute|Datatype|Semantics|
+|---|---|---|
+|MMSI|MMSIType|Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.|
+|RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
+|TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
 
 ## Interaction Classes
 
-Note that inherited and dependency parameters are not included in the description of interaction classes.
-
 ```mermaid
-graph RL
-RadioSignal-->HLAinteractionRoot
-SMC_EntityControl-->HLAinteractionRoot
-AIS_RadioSignal-->RadioSignal
-AisMessage-->AIS_RadioSignal
-AisNavigationData-->AisMessage
-AisBaseStationReportAndUTCDateResponseData-->AisMessage
-AisStaticAndVoyageData-->AisMessage
-AisBinaryMessageData-->AisMessage
-AcknowledgeData-->AisMessage
-AisMessage9-->AisMessage
-AisMessage10-->AisMessage
-AisMessage12-->AisMessage
-AisMessage14-->AisMessage
-AisMessage17-->AisMessage
-AisMessage18-->AisMessage
-AisMessage21-->AisMessage
-AisMessage27-->AisMessage
-AisMessage1-->AisNavigationData
-AisMessage2-->AisNavigationData
-AisMessage3-->AisNavigationData
-AisMessage4-->AisBaseStationReportAndUTCDateResponseData
-AisMessage11-->AisBaseStationReportAndUTCDateResponseData
-AisMessage5-->AisStaticAndVoyageData
-AisMessage19-->AisStaticAndVoyageData
-AisMessage24-->AisStaticAndVoyageData
-AisMessage6-->AisBinaryMessageData
-AisMessage8-->AisBinaryMessageData
-AisMessage7-->AcknowledgeData
-AisMessage13-->AcknowledgeData
-Task-->SMC_EntityControl
-SendSafetyRelatedMessage-->Task
-SendSafetyRelatedBroadcastMessage-->Task
+classDiagram 
+direction LR
+HLAinteractionRoot <|-- RadioSignal
+HLAinteractionRoot <|-- SMC_EntityControl
+RadioSignal <|-- AIS_RadioSignal
+AIS_RadioSignal <|-- AisMessage
+AIS_RadioSignal : HostRadioIndex
+AisMessage <|-- AisNavigationData
+AisMessage <|-- AisBaseStationReportAndUTCDateResponseData
+AisMessage <|-- AisStaticAndVoyageData
+AisMessage <|-- AisBinaryMessageData
+AisMessage <|-- AcknowledgeData
+AisMessage <|-- AisMessage9
+AisMessage <|-- AisMessage10
+AisMessage <|-- AisMessage12
+AisMessage <|-- AisMessage14
+AisMessage <|-- AisMessage17
+AisMessage <|-- AisMessage18
+AisMessage <|-- AisMessage21
+AisMessage <|-- AisMessage27
+AisMessage : MessageId
+AisMessage : UserId
+AisNavigationData <|-- AisMessage1
+AisNavigationData <|-- AisMessage2
+AisNavigationData <|-- AisMessage3
+AisNavigationData : CourseOverGround
+AisNavigationData : NavigationalStatus
+AisNavigationData : Position
+AisNavigationData : RateOfTurn
+AisNavigationData : SpecialManeuverIndicator
+AisNavigationData : SpeedOverGround
+AisNavigationData : TrueHeading
+AisNavigationData : UTCtime
+AisBaseStationReportAndUTCDateResponseData <|-- AisMessage4
+AisBaseStationReportAndUTCDateResponseData <|-- AisMessage11
+AisBaseStationReportAndUTCDateResponseData : Position
+AisBaseStationReportAndUTCDateResponseData : UTCtime
+AisStaticAndVoyageData <|-- AisMessage5
+AisStaticAndVoyageData <|-- AisMessage19
+AisStaticAndVoyageData <|-- AisMessage24
+AisStaticAndVoyageData : Callsign
+AisStaticAndVoyageData : DimensionBow
+AisStaticAndVoyageData : DimensionPort
+AisStaticAndVoyageData : DimensionStarboard
+AisStaticAndVoyageData : DimensionStern
+AisStaticAndVoyageData : Name
+AisStaticAndVoyageData : ShipType
+AisMessage5 : Destination
+AisMessage5 : Draught
+AisMessage5 : ETAtime
+AisMessage5 : IMO
+AisMessage19 : CourseOverGround
+AisMessage19 : Position
+AisMessage19 : SpeedOverGround
+AisMessage19 : TrueHeading
+AisMessage19 : UTCtime
+AisMessage24 : ManufacturerId
+AisMessage24 : PartNumber
+AisMessage24 : SerialNumber
+AisMessage24 : UnitModel
+AisBinaryMessageData <|-- AisMessage6
+AisBinaryMessageData <|-- AisMessage8
+AisBinaryMessageData : Data
+AisBinaryMessageData : DesignatedAreaCode
+AisBinaryMessageData : FunctionId
+AisMessage6 : Destination
+AcknowledgeData <|-- AisMessage7
+AcknowledgeData <|-- AisMessage13
+AcknowledgeData : Destination1
+AcknowledgeData : Destination2
+AcknowledgeData : Destination3
+AcknowledgeData : Destination4
+AisMessage9 : Altitude
+AisMessage9 : CourseOverGround
+AisMessage9 : Position
+AisMessage9 : SpeedOverGround
+AisMessage9 : UTCtime
+AisMessage10 : Destination
+AisMessage12 : Destination
+AisMessage12 : Message
+AisMessage14 : Message
+AisMessage17 : Position
+AisMessage18 : CourseOverGround
+AisMessage18 : Position
+AisMessage18 : SpeedOverGround
+AisMessage18 : TrueHeading
+AisMessage18 : UTCtime
+AisMessage21 : AidType
+AisMessage21 : DimensionBow
+AisMessage21 : DimensionPort
+AisMessage21 : DimensionStarboard
+AisMessage21 : DimensionStern
+AisMessage21 : Name
+AisMessage21 : OffPositionFlag
+AisMessage21 : Position
+AisMessage21 : UTCtime
+AisMessage21 : VirtualFlag
+AisMessage27 : CourseOverGround
+AisMessage27 : NavigationStatus
+AisMessage27 : Position
+AisMessage27 : SpeedOverGround
+SMC_EntityControl <|-- Task
+Task <|-- SendSafetyRelatedMessage
+Task <|-- SendSafetyRelatedBroadcastMessage
+SendSafetyRelatedMessage : Message
+SendSafetyRelatedMessage : ReceivingEntity
+SendSafetyRelatedBroadcastMessage : Message
 ```
 
-### RadioSignal
+### HLAinteractionRoot
 
 
 
-
-### AIS_RadioSignal
-
-This is the root interaction class for all AIS messages. The interaction class contains a reference to the embedded system that represents the AIS transmitter. The embedded system should be modelled as a RadioTransmitter, an RPR-FOM object class that is subclassed from Embedded System.
-
-|Parameter|Datatype|Semantics|
-|---|---|---|
-|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
-
-### AisMessage
-
-Super class for all AIS message types.
-
-|Parameter|Datatype|Semantics|
-|---|---|---|
-|MessageId|MsgIdEnumType|Required. Message type identifier.|
-|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
-
-### AisNavigationData
-
-Message Types 1, 2 and 3 share a common reporting structure for navigational data, captured in this class.
-
-|Parameter|Datatype|Semantics|
-|---|---|---|
-|NavigationalStatus|NavigationStatusEnumType|Optional (Default: not defined). Navigational status.|
-|RateOfTurn|DegreesPerSecondFloat32|Optional (Default: not available). Rate of turn.|
-|SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
-|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
-|CourseOverGround|DirectionDegreesFloat32|Optional (Default: not available). Course over the ground.|
-|TrueHeading|DirectionDegreesFloat32|Optional (Default: not available). True heading.|
-|UTCtime|EpochTime|Optional (Default: not available). Time of the report.|
-|SpecialManeuverIndicator|ManeuverIndicatorEnumType|Optional (Default: not available). Maneuver indication.|
 
 ### AisMessage1
 
@@ -270,6 +322,19 @@ Message Type 1: Position Report Class A.
  
 Message type for a scheduled position report; Class A shipborne mobile equipment. This message transmits information pertaining to a ships navigation: Longitude and latitude, time, heading, speed, ships navigation status (under power, at anchor...). This message is transmitted every 2 to 10 seconds while underway, and every 3 minutes while at anchor.
 
+|Parameter|Datatype|Semantics|
+|---|---|---|
+|CourseOverGround|DirectionDegreesFloat32|Optional (Default: not available). Course over the ground.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|NavigationalStatus|NavigationStatusEnumType|Optional (Default: not defined). Navigational status.|
+|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
+|RateOfTurn|DegreesPerSecondFloat32|Optional (Default: not available). Rate of turn.|
+|SpecialManeuverIndicator|ManeuverIndicatorEnumType|Optional (Default: not available). Maneuver indication.|
+|SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
+|TrueHeading|DirectionDegreesFloat32|Optional (Default: not available). True heading.|
+|UTCtime|EpochTime|Optional (Default: not available). Time of the report.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage2
 
@@ -277,6 +342,19 @@ Message Type 2: Position Report Class A.
  
 Message type for an assigned scheduled position report; Class A shipborne mobile equipment. This message transmits information pertaining to a ships navigation: Longitude and latitude, time, heading, speed, ships navigation status (under power, at anchor...). This message is transmitted every 2 to 10 seconds while underway, and every 3 minutes while at anchor.
 
+|Parameter|Datatype|Semantics|
+|---|---|---|
+|CourseOverGround|DirectionDegreesFloat32|Optional (Default: not available). Course over the ground.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|NavigationalStatus|NavigationStatusEnumType|Optional (Default: not defined). Navigational status.|
+|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
+|RateOfTurn|DegreesPerSecondFloat32|Optional (Default: not available). Rate of turn.|
+|SpecialManeuverIndicator|ManeuverIndicatorEnumType|Optional (Default: not available). Maneuver indication.|
+|SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
+|TrueHeading|DirectionDegreesFloat32|Optional (Default: not available). True heading.|
+|UTCtime|EpochTime|Optional (Default: not available). Time of the report.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage3
 
@@ -284,15 +362,19 @@ Message Type 3: Position Report Class A.
  
 Message type for a special position report, response to interrogation; Class A shipborne mobile equipment. This message transmits information pertaining to a ships navigation: Longitude and latitude, time, heading, speed, ships navigation status (under power, at anchor...). This message is transmitted every 2 to 10 seconds while underway, and every 3 minutes while at anchor.
 
-
-### AisBaseStationReportAndUTCDateResponseData
-
-Common reporting structure for Message Types 4 and 11 for reporting UTC time and date and, at the same time, position. It is also used by AIS stations for determining if the station is within 120 NM for response to Messages Types 20 and 23.
-
 |Parameter|Datatype|Semantics|
 |---|---|---|
-|UTCtime|EpochTime|Optional (Default: not available). Time of report.|
+|CourseOverGround|DirectionDegreesFloat32|Optional (Default: not available). Course over the ground.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|NavigationalStatus|NavigationStatusEnumType|Optional (Default: not defined). Navigational status.|
 |Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
+|RateOfTurn|DegreesPerSecondFloat32|Optional (Default: not available). Rate of turn.|
+|SpecialManeuverIndicator|ManeuverIndicatorEnumType|Optional (Default: not available). Maneuver indication.|
+|SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
+|TrueHeading|DirectionDegreesFloat32|Optional (Default: not available). True heading.|
+|UTCtime|EpochTime|Optional (Default: not available). Time of the report.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage4
 
@@ -300,6 +382,13 @@ Message Type 4: Base Station Report.
  
 This message is to be used by fixed-location base stations to periodically report a position and time reference.
 
+|Parameter|Datatype|Semantics|
+|---|---|---|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
+|UTCtime|EpochTime|Optional (Default: not available). Time of report.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage11
 
@@ -307,20 +396,13 @@ Message Type 11: UTC/Date Response.
  
 Identical to Message Type 4, with the semantics of a response to inquiry. This message type is only transmitted from a mobile station as a result of a UTC request message (Message Type 10).
 
-
-### AisStaticAndVoyageData
-
-Common Static and Voyage Data for Message Types 5, 19 and 24.
-
 |Parameter|Datatype|Semantics|
 |---|---|---|
-|Callsign|HLAASCIIstring|Required. 7 six-bit characters for the callsign.|
-|Name|HLAASCIIstring|Required. 20 six-bit characters for the name.|
-|ShipType|ShipTypeType|Optional (Default: not available). Ship type.|
-|DimensionBow|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the bow.|
-|DimensionStern|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the stern.|
-|DimensionPort|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the port.|
-|DimensionStarboard|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from starboard.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
+|UTCtime|EpochTime|Optional (Default: not available). Time of report.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage5
 
@@ -330,10 +412,20 @@ This message type is transmitted every 6 minutes and should only be used by Clas
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
-|IMO|IMOType|Optional (Default: zero). The IMO ship ID number. Not applicable to SAR aircraft.|
-|ETAtime|EpochTime|Optional (Default: not available). Estimated time of arrival. Not applicable to SAR aircraft. <br/>If a zero value is provided then this shall be interpreted as not available.|
-|Draught|DraughtMeterFloat32|Optional (Default: not available). Maximum present static draught.|
+|Callsign|HLAASCIIstring|Required. 7 six-bit characters for the callsign.|
 |Destination|HLAASCIIstring|Optional (Default: not available, 20 six-bit "@" value). 20 six-bit characters for the destination. For SAR aircraft, the use of this field may be decided by the responsible administration.|
+|DimensionBow|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the bow.|
+|DimensionPort|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the port.|
+|DimensionStarboard|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from starboard.|
+|DimensionStern|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the stern.|
+|Draught|DraughtMeterFloat32|Optional (Default: not available). Maximum present static draught.|
+|ETAtime|EpochTime|Optional (Default: not available). Estimated time of arrival. Not applicable to SAR aircraft. <br/>If a zero value is provided then this shall be interpreted as not available.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|IMO|IMOType|Optional (Default: zero). The IMO ship ID number. Not applicable to SAR aircraft.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|Name|HLAASCIIstring|Required. 20 six-bit characters for the name.|
+|ShipType|ShipTypeType|Optional (Default: not available). Ship type.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage19
 
@@ -343,11 +435,21 @@ A slightly more detailed report than Message Type 18 for vessels using Class B t
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
-|SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
-|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
+|Callsign|HLAASCIIstring|Required. 7 six-bit characters for the callsign.|
 |CourseOverGround|DirectionDegreesFloat32|Optional (Default: not available). Course over the ground.|
+|DimensionBow|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the bow.|
+|DimensionPort|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the port.|
+|DimensionStarboard|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from starboard.|
+|DimensionStern|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the stern.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|Name|HLAASCIIstring|Required. 20 six-bit characters for the name.|
+|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
+|ShipType|ShipTypeType|Optional (Default: not available). Ship type.|
+|SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
 |TrueHeading|DirectionDegreesFloat32|Optional (Default: not available). True heading.|
 |UTCtime|EpochTime|Optional (Default: not available). Time of the report.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage24
 
@@ -357,22 +459,20 @@ The equivalent of Message Type 5 for ships using Class B equipment. Also used to
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
-|PartNumber|PartNumberEnumType|Required. Part number.|
+|Callsign|HLAASCIIstring|Required. 7 six-bit characters for the callsign.|
+|DimensionBow|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the bow.|
+|DimensionPort|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the port.|
+|DimensionStarboard|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from starboard.|
+|DimensionStern|LengthMeterFloat32|Optional (Default: not available). GPS Ant. distance from the stern.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
 |ManufacturerId|ManufacturerIdType|Required. (Part B) 3 six-bit chars.|
-|UnitModel|UnitModelType|Required. (Part B) Unit Model Code.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|Name|HLAASCIIstring|Required. 20 six-bit characters for the name.|
+|PartNumber|PartNumberEnumType|Required. Part number.|
 |SerialNumber|SerialNumberType|Required. (Part B) Serial Number.|
-
-### AisBinaryMessageData
-
-Binary Payload for Message Types 6 and 8. The interpretation of the binary payload is controlled by: 
-- The Designated Area Code (DAC), is a jurisdiction code: 366 for the United States. It uses the same encoding as the area designator in MMMSIs; see [ITU-MID]. 1 designates international (ITU) messages. 
-- The FID is the Functional ID for a message subtype. In some sources, this is abbreviated FI.
-
-|Parameter|Datatype|Semantics|
-|---|---|---|
-|DesignatedAreaCode|DesignatedAreaCodeType|Required. Designated area code (DAC).|
-|FunctionId|FunctionIdType|Required. Functional ID (FID).|
-|Data|BinArrayType|Required. Binary data up to 920 bits.|
+|ShipType|ShipTypeType|Optional (Default: not available). Ship type.|
+|UnitModel|UnitModelType|Required. (Part B) Unit Model Code.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage6
 
@@ -382,7 +482,13 @@ This message type is an addressed point-to-point message with a binary payload.
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
+|Data|BinArrayType|Required. Binary data up to 920 bits.|
+|DesignatedAreaCode|DesignatedAreaCodeType|Required. Designated area code (DAC).|
 |Destination|MMSIType|Required. Destination MMSI.|
+|FunctionId|FunctionIdType|Required. Functional ID (FID).|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage8
 
@@ -390,17 +496,14 @@ Message Type 8: Binary Broadcast Message.
  
 This message type is a broadcast message with a binary payload.
 
-
-### AcknowledgeData
-
-Acknowledge data for Message Types 7 and 13.
-
 |Parameter|Datatype|Semantics|
 |---|---|---|
-|Destination1|MMSIType|Required. MMSI number 1.|
-|Destination2|MMSIType|Optional (Default: not available). MMSI number 2.|
-|Destination3|MMSIType|Optional (Default: not available). MMSI number 3.|
-|Destination4|MMSIType|Optional (Default: not available). MMSI number 4.|
+|Data|BinArrayType|Required. Binary data up to 920 bits.|
+|DesignatedAreaCode|DesignatedAreaCodeType|Required. Designated area code (DAC).|
+|FunctionId|FunctionIdType|Required. Functional ID (FID).|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage7
 
@@ -408,6 +511,15 @@ Message Type 7: Binary Acknowledge.
  
 This message type is a receipt acknowledgement to the senders of a previous messages of Message Type 6. Up to 4 destination MMSIs can be acknowledged in one message.
 
+|Parameter|Datatype|Semantics|
+|---|---|---|
+|Destination1|MMSIType|Required. MMSI number 1.|
+|Destination2|MMSIType|Optional (Default: not available). MMSI number 2.|
+|Destination3|MMSIType|Optional (Default: not available). MMSI number 3.|
+|Destination4|MMSIType|Optional (Default: not available). MMSI number 4.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage13
 
@@ -415,6 +527,15 @@ Message Type 13: Safety-Related Acknowledgement.
  
 This message type is a receipt acknowledgement to senders of previous messages of Message Type 12.
 
+|Parameter|Datatype|Semantics|
+|---|---|---|
+|Destination1|MMSIType|Required. MMSI number 1.|
+|Destination2|MMSIType|Optional (Default: not available). MMSI number 2.|
+|Destination3|MMSIType|Optional (Default: not available). MMSI number 3.|
+|Destination4|MMSIType|Optional (Default: not available). MMSI number 4.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage9
 
@@ -425,10 +546,13 @@ Tracking information for search-and-rescue aircraft.
 |Parameter|Datatype|Semantics|
 |---|---|---|
 |Altitude|AltitudeMeterFloat64|Optional (Default: not available). Altitude.|
-|SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
-|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
 |CourseOverGround|DirectionDegreesFloat32|Optional (Default: not available). Course over the ground.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
+|SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
 |UTCtime|EpochTime|Optional (Default: not available). Time of the report.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage10
 
@@ -439,6 +563,9 @@ Request for UTC/Date information from an AIS base station.
 |Parameter|Datatype|Semantics|
 |---|---|---|
 |Destination|MMSIType|Required. Destination MMSI.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage12
 
@@ -449,7 +576,10 @@ This is a point-to-point text message. The payload is interpreted as six-bit tex
 |Parameter|Datatype|Semantics|
 |---|---|---|
 |Destination|MMSIType|Required. Destination MMSI.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
 |Message|HLAASCIIstring|Required. 1-156 chars of six-bit text.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage14
 
@@ -459,7 +589,10 @@ This is a broadcast text message. The payload is interpreted as six-bit text.
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
 |Message|HLAASCIIstring|Required. 1-161 chars of six-bit text.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage17
 
@@ -469,7 +602,10 @@ This message type is used to broadcast differential corrections for GPS.
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
 |Position|GeodeticLocation|Optional (Default: not available). Position data.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage18
 
@@ -479,11 +615,14 @@ A less detailed report than message types 1-3 for vessels using Class B transmit
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
-|SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
-|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
 |CourseOverGround|DirectionDegreesFloat32|Optional (Default: not available). Course over the ground.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
+|SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
 |TrueHeading|DirectionDegreesFloat32|Optional (Default: not available). True heading.|
 |UTCtime|EpochTime|Optional (Default: not available). Time of the report.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage21
 
@@ -494,14 +633,17 @@ Identification and location message to be emitted by aids to navigation such as 
 |Parameter|Datatype|Semantics|
 |---|---|---|
 |AidType|AidTypeEnumType|Optional (Default: not specified). Type of aid.|
-|Name|HLAASCIIstring|Optional (Default: 34 six-bit @ characters). Up to max 34 six-bit characters for the name of the aid.|
-|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
 |DimensionBow|LengthMeterFloat32|Optional (Default: not available). Distance from the bow.|
-|DimensionStern|LengthMeterFloat32|Optional (Default: not available). Distance from the stern.|
 |DimensionPort|LengthMeterFloat32|Optional (Default: not available). Distance from the port.|
 |DimensionStarboard|LengthMeterFloat32|Optional (Default: not available). Distance from starboard.|
-|UTCtime|EpochTime|Optional (Default: not available). Time of the report.|
+|DimensionStern|LengthMeterFloat32|Optional (Default: not available). Distance from the stern.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
+|Name|HLAASCIIstring|Optional (Default: 34 six-bit @ characters). Up to max 34 six-bit characters for the name of the aid.|
 |OffPositionFlag|HLAboolean|Optional (Default: false). Off-Position Indicator. The Off-Position Indicator is for floating Aids-to-Navigation only: false means on position; true means off position. Only valid if UTCsecond is available.|
+|Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
+|UTCtime|EpochTime|Optional (Default: not available). Time of the report.|
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 |VirtualFlag|HLAboolean|Optional (Default: false). Virtual-aid flag. The Virtual Aid flag is interpreted as follows: false = real Aid to Navigation at the indicated position; true = virtual Aid to Navigation simulated by nearby AIS station.|
 
 ### AisMessage27
@@ -512,20 +654,13 @@ This message type is primarily intended for long-range detection of vessels equi
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
+|CourseOverGround|DirectionDegreesFloat32|Optional (Default: not available). Course over the ground.|
+|HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
+|MessageId|MsgIdEnumType|Required. Message type identifier.|
 |NavigationStatus|NavigationStatusEnumType|Optional (Default: not defined). Navigational status.|
 |Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
 |SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
-|CourseOverGround|DirectionDegreesFloat32|Optional (Default: not available). Course over the ground.|
-
-### SMC_EntityControl
-
-
-
-
-### Task
-
-
-
+|UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### SendSafetyRelatedMessage
 
@@ -535,8 +670,8 @@ Both source and destination must represent an AIS station (vessel, SAR aircraft,
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
-|ReceivingEntity|UUID|Required. The entity that represents the destination. This must be an AIS station.|
 |Message|HLAASCIIstring|Required. 1-156 chars of six-bit text.|
+|ReceivingEntity|UUID|Required. The entity that represents the destination. This must be an AIS station.|
 
 ### SendSafetyRelatedBroadcastMessage
 
