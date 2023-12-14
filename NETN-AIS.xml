@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <objectModel xsi:schemaLocation="http://standards.ieee.org/IEEE1516-2010 http://standards.ieee.org/downloads/1516/1516.2-2010/IEEE1516-DIF-2010.xsd" xmlns="http://standards.ieee.org/IEEE1516-2010" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <modelIdentification notes="netn-ais_2">
+    <modelIdentification notes="netn-ais_overview">
         <name>NETN-AIS</name>
         <type>FOM</type>
         <version>1.1</version>
@@ -21,7 +21,7 @@ The NETN-AIS FOM module defines all of the messages types specified in ITU-R M.1
 The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteristics for an automatic identification system using time division multiple access in the VHF maritime mobile frequency band (https://www.itu.int).</description>
         <useLimitation>The NETN-AIS FOM module is simulation oriented and does not focus on the physical message format as defined by ITU-R M.1371-5. However, the FOM is aligned well with ITU-R M.1371-5, enabling relatively easy mapping to/from the message format defined in ITU-R M.1371-5.</useLimitation>
         <useHistory>v1.0 - Developed by MSG-163 for NETN FOM v3.0</useHistory>
-        <useHistory notes="netn-ais_1">v1.1 - Developed by MSG-191 for NETN FOM v4.0</useHistory>
+        <useHistory notes="netn-ais_changelog_1">v1.1 - Developed by MSG-191 for NETN FOM v4.0</useHistory>
         <poc>
             <pocType>Release authority</pocType>
             <pocName>NATO Modelling and Simulation Group</pocName>
@@ -1214,11 +1214,11 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
     </dataTypes>
     <notes>
         <note>
-            <label>netn-ais_1</label>
+            <label>netn-ais_changelog_1</label>
             <semantics>* Minor text updates</semantics>
         </note>
         <note>
-            <label>netn-ais_2</label>
+            <label>netn-ais_overview</label>
             <semantics>## Overview 
  
 The NETN-AIS FOM module covers the following: 
