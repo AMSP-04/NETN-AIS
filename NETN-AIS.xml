@@ -844,7 +844,7 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
                 <units>Degrees/second</units>
                 <resolution>NA</resolution>
                 <accuracy>NA</accuracy>
-                <semantics>The turn rate in degrees per second, where: (a) zero value: not turning; (b) positive value: turning right; (c) negative value: turning left.</semantics>
+                <semantics>The turn rate in decimal degrees per second, where: (a) zero value: not turning; (b) positive value: turning right; (c) negative value: turning left.</semantics>
             </simpleData>
             <simpleData>
                 <name>DraughtMeterFloat32</name>

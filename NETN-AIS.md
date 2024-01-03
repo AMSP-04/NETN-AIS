@@ -471,7 +471,7 @@ Common Static and Voyage Data for Message Types 5, 19 and 24.
 |HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
 |MessageId|MsgIdEnumType|Required. Message type identifier.|
 |Name|HLAASCIIstring|Required. 20 six-bit characters for the name.|
-|ShipType|ShipTypeType|Optional (Default: not available). Ship type.|
+|ShipType|ShipTypeEnumType|Optional (Default: not available). Ship type.|
 |UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage5
@@ -494,7 +494,7 @@ This message type is transmitted every 6 minutes and should only be used by Clas
 |IMO|IMOType|Optional (Default: zero). The IMO ship ID number. Not applicable to SAR aircraft.|
 |MessageId|MsgIdEnumType|Required. Message type identifier.|
 |Name|HLAASCIIstring|Required. 20 six-bit characters for the name.|
-|ShipType|ShipTypeType|Optional (Default: not available). Ship type.|
+|ShipType|ShipTypeEnumType|Optional (Default: not available). Ship type.|
 |UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
 ### AisMessage19
@@ -515,7 +515,7 @@ A slightly more detailed report than Message Type 18 for vessels using Class B t
 |MessageId|MsgIdEnumType|Required. Message type identifier.|
 |Name|HLAASCIIstring|Required. 20 six-bit characters for the name.|
 |Position|GeodeticLocation|Optional (Default: not available). AIS (Lat,Lon) position.|
-|ShipType|ShipTypeType|Optional (Default: not available). Ship type.|
+|ShipType|ShipTypeEnumType|Optional (Default: not available). Ship type.|
 |SpeedOverGround|VelocityMeterPerSecondFloat32|Optional (Default: not available). Speed over the ground.|
 |TrueHeading|DirectionDegreesFloat32|Optional (Default: not available). True heading.|
 |UTCtime|EpochTime|Optional (Default: not available). Time of the report.|
@@ -540,7 +540,7 @@ The equivalent of Message Type 5 for ships using Class B equipment. Also used to
 |Name|HLAASCIIstring|Required. 20 six-bit characters for the name.|
 |PartNumber|PartNumberEnumType|Required. Part number.|
 |SerialNumber|SerialNumberType|Required. (Part B) Serial Number.|
-|ShipType|ShipTypeType|Optional (Default: not available). Ship type.|
+|ShipType|ShipTypeEnumType|Optional (Default: not available). Ship type.|
 |UnitModel|UnitModelType|Required. (Part B) Unit Model Code.|
 |UserId|MMSIType|Required. The message is from the vessel identified by this MMSI.|
 
@@ -791,7 +791,7 @@ Note that only datatypes defined in this FOM Module are listed below. Please ref
 |---|---|
 |AidTypeEnumType|Enumeration value for the aid type. According to [IALA], the aid type field has values 1-15 for fixed and 16-31 for floating aids to navigation.|
 |BinArrayType|Binary data.|
-|DegreesPerSecondFloat32|The turn rate in degrees per second, where: (a) zero value: not turning; (b) positive value: turning right; (c) negative value: turning left.|
+|DegreesPerSecondFloat32|The turn rate in decimal degrees per second, where: (a) zero value: not turning; (b) positive value: turning right; (c) negative value: turning left.|
 |DesignatedAreaCodeType|A 10-bit value. Designated area code (DAC).|
 |DraughtMeterFloat32|The vertical distance between the waterline and the bottom of the hull (keel) including the thickness of the hull; Draught determines the minimum depth of water a ship or boat can safely navigate.|
 |EntityControlActionEnum|Control actions for entities.|
@@ -804,20 +804,19 @@ Note that only datatypes defined in this FOM Module are listed below. Please ref
 |NavigationStatusEnumType|Enumeration value to indicate the navigational status.|
 |PartNumberEnumType|Identifier for the message part number.|
 |SerialNumberType|A 2-bit value. (Part B) Serial Number.|
-|ShipTypeType|An 8-bit value. The type of ship and cargo. See https://www.itu.int/en/ITU-R.|
+|ShipTypeEnumType|ITU-R M.1371-5 (02/2014) Vessel Types.|
 |UnitModelType|A 4-bit value. (Part B) Unit Model Code.|
         
 ### Simple Datatypes
 |Name|Units|Semantics|
 |---|---|---|
-|DegreesPerSecondFloat32|Degrees/second|The turn rate in degrees per second, where: (a) zero value: not turning; (b) positive value: turning right; (c) negative value: turning left.|
+|DegreesPerSecondFloat32|Degrees/second|The turn rate in decimal degrees per second, where: (a) zero value: not turning; (b) positive value: turning right; (c) negative value: turning left.|
 |DesignatedAreaCodeType|NA|A 10-bit value. Designated area code (DAC).|
 |DraughtMeterFloat32|Meter|The vertical distance between the waterline and the bottom of the hull (keel) including the thickness of the hull; Draught determines the minimum depth of water a ship or boat can safely navigate.|
 |FunctionIdType|NA|A 6-bit value. Functional ID (FID).|
 |IMOType|NA|A 30-bit value. The International Maritime Organization (IMO) number is a unique identifier for vessels. See https://www.itu.int/en/ITU-R. The IMO number is made of the three letters "IMO" followed by a seven-digit number. This number consists of a six-digit sequential unique number followed by a check digit. The integrity of an IMO number can be verified using its check digit. This is done by multiplying each of the first six digits by a factor of 2 to 7 corresponding to their position from right to left. The rightmost digit of this sum is the check digit. For example, for IMO 9074729: (9×7) + (0×6) + (7×5) + (4×4) + (7×3) + (2×2) = 139. This attribute represents the 7 digits value of the IMO number. The value shall be zero for not available (default). The value shall also be zero for inland vessels.|
 |MMSIType|NA|A 30-bit value. The MMSI number (Maritime Mobile Service Identity) is a unique nine-digit number for identifying an AIS station.|
 |SerialNumberType|NA|A 2-bit value. (Part B) Serial Number.|
-|ShipTypeType|NA|An 8-bit value. The type of ship and cargo. See https://www.itu.int/en/ITU-R.|
 |UnitModelType|NA|A 4-bit value. (Part B) Unit Model Code.|
         
 ### Enumerated Datatypes
@@ -829,6 +828,7 @@ Note that only datatypes defined in this FOM Module are listed below. Please ref
 |MsgIdEnumType|HLAoctet|Enumeration value for the message type.|
 |NavigationStatusEnumType|HLAoctet|Enumeration value to indicate the navigational status.|
 |PartNumberEnumType|HLAoctet|Identifier for the message part number.|
+|ShipTypeEnumType|HLAoctet|ITU-R M.1371-5 (02/2014) Vessel Types.|
         
 ### Array Datatypes
 |Name|Element Datatype|Semantics|
