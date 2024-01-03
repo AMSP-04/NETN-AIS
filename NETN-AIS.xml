@@ -90,18 +90,29 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                 <dataType>MMSIInteger32</dataType>
                                 <updateType>Static</updateType>
                                 <updateCondition>Init</updateCondition>
-                                <ownership>NoTransfer</ownership>
+                                <ownership>DivestAcquire</ownership>
                                 <sharing>PublishSubscribe</sharing>
                                 <transportation>HLAreliable</transportation>
                                 <order>Receive</order>
                                 <semantics>Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.</semantics>
                             </attribute>
                             <attribute>
+                                <name>Callsign</name>
+                                <dataType>HLAunicodeString</dataType>
+                                <updateType>NA</updateType>
+                                <updateCondition></updateCondition>
+                                <ownership>DivestAcquire</ownership>
+                                <sharing>PublishSubscribe</sharing>
+                                <transportation>HLAreliable</transportation>
+                                <order>Receive</order>
+                                <semantics>Optional. The callsign of the AIS Station (typically a vessel). The callsign prefix should be in accordance with ITU recommendation for call sign allocation. See https://www.itu.int/en/ITU-R/terrestrial/fmd/Pages/call_sign_series.aspx</semantics>
+                            </attribute>
+                            <attribute>
                                 <name>TransmitterStatus</name>
                                 <dataType>TransmitterOperationalStatusEnum8</dataType>
                                 <updateType>Conditional</updateType>
                                 <updateCondition>When the tansmitter status updated</updateCondition>
-                                <ownership>NoTransfer</ownership>
+                                <ownership>DivestAcquire</ownership>
                                 <sharing>PublishSubscribe</sharing>
                                 <transportation>HLAreliable</transportation>
                                 <order>Receive</order>
@@ -112,7 +123,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                 <dataType>EntityTypeStruct</dataType>
                                 <updateType>Static</updateType>
                                 <updateCondition>Init</updateCondition>
-                                <ownership>NoTransfer</ownership>
+                                <ownership>DivestAcquire</ownership>
                                 <sharing>PublishSubscribe</sharing>
                                 <transportation>HLAreliable</transportation>
                                 <order>Receive</order>
@@ -127,11 +138,77 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <dataType>IMOInteger32</dataType>
                                     <updateType>Static</updateType>
                                     <updateCondition>Init</updateCondition>
-                                    <ownership>NoTransfer</ownership>
+                                    <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
                                     <order>Receive</order>
                                     <semantics>Optional. The International Maritime Organization (IMO) number to identify the vessel. If the value is not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.</semantics>
+                                </attribute>
+                                <attribute>
+                                    <name>ShipType</name>
+                                    <dataType>ShipTypeEnum8</dataType>
+                                    <updateType>Static</updateType>
+                                    <updateCondition></updateCondition>
+                                    <ownership>DivestAcquire</ownership>
+                                    <sharing>PublishSubscribe</sharing>
+                                    <transportation>HLAreliable</transportation>
+                                    <order>Receive</order>
+                                    <semantics>Optional. The type of vessel.</semantics>
+                                </attribute>
+                                <attribute>
+                                    <name>DimensionToStern</name>
+                                    <dataType>LengthMeterFloat32</dataType>
+                                    <updateType>Static</updateType>
+                                    <updateCondition></updateCondition>
+                                    <ownership>DivestAcquire</ownership>
+                                    <sharing>PublishSubscribe</sharing>
+                                    <transportation>HLAreliable</transportation>
+                                    <order>Receive</order>
+                                    <semantics>Optional. Distance in meters to stern, in accordance with ITU-R M.1371-5 (02/2014).</semantics>
+                                </attribute>
+                                <attribute>
+                                    <name>DimensionToBow</name>
+                                    <dataType>LengthMeterFloat32</dataType>
+                                    <updateType>Static</updateType>
+                                    <updateCondition></updateCondition>
+                                    <ownership>DivestAcquire</ownership>
+                                    <sharing>PublishSubscribe</sharing>
+                                    <transportation>HLAreliable</transportation>
+                                    <order>Receive</order>
+                                    <semantics>Optional. Distance in meters to bow, in accordance with ITU-R M.1371-5 (02/2014).</semantics>
+                                </attribute>
+                                <attribute>
+                                    <name>DimensionToPort</name>
+                                    <dataType>LengthMeterFloat32</dataType>
+                                    <updateType>Static</updateType>
+                                    <updateCondition></updateCondition>
+                                    <ownership>DivestAcquire</ownership>
+                                    <sharing>PublishSubscribe</sharing>
+                                    <transportation>HLAreliable</transportation>
+                                    <order>Receive</order>
+                                    <semantics>Optional. Distance in meters to port, in accordance with ITU-R M.1371-5 (02/2014).</semantics>
+                                </attribute>
+                                <attribute>
+                                    <name>DimensionToStarboard</name>
+                                    <dataType>LengthMeterFloat32</dataType>
+                                    <updateType>Static</updateType>
+                                    <updateCondition></updateCondition>
+                                    <ownership>DivestAcquire</ownership>
+                                    <sharing>PublishSubscribe</sharing>
+                                    <transportation>HLAreliable</transportation>
+                                    <order>Receive</order>
+                                    <semantics>Optional. Distance in meters to starboard, in accordance with ITU-R M.1371-5 (02/2014).</semantics>
+                                </attribute>
+                                <attribute>
+                                    <name>Draught</name>
+                                    <dataType>DraughtMeterFloat32</dataType>
+                                    <updateType>Static</updateType>
+                                    <updateCondition></updateCondition>
+                                    <ownership>DivestAcquire</ownership>
+                                    <sharing>PublishSubscribe</sharing>
+                                    <transportation>HLAreliable</transportation>
+                                    <order>Receive</order>
+                                    <semantics>Optional. Draught, in accordance with ITU-R M.1371-5 (02/2014).</semantics>
                                 </attribute>
                             </objectClass>
                             <objectClass>
@@ -148,6 +225,61 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                 <name>AidToNavigation</name>
                                 <sharing>PublishSubscribe</sharing>
                                 <semantics>This class defines additional attributes for aid to navigation (ATON) equipment.</semantics>
+                                <attribute>
+                                    <name>AidType</name>
+                                    <dataType>AidTypeEnum8</dataType>
+                                    <updateType>Static</updateType>
+                                    <updateCondition></updateCondition>
+                                    <ownership>DivestAcquire</ownership>
+                                    <sharing>PublishSubscribe</sharing>
+                                    <transportation>HLAreliable</transportation>
+                                    <order>Receive</order>
+                                    <semantics>Optional. Type of AtoN.</semantics>
+                                </attribute>
+                                <attribute>
+                                    <name>DimensionToStern</name>
+                                    <dataType>LengthMeterFloat32</dataType>
+                                    <updateType>Static</updateType>
+                                    <updateCondition></updateCondition>
+                                    <ownership>DivestAcquire</ownership>
+                                    <sharing>PublishSubscribe</sharing>
+                                    <transportation>HLAreliable</transportation>
+                                    <order>Receive</order>
+                                    <semantics>Optional. Distance in meters to stern, in accordance with ITU-R M.1371-5 (02/2014).</semantics>
+                                </attribute>
+                                <attribute>
+                                    <name>DimensionToBow</name>
+                                    <dataType>LengthMeterFloat32</dataType>
+                                    <updateType>Static</updateType>
+                                    <updateCondition></updateCondition>
+                                    <ownership>DivestAcquire</ownership>
+                                    <sharing>PublishSubscribe</sharing>
+                                    <transportation>HLAreliable</transportation>
+                                    <order>Receive</order>
+                                    <semantics>Optional. Distance in meters to bow, in accordance with ITU-R M.1371-5 (02/2014).</semantics>
+                                </attribute>
+                                <attribute>
+                                    <name>DimensionToPort</name>
+                                    <dataType>LengthMeterFloat32</dataType>
+                                    <updateType>Static</updateType>
+                                    <updateCondition></updateCondition>
+                                    <ownership>DivestAcquire</ownership>
+                                    <sharing>PublishSubscribe</sharing>
+                                    <transportation>HLAreliable</transportation>
+                                    <order>Receive</order>
+                                    <semantics>Optional. Distance in meters to port, in accordance with ITU-R M.1371-5 (02/2014).</semantics>
+                                </attribute>
+                                <attribute>
+                                    <name>DimensionToStarboard</name>
+                                    <dataType>LengthMeterFloat32</dataType>
+                                    <updateType>Static</updateType>
+                                    <updateCondition></updateCondition>
+                                    <ownership>DivestAcquire</ownership>
+                                    <sharing>PublishSubscribe</sharing>
+                                    <transportation>HLAreliable</transportation>
+                                    <order>Receive</order>
+                                    <semantics>Optional. Distance in meters to starboard, in accordance with ITU-R M.1371-5 (02/2014).</semantics>
+                                </attribute>
                             </objectClass>
                         </objectClass>
                     </objectClass>
