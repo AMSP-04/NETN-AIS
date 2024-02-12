@@ -145,8 +145,14 @@ classDiagram
 direction LR
 
 HLAobjectRoot <|-- ORG_Root
+HLAobjectRoot : UniqueId(NETN-BASE)
 ORG_Root <|-- OrganizationElement
+ORG_Root : Name(NETN-ORG)
 OrganizationElement <|-- Equipment
+OrganizationElement : EntityType(NETN-ORG)
+OrganizationElement : Organization(NETN-ORG)
+OrganizationElement : SuperiorUnit(NETN-ORG)
+OrganizationElement : Symbol(NETN-ORG)
 Equipment <|-- AIS_Equipment
 AIS_Equipment <|-- Vessel
 AIS_Equipment <|-- SARaircraft
@@ -342,8 +348,10 @@ AisMessage27 : NavigationStatus
 AisMessage27 : Position
 AisMessage27 : SpeedOverGround
 SMC_EntityControl <|-- Task
+SMC_EntityControl : Entity(NETN-SMC)
 Task <|-- SendSafetyRelatedMessage
 Task <|-- SendSafetyRelatedBroadcastMessage
+Task : TaskId(NETN-ETR)
 SendSafetyRelatedMessage : Message
 SendSafetyRelatedMessage : ReceivingEntity
 SendSafetyRelatedBroadcastMessage : Message
