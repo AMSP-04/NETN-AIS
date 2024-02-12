@@ -21,18 +21,18 @@ The NETN-AIS FOM module content is based on ITU-R M.1371-5, Technical characteri
 The NETN-AIS FOM module is simulation oriented and does not focus on the physical message format as defined by ITU-R M.1371-5. However, the FOM is aligned well with ITU-R M.1371-5, enabling relatively easy mapping to/from the message format defined in ITU-R M.1371-5.
 
 ## Overview 
-
+ 
 The NETN-AIS FOM module covers the following: 
-
+ 
 * AIS messages are represented as `AisMessage` interactions extending the RPR-Communication FOM Module `RadioSignal` interaction class. 
 * AIS-specific entity tasking interactions that extend the NETN-ETR FOM module `Task` interaction class. 
 * AIS stations are represented as `AisEquipmentItem` objects that extend `EquipmentItem` defined in the NETN-ORG FOM module. 
-
-
+ 
+ 
 ### AIS messages 
-
+ 
 The following AIS message types are included: 
-
+ 
 | Message type | Description | 
 | --- | --- | 
 | 1 | **Position Report Class A**. Message type for a scheduled position report; Class A shipborne mobile equipment. This message transmits information about the navigation of a ship: Longitude and latitude, time, heading, speed, ships navigation status, e.g. under power, at anchor. This message is transmitted every 2 to 10 seconds while underway, and every 3 minutes while at anchor. | 
@@ -55,23 +55,23 @@ The following AIS message types are included:
 | 21 | **Aid-to-Navigation Report**. Identification and location message to be emitted by aids to navigation such as buoys and lighthouses. | 
 | 24 | **Static Data Report**. The equivalent of Message Type 5 for ships using Class B equipment. They are also used to associate an MMSI with a name on either class A or class B equipment. This message type may be in part A or part B format. According to the standard, parts A and B are expected to be broadcast in adjacent pairs. | 
 | 27 | **Long Range AIS Broadcast message**. This message type is primarily intended for long-range detection of AIS Class A equipped vessels (typically by satellite). This message has similar content to Messages 1, 2 and 3, but the total number of bits is compressed to allow for increased propagation delays associated with long-range detection. | 
-
-
+ 
+ 
 Many of the `AisMessage` class parameters are optional. For each optional parameter, a default value is defined that can be assumed by the receiving HLA federate if no parameter value is provided. 
-
+ 
 To include a minimum amount of navigation data in the message and make the message useful, the following optional parameters should be provided: 
-
+ 
 |Parameter|Semantics| 
 |---|---| 
 |Position|Optional (Default: not available). AIS (Lat,Lon) position.| 
 |UTCtime|Optional (Default: not available). Time of report.| 
-
+ 
 Note that the AIS position in the NETN-AIS FOM module is defined as a `GeodeticLocation` datatype. This is different from ITU-R M.1371-5, where Longitude and Latitude are represented in 1/10 000 min and stored in a 28 and 27-bit field, respectively. However, the class and parameter structure is such that the mapping between the NETN-AIS FOM and ITU-R M.1371-5 is straightforward. 
-
+ 
 #### Encoding of a six-bit character string 
-
+ 
 Several parameters are typed as six-bit character strings—for example, vessel name and callsign. The parameter data type of a six-bit character string is `HLAASCIIstring`, and the following table shows the ASCII character to be used for each six-bit character. 
-
+ 
 | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char | 
 | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- | 
 | 000000 | 0 | "@" | 010000 | 16 | "P" | 100000 | 32 | " " | 110000 | 48 | "0" | 
@@ -90,11 +90,11 @@ Several parameters are typed as six-bit character strings—for example, vessel 
 | 001101 | 13 | "M" | 011101 | 29 | "]" | 101101 | 45 | "-" | 111101 | 61 | "=" | 
 | 001110 | 14 | "N" | 011110 | 30 | "\^" | 101110 | 46 | "." | 111110 | 62 | ">" | 
 | 001111 | 15 | "O" | 011111 | 31 | "\_" | 101111 | 47 | "/" | 111111 | 63 | "?" | 
-
+ 
 #### RadioTransmitter 
-
+ 
 An AIS Radio Signal can be associated with a `RadioTransmitter` object instance. The required attributes of the `RadioTransmitter` object instance can be assigned the following values: 
-
+ 
 | Attribute | Semantics | Value | 
 | --- | --- | --- | 
 | Frequency | Center frequency of the radio transmissions, specified in Herz. | `162000000` Hz | 
@@ -104,20 +104,20 @@ An AIS Radio Signal can be associated with a `RadioTransmitter` object instance.
 | TransmittedPower | The average power being transmitted in units of decibel-milliwatts. | `12.5` watt for class A (`41` dBm), `5` watt for class B/SO (`37` dBm), and `2` watt for class B/CS (`33` dBm). | 
 | TransmitterOperationalStatus | On/Off state of the transmitter as an enumeration. | `Off`, `OnButNotTransmitting` or `OnAndTransmitting` | 
 | WorldLocation | Location of the antenna in world coordinates. | The vessel position. | 
-
+ 
 ### NETN-ETR extensions 
-
+ 
 The NETN-ETR `Task` extensions are summarized in the following table. 
-
+ 
 | Name | Semantics | 
 | --- | --- | 
 | SendSafetyRelatedMessage | Tasks entity (the source) to send a safety related message (AIS message type 12) to another entity (the destination). Both source and destination must represent an AIS station (vessel, SAR aircraft, etc). | 
 | SendSafetyRelatedBroadcastMessage | Tasks entity (the source) to send a safety related broadcast message (AIS message type 14). The source must represent an AIS station (vessel, SAR aircraft, etc). | 
-
+ 
 ### NETN-ORG extensions 
-
+ 
 The NETN-ORG `EquipmentItem` extensions are summarized in the following table. 
-
+ 
 |Name|Semantics| 
 |---|---| 
 |AisEquipmentItem|This class defines additional attributes for AIS equipment. Depending on the kind of AIS equipment, further attributes are added in sub-classes.| 
@@ -125,50 +125,17 @@ The NETN-ORG `EquipmentItem` extensions are summarized in the following table.
 |SARaircraft|This class defines additional attributes for SAR aircraft equipment.| 
 |Basestation|This class defines additional attributes for basestation equipment.| 
 |AidToNavigation|This class defines additional attributes for aid to navigation (ATON) equipment.| 
-
+ 
 The `AisEquipmentItem` defines, amongst others, the `RadioSystemType` of the AIS station. The `RadioSystemType` should be used by the federate to initialize the `RadioTransmitter` object instance. Entity type values that may be used for the `RadioSystemType` are: 
-
+ 
 - `7.3.0.37.0.0.0` for a default AIS transmitter that relates to the AIS station modelled 
 - `7.3.0.37.1.0.0` for a class A transmitter 
 - `7.3.0.37.2.0.0` for a class B/SO (Self-Organizing) transmitter 
 - `7.3.0.37.3.0.0` for a class B/CS (Carrier-Sense) transmitter 
-
+ 
 See Radio Kind in the SISO Enumerations, [UID 22] for categories. By adding a subcategory (i.e. `1`,`2`, etc., not defined in the SISO Enumerations), it is possible to identify the specific type of transmitter, namely class A, B/SO, or B/CS in this example. These non-standard subcategory values should be defined as part of the federation agreements. The country code value `0` in this example should be replaced by the appropriate value. 
-
+ 
 In addition, the NETN-ORG MSDL schema is extended with an AIS schema. This enables persistent storage of AIS-related ORBAT data in the same file as the rest of the ORBAT data.
-
-### Patterns for initialization
-
-The initialization of the Physical Entity `Marking` and `Callsign` attributes for AIS simulation is use case dependent. In some use cases these attributes need to be set to specific values, in other use cases a specific value is not relevant.
-
-This section describes a few patterns for the initialization of the Physical Entity `Marking` and `Callsign` attributes. In all examples, if a callsign is used then the value should be in accordance with the ITU recommendation for callsigns.
-
-#### Use AIS NETN-ORG extension
-
-If the AIS NETN-ORG extension is used then the entity `Marking` and `Callsign` attributes can be initialized to the provided values in the NETN-ORG initialization data:
-
-| NETN Physical Entity attribute | Initialized with                    |
-| ------------------------------ | ----------------------------------- |
-| ``Marking``                    | NETN-ORG ``Equipment.Name``         |
-| ``Callsign``                   | NETN-ORG ``AIS_Equipment.Callsign`` |
-
-#### Use NETN-ORG, but not the AIS NETN-ORG extension
-
-If there is no NETN-ORG AIS initialization data available, then the NETN-ORG `Equipment.Name` may be used as AIS Callsign value for the entity callsign. The  marking attribute value is provided by the entity owner.
-
-| NETN Physical Entity attribute | Initialized with                                   |
-| ------------------------------ | -------------------------------------------------- |
-| ``Marking``                    | A marking value provided by the entity owner       |
-| ``Callsign``                   | NETN-ORG ``Equipment.Name``, an AIS Callsign value |
-
-#### No NETN-ORG initialization data available
-
-Alternatively, if no NETN-ORG initialization data is used or available, then the entity owner may set the entity marking to the AIS MMSI value and the entity callsign to the associated AIS callsign value. In this pattern other applications are able to lookup additional AIS Station information based on the received MMSI value (using e.g. a configuration file with the additional data). Also RPR-FOM based federates are able to provide the MMSI value to consumers via the marking attribute. This pattern can also be used if NETN-ORG initialization data is available.
-
-| NETN Physical Entity attribute | Initialized with                                             |
-| ------------------------------ | ------------------------------------------------------------ |
-| ``Marking``                    | AIS MMSI value provided by the entity owner                  |
-| ``Callsign``                   | (1) AIS Callsign value provided by the entity owner, or (2) not used/not published |
 
 
 ## Object Classes
@@ -185,22 +152,22 @@ AIS_Equipment <|-- Vessel
 AIS_Equipment <|-- SARaircraft
 AIS_Equipment <|-- Basestation
 AIS_Equipment <|-- AidToNavigation
-AIS_Equipment : MMSI
 AIS_Equipment : Callsign
+AIS_Equipment : MMSI
 AIS_Equipment : RadioSystemType
 AIS_Equipment : TransmitterStatus
-Vessel : IMO
-Vessel : ShipType
-Vessel : DimensionToStern
 Vessel : DimensionToBow
 Vessel : DimensionToPort
 Vessel : DimensionToStarboard
+Vessel : DimensionToStern
 Vessel : Draught
+Vessel : IMO
+Vessel : ShipType
 AidToNavigation : AidType
-AidToNavigation : DimensionToStern
 AidToNavigation : DimensionToBow
 AidToNavigation : DimensionToPort
 AidToNavigation : DimensionToStarboard
+AidToNavigation : DimensionToStern
 ```
 
 ### AIS_Equipment
@@ -209,8 +176,8 @@ This class defines additional attributes for AIS equipment. Depending on the kin
 
 |Attribute|Datatype|Semantics|
 |---|---|---|
-|MMSI|MMSIInteger32|Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.|
 |Callsign|HLAunicodeString|Optional. The callsign of the AIS Station (typically a vessel). The callsign prefix should be in accordance with ITU recommendation for call sign allocation. See https://www.itu.int/en/ITU-R/terrestrial/fmd/Pages/call_sign_series.aspx.|
+|MMSI|MMSIInteger32|Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.|
 |RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
 |TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
 
@@ -220,21 +187,39 @@ This class defines additional attributes for vessel equipment.
 
 |Attribute|Datatype|Semantics|
 |---|---|---|
-|IMO|IMOType|Optional. The International Maritime Organization (IMO) number to identify the vessel. If the value is not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.|
-| ShipType             | ShipTypeEnum8       | Optional. Type of ship.                                      |
-| DimensionToStern     | LengthMeterFloat32  | Optional. Distance in meters to stern, in accordance with ITU-R M.1371-5 (02/2014). |
-| DimensionToBow       | LengthMeterFloat32  | Optional. Distance in meters to bow, in accordance with ITU-R M.1371-5 (02/2014). |
-| DimensionToPort      | LengthMeterFloat32  | Optional. Distance in meters to port, in accordance with ITU-R M.1371-5 (02/2014). |
-| DimensionToStarboard | LengthMeterFloat32  | Optional. Distance in meters to starboard, in accordance with ITU-R M.1371-5 (02/2014). |
-| Draught              | DraughtMeterFloat32 | Optional. Draught, in accordance with ITU-R M.1371-5 (02/2014). |
+|Callsign|HLAunicodeString|Optional. The callsign of the AIS Station (typically a vessel). The callsign prefix should be in accordance with ITU recommendation for call sign allocation. See https://www.itu.int/en/ITU-R/terrestrial/fmd/Pages/call_sign_series.aspx.|
+|DimensionToBow|LengthMeterFloat32|Optional. Distance in meters to bow, in accordance with ITU-R M.1371-5 (02/2014).|
+|DimensionToPort|LengthMeterFloat32|Optional. Distance in meters to port, in accordance with ITU-R M.1371-5 (02/2014).|
+|DimensionToStarboard|LengthMeterFloat32|Optional. Distance in meters to starboard, in accordance with ITU-R M.1371-5 (02/2014).|
+|DimensionToStern|LengthMeterFloat32|Optional. Distance in meters to stern, in accordance with ITU-R M.1371-5 (02/2014).|
+|Draught|DraughtMeterFloat32|Optional. Draught, in accordance with ITU-R M.1371-5 (02/2014).|
+|IMO|IMOInteger32|Optional. The International Maritime Organization (IMO) number to identify the vessel. If the value is not provided then the subscribing federate that is responsible for the modelling of the vessel shall generate a value.|
+|MMSI|MMSIInteger32|Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.|
+|RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
+|ShipType|ShipTypeEnum8|Optional. The type of vessel.|
+|TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
 
 ### SARaircraft
 
 This class defines additional attributes for SAR aircraft equipment.
 
+|Attribute|Datatype|Semantics|
+|---|---|---|
+|Callsign|HLAunicodeString|Optional. The callsign of the AIS Station (typically a vessel). The callsign prefix should be in accordance with ITU recommendation for call sign allocation. See https://www.itu.int/en/ITU-R/terrestrial/fmd/Pages/call_sign_series.aspx.|
+|MMSI|MMSIInteger32|Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.|
+|RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
+|TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
+
 ### Basestation
 
 This class defines additional attributes for basestation equipment.
+
+|Attribute|Datatype|Semantics|
+|---|---|---|
+|Callsign|HLAunicodeString|Optional. The callsign of the AIS Station (typically a vessel). The callsign prefix should be in accordance with ITU recommendation for call sign allocation. See https://www.itu.int/en/ITU-R/terrestrial/fmd/Pages/call_sign_series.aspx.|
+|MMSI|MMSIInteger32|Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.|
+|RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
+|TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
 
 ### AidToNavigation
 
@@ -242,11 +227,15 @@ This class defines additional attributes for aid to navigation (ATON) equipment.
 
 |Attribute|Datatype|Semantics|
 |---|---|---|
-| AidType              | AidTypeEnum8       | Optional. Type of AtoN.                                      |
-| DimensionToStern     | LengthMeterFloat32 | Optional. Distance in meters to stern, in accordance with ITU-R M.1371-5 (02/2014). |
-| DimensionToBow       | LengthMeterFloat32 | Optional. Distance in meters to bow, in accordance with ITU-R M.1371-5 (02/2014). |
-| DimensionToPort      | LengthMeterFloat32 | Optional. Distance in meters to port, in accordance with ITU-R M.1371-5 (02/2014). |
-| DimensionToStarboard | LengthMeterFloat32 | Optional. Distance in meters to starboard, in accordance with ITU-R M.1371-5 (02/2014). |
+|AidType|AidTypeEnum8|Optional. Type of AtoN.|
+|Callsign|HLAunicodeString|Optional. The callsign of the AIS Station (typically a vessel). The callsign prefix should be in accordance with ITU recommendation for call sign allocation. See https://www.itu.int/en/ITU-R/terrestrial/fmd/Pages/call_sign_series.aspx.|
+|DimensionToBow|LengthMeterFloat32|Optional. Distance in meters to bow, in accordance with ITU-R M.1371-5 (02/2014).|
+|DimensionToPort|LengthMeterFloat32|Optional. Distance in meters to port, in accordance with ITU-R M.1371-5 (02/2014).|
+|DimensionToStarboard|LengthMeterFloat32|Optional. Distance in meters to starboard, in accordance with ITU-R M.1371-5 (02/2014).|
+|DimensionToStern|LengthMeterFloat32|Optional. Distance in meters to stern, in accordance with ITU-R M.1371-5 (02/2014).|
+|MMSI|MMSIInteger32|Optional. The MMSI number (Maritime Mobile Service Identity) of the AIS station.  If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall generate a value. Note that the value of each AIS station must be  unique across all AIS stations in the simulation. Reuse of MMSI numbers if not advised since some systems may retain dead tracks for some time.|
+|RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
+|TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
 
 ## Interaction Classes
 
@@ -399,7 +388,7 @@ Message Types 1, 2 and 3 share a common reporting structure for navigational dat
 ### AisMessage1
 
 Message Type 1: Position Report Class A. 
-
+ 
 Message type for a scheduled position report; Class A shipborne mobile equipment. This message transmits information pertaining to a ships navigation: Longitude and latitude, time, heading, speed, ships navigation status (under power, at anchor...). This message is transmitted every 2 to 10 seconds while underway, and every 3 minutes while at anchor.
 
 |Parameter|Datatype|Semantics|
@@ -419,7 +408,7 @@ Message type for a scheduled position report; Class A shipborne mobile equipment
 ### AisMessage2
 
 Message Type 2: Position Report Class A. 
-
+ 
 Message type for an assigned scheduled position report; Class A shipborne mobile equipment. This message transmits information pertaining to a ships navigation: Longitude and latitude, time, heading, speed, ships navigation status (under power, at anchor...). This message is transmitted every 2 to 10 seconds while underway, and every 3 minutes while at anchor.
 
 |Parameter|Datatype|Semantics|
@@ -439,7 +428,7 @@ Message type for an assigned scheduled position report; Class A shipborne mobile
 ### AisMessage3
 
 Message Type 3: Position Report Class A. 
-
+ 
 Message type for a special position report, response to interrogation; Class A shipborne mobile equipment. This message transmits information pertaining to a ships navigation: Longitude and latitude, time, heading, speed, ships navigation status (under power, at anchor...). This message is transmitted every 2 to 10 seconds while underway, and every 3 minutes while at anchor.
 
 |Parameter|Datatype|Semantics|
@@ -471,7 +460,7 @@ Common reporting structure for Message Types 4 and 11 for reporting UTC time and
 ### AisMessage4
 
 Message Type 4: Base Station Report. 
-
+ 
 This message is to be used by fixed-location base stations to periodically report a position and time reference.
 
 |Parameter|Datatype|Semantics|
@@ -485,7 +474,7 @@ This message is to be used by fixed-location base stations to periodically repor
 ### AisMessage11
 
 Message Type 11: UTC/Date Response. 
-
+ 
 Identical to Message Type 4, with the semantics of a response to inquiry. This message type is only transmitted from a mobile station as a result of a UTC request message (Message Type 10).
 
 |Parameter|Datatype|Semantics|
@@ -516,7 +505,7 @@ Common Static and Voyage Data for Message Types 5, 19 and 24.
 ### AisMessage5
 
 Message Type 5: Static and Voyage-Related Data. 
-
+ 
 This message type is transmitted every 6 minutes and should only be used by Class A shipborne and SAR aircraft AIS stations when reporting static or voyage-related data.
 
 |Parameter|Datatype|Semantics|
@@ -530,7 +519,7 @@ This message type is transmitted every 6 minutes and should only be used by Clas
 |Draught|DraughtMeterFloat32|Optional (Default: not available). Maximum present static draught.|
 |ETAtime|EpochTime|Optional (Default: not available). Estimated time of arrival. Not applicable to SAR aircraft. <br/>If a zero value is provided then this shall be interpreted as not available.|
 |HostRadioIndex|RTIobjectId|Optional (Default: not available). The HostRadioIndex is a unique string that identifies the name of the RadioTransmitter object.|
-|IMO|IMOType|Optional (Default: zero). The IMO ship ID number. Not applicable to SAR aircraft.|
+|IMO|IMOInteger32|Optional (Default: zero). The IMO ship ID number. Not applicable to SAR aircraft.|
 |MessageId|MsgIdEnum8|Required. Message type identifier.|
 |Name|HLAASCIIstring|Required. 20 six-bit characters for the name.|
 |ShipType|ShipTypeEnum8|Optional (Default: not available). Ship type.|
@@ -539,7 +528,7 @@ This message type is transmitted every 6 minutes and should only be used by Clas
 ### AisMessage19
 
 Message Type 19: Extended Class B CS Position Report. 
-
+ 
 A slightly more detailed report than Message Type 18 for vessels using Class B transmitters. Omits navigational status and rate of turn. Fields are as in the common navigation block and the Message Type 5 message.
 
 |Parameter|Datatype|Semantics|
@@ -563,7 +552,7 @@ A slightly more detailed report than Message Type 18 for vessels using Class B t
 ### AisMessage24
 
 Message Type 24: Static Data Report. 
-
+ 
 The equivalent of Message Type 5 for ships using Class B equipment. Also used to associate an MMSI with a name on either class A or class B equipment. This message type may be in part A or part B format. According to the standard, parts A and B are expected to be broadcast in adjacent pairs.
 
 |Parameter|Datatype|Semantics|
@@ -601,7 +590,7 @@ Binary Payload for Message Types 6 and 8. The interpretation of the binary paylo
 ### AisMessage6
 
 Message Type 6: Binary Addressed Message. 
-
+ 
 This message type is an addressed point-to-point message with a binary payload.
 
 |Parameter|Datatype|Semantics|
@@ -617,7 +606,7 @@ This message type is an addressed point-to-point message with a binary payload.
 ### AisMessage8
 
 Message Type 8: Binary Broadcast Message. 
-
+ 
 This message type is a broadcast message with a binary payload.
 
 |Parameter|Datatype|Semantics|
@@ -646,7 +635,7 @@ Acknowledge data for Message Types 7 and 13.
 ### AisMessage7
 
 Message Type 7: Binary Acknowledge. 
-
+ 
 This message type is a receipt acknowledgement to the senders of a previous messages of Message Type 6. Up to 4 destination MMSIs can be acknowledged in one message.
 
 |Parameter|Datatype|Semantics|
@@ -662,7 +651,7 @@ This message type is a receipt acknowledgement to the senders of a previous mess
 ### AisMessage13
 
 Message Type 13: Safety-Related Acknowledgement. 
-
+ 
 This message type is a receipt acknowledgement to senders of previous messages of Message Type 12.
 
 |Parameter|Datatype|Semantics|
@@ -678,7 +667,7 @@ This message type is a receipt acknowledgement to senders of previous messages o
 ### AisMessage9
 
 Message type 9: Standard SAR Aircraft Position Report. 
-
+ 
 Tracking information for search-and-rescue aircraft.
 
 |Parameter|Datatype|Semantics|
@@ -695,7 +684,7 @@ Tracking information for search-and-rescue aircraft.
 ### AisMessage10
 
 Message Type 10: UTC/Date Inquiry. 
-
+ 
 Request for UTC/Date information from an AIS base station.
 
 |Parameter|Datatype|Semantics|
@@ -708,7 +697,7 @@ Request for UTC/Date information from an AIS base station.
 ### AisMessage12
 
 Type 12: Addressed Safety-Related Message. 
-
+ 
 This is a point-to-point text message. The payload is interpreted as six-bit text.
 
 |Parameter|Datatype|Semantics|
@@ -722,7 +711,7 @@ This is a point-to-point text message. The payload is interpreted as six-bit tex
 ### AisMessage14
 
 Type 14: Safety-Related Broadcast Message. 
-
+ 
 This is a broadcast text message. The payload is interpreted as six-bit text.
 
 |Parameter|Datatype|Semantics|
@@ -735,7 +724,7 @@ This is a broadcast text message. The payload is interpreted as six-bit text.
 ### AisMessage17
 
 Message Type 17: DGNSS Broadcast Binary Message. 
-
+ 
 This message type is used to broadcast differential corrections for GPS.
 
 |Parameter|Datatype|Semantics|
@@ -748,7 +737,7 @@ This message type is used to broadcast differential corrections for GPS.
 ### AisMessage18
 
 Message Type 18: Standard Class B CS Position Report. 
-
+ 
 A less detailed report than message types 1-3 for vessels using Class B transmitters. Omits navigational status and rate of turn.
 
 |Parameter|Datatype|Semantics|
@@ -765,12 +754,12 @@ A less detailed report than message types 1-3 for vessels using Class B transmit
 ### AisMessage21
 
 Message Type 21: Aid-to-Navigation Report. 
-
+ 
 Identification and location message to be emitted by aids to navigation such as buoys and lighthouses.
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
-|AidType|AidTypeEnumType|Optional (Default: not specified). Type of aid.|
+|AidType|AidTypeEnum8|Optional (Default: not specified). Type of aid.|
 |DimensionBow|LengthMeterFloat32|Optional (Default: not available). Distance from the bow.|
 |DimensionPort|LengthMeterFloat32|Optional (Default: not available). Distance from the port.|
 |DimensionStarboard|LengthMeterFloat32|Optional (Default: not available). Distance from starboard.|
@@ -787,7 +776,7 @@ Identification and location message to be emitted by aids to navigation such as 
 ### AisMessage27
 
 Message Type 27: Long Range AIS Broadcast message. 
-
+ 
 This message type is primarily intended for long-range detection of vessels equipped with AIS Class A (typically by satellite). This message has similar content to Messages 1, 2 and 3, but the total number of bits has been compressed to allow for increased propagation delays associated with long-range detection.
 
 |Parameter|Datatype|Semantics|
@@ -803,7 +792,7 @@ This message type is primarily intended for long-range detection of vessels equi
 ### SendSafetyRelatedMessage
 
 Tasks entity (the source) to send a safety-related message (AIS message type 12) to another entity (the destination). 
-
+ 
 Both source and destination must represent an AIS station (vessel, SAR aircraft, etc).
 
 |Parameter|Datatype|Semantics|
@@ -814,7 +803,7 @@ Both source and destination must represent an AIS station (vessel, SAR aircraft,
 ### SendSafetyRelatedBroadcastMessage
 
 Tasks entity (the source) to send a safety-related broadcast message (AIS message type 14). 
-
+ 
 The source must represent an AIS station (vessel, SAR aircraft, etc).
 
 |Parameter|Datatype|Semantics|
@@ -838,14 +827,14 @@ Note that only datatypes defined in this FOM Module are listed below. Please ref
 |IMOInteger32|A 30-bit value. The International Maritime Organization (IMO) number is a unique identifier for vessels. See https://www.itu.int/en/ITU-R. The IMO number is made of the three letters "IMO" followed by a seven-digit number. This number consists of a six-digit sequential unique number followed by a check digit. The integrity of an IMO number can be verified using its check digit. This is done by multiplying each of the first six digits by a factor of 2 to 7 corresponding to their position from right to left. The rightmost digit of this sum is the check digit. For example, for IMO 9074729: (9×7) + (0×6) + (7×5) + (4×4) + (7×3) + (2×2) = 139. This attribute represents the 7 digits value of the IMO number. The value shall be zero for not available (default). The value shall also be zero for inland vessels.|
 |MMSIInteger32|A 30-bit value. The MMSI number (Maritime Mobile Service Identity) is a unique nine-digit number for identifying an AIS station.|
 |ManeuverIndicatorEnum8|Enumeration value to indicate a maneuver.|
-|ManufacturerIdEnum8|The manufacturer's mnemonic code consists of three 6-bit ASCII characters.|
+|ManufacturerIdArray3|The manufacturer's mnemonic code consists of three 6-bit ASCII characters.|
 |MsgIdEnum8|Enumeration value for the message type.|
 |NavigationStatusEnum8|Enumeration value to indicate the navigational status.|
 |PartNumberEnum8|Identifier for the message part number.|
 |SerialNumberInteger32|A 2-bit value. (Part B) Serial Number.|
 |ShipTypeEnum8|ITU-R M.1371-5 (02/2014) Vessel Types.|
 |UnitModelInteger8|A 4-bit value. (Part B) Unit Model Code.|
-
+        
 ### Simple Datatypes
 |Name|Units|Semantics|
 |---|---|---|
@@ -857,7 +846,7 @@ Note that only datatypes defined in this FOM Module are listed below. Please ref
 |MMSIInteger32|NA|A 30-bit value. The MMSI number (Maritime Mobile Service Identity) is a unique nine-digit number for identifying an AIS station.|
 |SerialNumberInteger32|NA|A 2-bit value. (Part B) Serial Number.|
 |UnitModelInteger8|NA|A 4-bit value. (Part B) Unit Model Code.|
-
+        
 ### Enumerated Datatypes
 |Name|Representation|Semantics|
 |---|---|---|
@@ -868,9 +857,10 @@ Note that only datatypes defined in this FOM Module are listed below. Please ref
 |NavigationStatusEnum8|HLAoctet|Enumeration value to indicate the navigational status.|
 |PartNumberEnum8|HLAoctet|Identifier for the message part number.|
 |ShipTypeEnum8|HLAoctet|ITU-R M.1371-5 (02/2014) Vessel Types.|
-
+        
 ### Array Datatypes
 |Name|Element Datatype|Semantics|
 |---|---|---|
 |BinArray|HLAboolean|Binary data.|
 |ManufacturerIdArray3|HLAASCIIchar|The manufacturer's mnemonic code consists of three 6-bit ASCII characters.|
+    
