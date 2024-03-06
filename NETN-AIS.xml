@@ -95,7 +95,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                 <name>Callsign</name>
                                 <dataType>HLAunicodeString</dataType>
                                 <updateType>NA</updateType>
-                                <updateCondition></updateCondition>
+                                <updateCondition>NA</updateCondition>
                                 <ownership>DivestAcquire</ownership>
                                 <sharing>PublishSubscribe</sharing>
                                 <transportation>HLAreliable</transportation>
@@ -143,7 +143,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <name>ShipType</name>
                                     <dataType>ShipTypeEnum8</dataType>
                                     <updateType>Static</updateType>
-                                    <updateCondition></updateCondition>
+                                    <updateCondition>NA</updateCondition>
                                     <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
@@ -154,7 +154,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <name>DimensionToStern</name>
                                     <dataType>LengthMeterFloat32</dataType>
                                     <updateType>Static</updateType>
-                                    <updateCondition></updateCondition>
+                                    <updateCondition>NA</updateCondition>
                                     <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
@@ -165,7 +165,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <name>DimensionToBow</name>
                                     <dataType>LengthMeterFloat32</dataType>
                                     <updateType>Static</updateType>
-                                    <updateCondition></updateCondition>
+                                    <updateCondition>NA</updateCondition>
                                     <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
@@ -176,7 +176,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <name>DimensionToPort</name>
                                     <dataType>LengthMeterFloat32</dataType>
                                     <updateType>Static</updateType>
-                                    <updateCondition></updateCondition>
+                                    <updateCondition>NA</updateCondition>
                                     <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
@@ -187,7 +187,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <name>DimensionToStarboard</name>
                                     <dataType>LengthMeterFloat32</dataType>
                                     <updateType>Static</updateType>
-                                    <updateCondition></updateCondition>
+                                    <updateCondition>NA</updateCondition>
                                     <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
@@ -198,7 +198,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <name>Draught</name>
                                     <dataType>DraughtMeterFloat32</dataType>
                                     <updateType>Static</updateType>
-                                    <updateCondition></updateCondition>
+                                    <updateCondition>NA</updateCondition>
                                     <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
@@ -224,7 +224,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <name>AidType</name>
                                     <dataType>AidTypeEnum8</dataType>
                                     <updateType>Static</updateType>
-                                    <updateCondition></updateCondition>
+                                    <updateCondition>NA</updateCondition>
                                     <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
@@ -235,7 +235,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <name>DimensionToStern</name>
                                     <dataType>LengthMeterFloat32</dataType>
                                     <updateType>Static</updateType>
-                                    <updateCondition></updateCondition>
+                                    <updateCondition>NA</updateCondition>
                                     <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
@@ -246,7 +246,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <name>DimensionToBow</name>
                                     <dataType>LengthMeterFloat32</dataType>
                                     <updateType>Static</updateType>
-                                    <updateCondition></updateCondition>
+                                    <updateCondition>NA</updateCondition>
                                     <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
@@ -257,7 +257,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <name>DimensionToPort</name>
                                     <dataType>LengthMeterFloat32</dataType>
                                     <updateType>Static</updateType>
-                                    <updateCondition></updateCondition>
+                                    <updateCondition>NA</updateCondition>
                                     <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
@@ -268,7 +268,7 @@ Above license gives you the right to use and redistribute this FOM Module (XML f
                                     <name>DimensionToStarboard</name>
                                     <dataType>LengthMeterFloat32</dataType>
                                     <updateType>Static</updateType>
-                                    <updateCondition></updateCondition>
+                                    <updateCondition>NA</updateCondition>
                                     <ownership>DivestAcquire</ownership>
                                     <sharing>PublishSubscribe</sharing>
                                     <transportation>HLAreliable</transportation>
@@ -1301,9 +1301,9 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
                 </enumerator>
             </enumeratedData>
             <enumeratedData>
-                <name>EntityControlActionEnum32</name>
+                <name>EntityControlActionEnum</name>
                 <representation>HLAinteger32BE</representation>
-                <semantics>Control actions for entities.</semantics>
+                <semantics>Enumeration of Entity Control Actions. The datatype is expected to be extended in specific modules defining additional actions.</semantics>
                 <enumerator>
                     <name>SEND_SAFETY_RELATED_MESSAGE</name>
                     <value>300</value>
@@ -1551,7 +1551,7 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
     <notes>
         <note>
             <label>netn-ais_changelog_1</label>
-            <semantics>* Renamed `AisEquipmentItem` object class to `AIS_Equipment` as subclass of NETN-ORG object class `Equipment`
+            <semantics>* Renamed `AisEquipmentItem` object class to `AIS_Equipment` as subclass of NETN-ORG object class `Equipment` 
 * Added `AIS_Equipment` object class attribute `Callsign` 
 * Added `Vessel` object class attribute `ShipType` 
 * Added `Vessel` object class attribute `DimensionToStern` 
@@ -1562,57 +1562,56 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
 * Added `AidToNavigation` object class attribute `DimensionToStern` 
 * Added `AidToNavigation` object class attribute `DimensionToBow` 
 * Added `AidToNavigation` object class attribute `DimensionToPort` 
-* Added `AidToNavigation` object class attribute `DimensionToStarboard` 
-            </semantics>
+* Added `AidToNavigation` object class attribute `DimensionToStarboard`</semantics>
         </note>
         <note>
             <label>netn-ais_overview</label>
             <semantics>## Overview 
-
-The NETN-AIS module defines most of the AIS message types defined in ITU-R M.1371-5 [3] except for rarely used message types and message types that are related to traffic analysis in an AIS network, i.e. 15, 16, 20, 22, 23, 25 and 26.
-
-The most common message types are:
+ 
+The NETN-AIS module defines most of the AIS message types defined in ITU-R M.1371-5 [3] except for rarely used message types and message types that are related to traffic analysis in an AIS network, i.e. 15, 16, 20, 22, 23, 25 and 26. 
+ 
+The most common message types are: 
 * Position Report Class A (Message types 1,2, and 3) and 
 * Static and Voyage Related Data (Message type 5). 
-
-
-
-```mermaid
+ 
+ 
+ 
+```mermaid 
 classDiagram 
-direction LR
-HLAinteractionRoot &lt;|-- RadioSignal
-
-RadioSignal &lt;|-- AIS_RadioSignal
-AIS_RadioSignal &lt;|-- AisMessage
-AIS_RadioSignal : HostRadioIndex
-AisMessage &lt;|-- AisNavigationData
-AisMessage &lt;|-- AisStaticAndVoyageData
-AisMessage : MessageId
-AisMessage : UserId
-
-AisNavigationData : CourseOverGround
-AisNavigationData : NavigationalStatus
-AisNavigationData : Position
-AisNavigationData : RateOfTurn
-AisNavigationData : SpecialManeuverIndicator
-AisNavigationData : SpeedOverGround
-AisNavigationData : TrueHeading
-AisNavigationData : UTCtime
-
-AisStaticAndVoyageData : Callsign
-AisStaticAndVoyageData : DimensionBow
-AisStaticAndVoyageData : DimensionPort
-AisStaticAndVoyageData : DimensionStarboard
-AisStaticAndVoyageData : DimensionStern
-AisStaticAndVoyageData : Name
-AisStaticAndVoyageData : ShipType
-
-```
-The NETN-AIS interaction class structure is closely aligned with the message type specification in ITU-R M.1371-5, enabling easy translation to and from commonly used live protocols such as NMEA 0183.
-
-The `AIS_RadioSignal` interaction is a subclass of the RPR-FOM `RadioSignal` interaction and uses the `HostRadioIndex` parameter to reference an RPR-FOM `RadioTransmitter` object instance.
-
-
+direction LR 
+HLAinteractionRoot &lt;|-- RadioSignal 
+ 
+RadioSignal &lt;|-- AIS_RadioSignal 
+AIS_RadioSignal &lt;|-- AisMessage 
+AIS_RadioSignal : HostRadioIndex 
+AisMessage &lt;|-- AisNavigationData 
+AisMessage &lt;|-- AisStaticAndVoyageData 
+AisMessage : MessageId 
+AisMessage : UserId 
+ 
+AisNavigationData : CourseOverGround 
+AisNavigationData : NavigationalStatus 
+AisNavigationData : Position 
+AisNavigationData : RateOfTurn 
+AisNavigationData : SpecialManeuverIndicator 
+AisNavigationData : SpeedOverGround 
+AisNavigationData : TrueHeading 
+AisNavigationData : UTCtime 
+ 
+AisStaticAndVoyageData : Callsign 
+AisStaticAndVoyageData : DimensionBow 
+AisStaticAndVoyageData : DimensionPort 
+AisStaticAndVoyageData : DimensionStarboard 
+AisStaticAndVoyageData : DimensionStern 
+AisStaticAndVoyageData : Name 
+AisStaticAndVoyageData : ShipType 
+ 
+``` 
+The NETN-AIS interaction class structure is closely aligned with the message type specification in ITU-R M.1371-5, enabling easy translation to and from commonly used live protocols such as NMEA 0183. 
+ 
+The `AIS_RadioSignal` interaction is a subclass of the RPR-FOM `RadioSignal` interaction and uses the `HostRadioIndex` parameter to reference an RPR-FOM `RadioTransmitter` object instance. 
+ 
+ 
  
 ### AIS messages 
  
@@ -1644,15 +1643,15 @@ The following AIS message types are included:
  
 Many of the `AisMessage` class parameters are optional with a default value. However, the following parameters should be provided if possible: 
  
-* Position: Geodetic Location.
-* UTCtime : Time of the report in UTC.
-
+* Position: Geodetic Location. 
+* UTCtime : Time of the report in UTC. 
  
-Note that the AIS position defined as a `GeodeticLocation` differs from ITU-R M.1371-5, where Longitude and Latitude are represented in 1/10 000 min and stored in a 28 and 27-bit field, respectively.
+ 
+Note that the AIS position defined as a `GeodeticLocation` differs from ITU-R M.1371-5, where Longitude and Latitude are represented in 1/10 000 min and stored in a 28 and 27-bit field, respectively. 
  
 #### Encoding of a six-bit character string 
  
-Several parameters in AIS use six-bit character strings, e.g., vessel name and callsign. In NETN-AIS, the parameter data type of a six-bit character string is `HLAASCIIstring`. The following table shows the mapping of ASCII characters to the AIS six-bit character.
+Several parameters in AIS use six-bit character strings, e.g., vessel name and callsign. In NETN-AIS, the parameter data type of a six-bit character string is `HLAASCIIstring`. The following table shows the mapping of ASCII characters to the AIS six-bit character. 
  
 | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char | 
 | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- | 
@@ -1688,7 +1687,7 @@ An `AIS_RadioSignal` can be associated with a `RadioTransmitter` object instance
 | WorldLocation | Location of the antenna in world coordinates. | The vessel position. | 
  
 ### NETN-ETR extensions 
-
+ 
 The NETN-AIS FOM module covers the following: 
  
 * AIS messages are represented as `AisMessage` interactions extending the RPR-Communication FOM Module `RadioSignal` interaction class. 
