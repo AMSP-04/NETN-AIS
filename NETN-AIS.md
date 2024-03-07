@@ -182,6 +182,7 @@ classDiagram
 direction LR
 
 HLAobjectRoot <|-- ORG_Root
+HLAobjectRoot : CreationTime(NETN-BASE)
 HLAobjectRoot : UniqueId(NETN-BASE)
 ORG_Root <|-- OrganizationElement
 ORG_Root : Name(NETN-ORG)
@@ -247,12 +248,6 @@ This class defines additional attributes for vessel equipment.
 |RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
 |ShipType|ShipTypeEnum8|Optional. The type of vessel.|
 |TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
-|EntityType<br/>(NETN-ORG)|EntityTypeStruct|Required. SISO-REF-010 code for entity type definitions. If unknown, use 0.0.0.0.0.0.0.| 
-|Name<br/>(NETN-ORG)|HLAunicodeString|Required. Required. A unique name.| 
-|Organization<br/>(NETN-ORG)|UUID|Required: A reference to the organization the element is affiliated with.| 
-|SuperiorUnit<br/>(NETN-ORG)|UUID|Required: A reference to a unit within the organization for which this element is a subunit/equipment or controlled installation.  The default value is all zeros (no aggregate unit).| 
-|Symbol<br/>(NETN-ORG)|SymbolStruct|Required. Initial symbol identifier and amplification data for this element. In NETN-ORG the symbol identifier acts as a template and may contain wildcard characters '*' to indicate undefined elements of the symbol code.| 
-|UniqueId<br/>(NETN-BASE)|UUID|Required. A unique identifier for the object. The Universally Unique Identifier (UUID) is generated or pre-defined.| 
 
 ### SARaircraft
 
@@ -419,9 +414,8 @@ SMC_EntityControl : Entity(NETN-SMC)
 Task <|-- SendSafetyRelatedMessage
 Task <|-- SendSafetyRelatedBroadcastMessage
 Task : TaskId(NETN-ETR)
-SendSafetyRelatedMessage : Message
-SendSafetyRelatedMessage : ReceivingEntity
-SendSafetyRelatedBroadcastMessage : Message
+SendSafetyRelatedMessage : TaskParameters
+SendSafetyRelatedBroadcastMessage : TaskParameters
 ```
 
 ### AIS_RadioSignal
@@ -872,8 +866,7 @@ Both source and destination must represent an AIS station (vessel, SAR aircraft,
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
-|Message|HLAASCIIstring|Required. 1-156 chars of six-bit text.|
-|ReceivingEntity|UUID|Required. The entity that represents the destination. This must be an AIS station.|
+|TaskParameters|SendSafetyRelatedMessageTaskStruct|Required: Task parameters|
 |Entity<br/>(NETN-SMC)|UUID|Required: Reference to a simulation entity for which the control action is intended.| 
 |TaskId<br/>(NETN-ETR)|UUID|Required. Unique identifier for the task.| 
 
@@ -885,7 +878,7 @@ The source must represent an AIS station (vessel, SAR aircraft, etc).
 
 |Parameter|Datatype|Semantics|
 |---|---|---|
-|Message|HLAASCIIstring|Required. 1-161 chars of six-bit text.|
+|TaskParameters|SendSafetyRelatedBroadcastMessageTaskStruct|Required: Task Parameters|
 |Entity<br/>(NETN-SMC)|UUID|Required: Reference to a simulation entity for which the control action is intended.| 
 |TaskId<br/>(NETN-ETR)|UUID|Required. Unique identifier for the task.| 
 
@@ -901,7 +894,7 @@ Note that only datatypes defined in this FOM Module are listed below. Please ref
 |DegreesPerSecondFloat32|The turn rate in decimal degrees per second, where: (a) zero value: not turning; (b) positive value: turning right; (c) negative value: turning left.|
 |DesignatedAreaCodeInteger32|A 10-bit value. Designated area code (DAC).|
 |DraughtMeterFloat32|The vertical distance between the waterline and the bottom of the hull (keel) including the thickness of the hull; Draught determines the minimum depth of water a ship or boat can safely navigate.|
-|EntityControlActionEnum32|Control actions for entities.|
+|EntityControlActionEnum|Enumeration of Entity Control Actions. The datatype is expected to be extended in specific modules defining additional actions.|
 |FunctionIdInteger32|A 6-bit value. Functional ID (FID).|
 |IMOInteger32|A 30-bit value. The International Maritime Organization (IMO) number is a unique identifier for vessels. See https://www.itu.int/en/ITU-R. The IMO number is made of the three letters "IMO" followed by a seven-digit number. This number consists of a six-digit sequential unique number followed by a check digit. The integrity of an IMO number can be verified using its check digit. This is done by multiplying each of the first six digits by a factor of 2 to 7 corresponding to their position from right to left. The rightmost digit of this sum is the check digit. For example, for IMO 9074729: (9×7) + (0×6) + (7×5) + (4×4) + (7×3) + (2×2) = 139. This attribute represents the 7 digits value of the IMO number. The value shall be zero for not available (default). The value shall also be zero for inland vessels.|
 |MMSIInteger32|A 30-bit value. The MMSI number (Maritime Mobile Service Identity) is a unique nine-digit number for identifying an AIS station.|
@@ -910,8 +903,12 @@ Note that only datatypes defined in this FOM Module are listed below. Please ref
 |MsgIdEnum8|Enumeration value for the message type.|
 |NavigationStatusEnum8|Enumeration value to indicate the navigational status.|
 |PartNumberEnum8|Identifier for the message part number.|
+|SendSafetyRelatedBroadcastMessageTaskStruct|Task-specific data for SendSafetyRelatedBroadcastMessage task.|
+|SendSafetyRelatedMessageTaskStruct|Task-specific data for SendSafetyRelatedMessage task.|
 |SerialNumberInteger32|A 2-bit value. (Part B) Serial Number.|
 |ShipTypeEnum8|ITU-R M.1371-5 (02/2014) Vessel Types.|
+|TaskDefinitionVariantRecord|Variant record for task definition data.|
+|TaskProgressVariantRecord|Variant record for task progress data.|
 |UnitModelInteger8|A 4-bit value. (Part B) Unit Model Code.|
         
 ### Simple Datatypes
@@ -930,7 +927,7 @@ Note that only datatypes defined in this FOM Module are listed below. Please ref
 |Name|Representation|Semantics|
 |---|---|---|
 |AidTypeEnum8|HLAoctet|Enumeration value for the aid type. According to [IALA], the aid type field has values 1-15 for fixed and 16-31 for floating aids to navigation.|
-|EntityControlActionEnum32|HLAinteger32BE|Control actions for entities.|
+|EntityControlActionEnum|HLAinteger32BE|Enumeration of Entity Control Actions. The datatype is expected to be extended in specific modules defining additional actions.|
 |ManeuverIndicatorEnum8|HLAoctet|Enumeration value to indicate a maneuver.|
 |MsgIdEnum8|HLAoctet|Enumeration value for the message type.|
 |NavigationStatusEnum8|HLAoctet|Enumeration value to indicate the navigational status.|
@@ -942,4 +939,16 @@ Note that only datatypes defined in this FOM Module are listed below. Please ref
 |---|---|---|
 |BinArray|HLAboolean|Binary data.|
 |ManufacturerIdArray3|HLAASCIIchar|The manufacturer's mnemonic code consists of three 6-bit ASCII characters.|
+        
+### Fixed Record Datatypes
+|Name|Fields|Semantics|
+|---|---|---|
+|SendSafetyRelatedBroadcastMessageTaskStruct|Message|Task-specific data for SendSafetyRelatedBroadcastMessage task.|
+|SendSafetyRelatedMessageTaskStruct|ReceivingEntity, Message|Task-specific data for SendSafetyRelatedMessage task.|
+        
+### Variant Record Datatypes
+|Name|Discriminant (Datatype)|Alternatives|Semantics|
+|---|---|---|---|
+|TaskDefinitionVariantRecord|TaskType (EntityControlActionEnum)|SendSafetyRelatedtMessage, SendSafetyRelatedBroadcastMessage|Variant record for task definition data.|
+|TaskProgressVariantRecord|TaskType (EntityControlActionEnum)||Variant record for task progress data.|
     

@@ -17,6 +17,11 @@
 * Added `AidToNavigation` object class attribute `DimensionToStern` 
 * Added `AidToNavigation` object class attribute `DimensionToBow` 
 * Added `AidToNavigation` object class attribute `DimensionToPort` 
-* Added `AidToNavigation` object class attribute `DimensionToStarboard` 
-            
+* Added `AidToNavigation` object class attribute `DimensionToStarboard`
+
+* Added datatype `SendSafetyRelatedMessageTaskStruct`
+* Added datatype `SendSafetyRelatedBroadcastMessageTaskStruct`
+* Added datatype `TaskDefinitionVariantRecord`
+* Added datatype `TaskProgressVariantRecord`
+* Added datatype `EntityControlActionEnum`
 

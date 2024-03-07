@@ -883,14 +883,9 @@ This message type is primarily intended for long-range detection of vessels equi
  
 Both source and destination must represent an AIS station (vessel, SAR aircraft, etc).</semantics>
                         <parameter>
-                            <name>ReceivingEntity</name>
-                            <dataType>UUID</dataType>
-                            <semantics>Required. The entity that represents the destination. This must be an AIS station.</semantics>
-                        </parameter>
-                        <parameter>
-                            <name>Message</name>
-                            <dataType>HLAASCIIstring</dataType>
-                            <semantics>Required. 1-156 chars of six-bit text.</semantics>
+                            <name>TaskParameters</name>
+                            <dataType>SendSafetyRelatedMessageTaskStruct</dataType>
+                            <semantics>Required: Task parameters</semantics>
                         </parameter>
                     </interactionClass>
                     <interactionClass>
@@ -902,9 +897,9 @@ Both source and destination must represent an AIS station (vessel, SAR aircraft,
  
 The source must represent an AIS station (vessel, SAR aircraft, etc).</semantics>
                         <parameter>
-                            <name>Message</name>
-                            <dataType>HLAASCIIstring</dataType>
-                            <semantics>Required. 1-161 chars of six-bit text.</semantics>
+                            <name>TaskParameters</name>
+                            <dataType>SendSafetyRelatedBroadcastMessageTaskStruct</dataType>
+                            <semantics>Required: Task Parameters</semantics>
                         </parameter>
                     </interactionClass>
                 </interactionClass>
@@ -1305,11 +1300,11 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
                 <representation>HLAinteger32BE</representation>
                 <semantics>Enumeration of Entity Control Actions. The datatype is expected to be extended in specific modules defining additional actions.</semantics>
                 <enumerator>
-                    <name>SEND_SAFETY_RELATED_MESSAGE</name>
+                    <name>SendSafetyRelatedMessage</name>
                     <value>300</value>
                 </enumerator>
                 <enumerator>
-                    <name>SEND_SAFETY_RELATED_BROADCAST_MESSAGE</name>
+                    <name>SendSafetyRelatedBroadcastMessage</name>
                     <value>301</value>
                 </enumerator>
             </enumeratedData>
@@ -1547,6 +1542,61 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
                 <semantics>The manufacturer's mnemonic code consists of three 6-bit ASCII characters.</semantics>
             </arrayData>
         </arrayDataTypes>
+        <fixedRecordDataTypes>
+            <fixedRecordData>
+                <name>SendSafetyRelatedMessageTaskStruct</name>
+                <encoding>HLAfixedRecord</encoding>
+                <semantics>Task-specific data for SendSafetyRelatedMessage task.</semantics>
+                <field>
+                    <name>ReceivingEntity</name>
+                    <dataType>UUID</dataType>
+                    <semantics>The entity that represents the destination. This must be an AIS station.</semantics>
+                </field>
+                <field>
+                    <name>Message</name>
+                    <dataType>HLAASCIIchar</dataType>
+                    <semantics>1-156 chars of six-bit text.</semantics>
+                </field>
+            </fixedRecordData>
+            <fixedRecordData>
+                <name>SendSafetyRelatedBroadcastMessageTaskStruct</name>
+                <encoding>HLAfixedRecord</encoding>
+                <semantics>Task-specific data for SendSafetyRelatedBroadcastMessage task.</semantics>
+                <field>
+                    <name>Message</name>
+                    <dataType>HLAASCIIchar</dataType>
+                    <semantics>1-156 chars of six-bit text.</semantics>
+                </field>
+            </fixedRecordData>
+        </fixedRecordDataTypes>
+        <variantRecordDataTypes>
+            <variantRecordData>
+                <name>TaskDefinitionVariantRecord</name>
+                <discriminant>TaskType</discriminant>
+                <dataType>EntityControlActionEnum</dataType>
+                <alternative>
+                    <enumerator>SendSafetyRelatedMessage</enumerator>
+                    <name>SendSafetyRelatedtMessage</name>
+                    <dataType>SendSafetyRelatedMessageTaskStruct</dataType>
+                    <semantics>Task parameters.</semantics>
+                </alternative>
+                <alternative>
+                    <enumerator>SendSafetyRelatedBroadcastMessage</enumerator>
+                    <name>SendSafetyRelatedBroadcastMessage</name>
+                    <dataType>SendSafetyRelatedBroadcastMessageTaskStruct</dataType>
+                    <semantics>Task parameters.</semantics>
+                </alternative>
+                <encoding>HLAextendableVariantRecord</encoding>
+                <semantics>Variant record for task definition data.</semantics>
+            </variantRecordData>
+            <variantRecordData>
+                <name>TaskProgressVariantRecord</name>
+                <discriminant>TaskType</discriminant>
+                <dataType>EntityControlActionEnum</dataType>
+                <encoding>HLAextendableVariantRecord</encoding>
+                <semantics>Variant record for task progress data.</semantics>
+            </variantRecordData>
+        </variantRecordDataTypes>
     </dataTypes>
     <notes>
         <note>
@@ -1562,7 +1612,13 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
 * Added `AidToNavigation` object class attribute `DimensionToStern` 
 * Added `AidToNavigation` object class attribute `DimensionToBow` 
 * Added `AidToNavigation` object class attribute `DimensionToPort` 
-* Added `AidToNavigation` object class attribute `DimensionToStarboard`</semantics>
+* Added `AidToNavigation` object class attribute `DimensionToStarboard`
+
+* Added datatype `SendSafetyRelatedMessageTaskStruct`
+* Added datatype `SendSafetyRelatedBroadcastMessageTaskStruct`
+* Added datatype `TaskDefinitionVariantRecord`
+* Added datatype `TaskProgressVariantRecord`
+* Added datatype `EntityControlActionEnum`</semantics>
         </note>
         <note>
             <label>netn-ais_overview</label>
