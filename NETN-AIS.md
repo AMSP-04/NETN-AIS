@@ -16,51 +16,51 @@ AIS is a worldwide automated tracking system used for sharing vessel identificat
 The NETN-AIS module is a simulation-oriented representation of AIS messages. It does not focus on the physical message format as defined by the AIS standard ITU-R M.1371-5, however, the module is aligned with this standard to enable easy mapping to and from live message formats.
 
 ## Overview 
-
-The NETN-AIS module defines most of the AIS message types defined in ITU-R M.1371-5 [3] except for rarely used message types and message types that are related to traffic analysis in an AIS network, i.e. 15, 16, 20, 22, 23, 25 and 26.
-
-The most common message types are:
+ 
+The NETN-AIS module defines most of the AIS message types defined in ITU-R M.1371-5 [3] except for rarely used message types and message types that are related to traffic analysis in an AIS network, i.e. 15, 16, 20, 22, 23, 25 and 26. 
+ 
+The most common message types are: 
 * Position Report Class A (Message types 1,2, and 3) and 
 * Static and Voyage Related Data (Message type 5). 
-
-
-
-```mermaid
+ 
+ 
+ 
+```mermaid 
 classDiagram 
-direction LR
-HLAinteractionRoot <|-- RadioSignal
-
-RadioSignal <|-- AIS_RadioSignal
-AIS_RadioSignal <|-- AisMessage
-AIS_RadioSignal : HostRadioIndex
-AisMessage <|-- AisNavigationData
-AisMessage <|-- AisStaticAndVoyageData
-AisMessage : MessageId
-AisMessage : UserId
-
-AisNavigationData : CourseOverGround
-AisNavigationData : NavigationalStatus
-AisNavigationData : Position
-AisNavigationData : RateOfTurn
-AisNavigationData : SpecialManeuverIndicator
-AisNavigationData : SpeedOverGround
-AisNavigationData : TrueHeading
-AisNavigationData : UTCtime
-
-AisStaticAndVoyageData : Callsign
-AisStaticAndVoyageData : DimensionBow
-AisStaticAndVoyageData : DimensionPort
-AisStaticAndVoyageData : DimensionStarboard
-AisStaticAndVoyageData : DimensionStern
-AisStaticAndVoyageData : Name
-AisStaticAndVoyageData : ShipType
-
-```
-The NETN-AIS interaction class structure is closely aligned with the message type specification in ITU-R M.1371-5, enabling easy translation to and from commonly used live protocols such as NMEA 0183.
-
-The `AIS_RadioSignal` interaction is a subclass of the RPR-FOM `RadioSignal` interaction and uses the `HostRadioIndex` parameter to reference an RPR-FOM `RadioTransmitter` object instance.
-
-
+direction LR 
+HLAinteractionRoot <|-- RadioSignal 
+ 
+RadioSignal <|-- AIS_RadioSignal 
+AIS_RadioSignal <|-- AisMessage 
+AIS_RadioSignal : HostRadioIndex 
+AisMessage <|-- AisNavigationData 
+AisMessage <|-- AisStaticAndVoyageData 
+AisMessage : MessageId 
+AisMessage : UserId 
+ 
+AisNavigationData : CourseOverGround 
+AisNavigationData : NavigationalStatus 
+AisNavigationData : Position 
+AisNavigationData : RateOfTurn 
+AisNavigationData : SpecialManeuverIndicator 
+AisNavigationData : SpeedOverGround 
+AisNavigationData : TrueHeading 
+AisNavigationData : UTCtime 
+ 
+AisStaticAndVoyageData : Callsign 
+AisStaticAndVoyageData : DimensionBow 
+AisStaticAndVoyageData : DimensionPort 
+AisStaticAndVoyageData : DimensionStarboard 
+AisStaticAndVoyageData : DimensionStern 
+AisStaticAndVoyageData : Name 
+AisStaticAndVoyageData : ShipType 
+ 
+``` 
+The NETN-AIS interaction class structure is closely aligned with the message type specification in ITU-R M.1371-5, enabling easy translation to and from commonly used live protocols such as NMEA 0183. 
+ 
+The `AIS_RadioSignal` interaction is a subclass of the RPR-FOM `RadioSignal` interaction and uses the `HostRadioIndex` parameter to reference an RPR-FOM `RadioTransmitter` object instance. 
+ 
+ 
  
 ### AIS messages 
  
@@ -92,15 +92,15 @@ The following AIS message types are included:
  
 Many of the `AisMessage` class parameters are optional with a default value. However, the following parameters should be provided if possible: 
  
-* Position: Geodetic Location.
-* UTCtime : Time of the report in UTC.
-
+* Position: Geodetic Location. 
+* UTCtime : Time of the report in UTC. 
  
-Note that the AIS position defined as a `GeodeticLocation` differs from ITU-R M.1371-5, where Longitude and Latitude are represented in 1/10 000 min and stored in a 28 and 27-bit field, respectively.
+ 
+Note that the AIS position defined as a `GeodeticLocation` differs from ITU-R M.1371-5, where Longitude and Latitude are represented in 1/10 000 min and stored in a 28 and 27-bit field, respectively. 
  
 #### Encoding of a six-bit character string 
  
-Several parameters in AIS use six-bit character strings, e.g., vessel name and callsign. In NETN-AIS, the parameter data type of a six-bit character string is `HLAASCIIstring`. The following table shows the mapping of ASCII characters to the AIS six-bit character.
+Several parameters in AIS use six-bit character strings, e.g., vessel name and callsign. In NETN-AIS, the parameter data type of a six-bit character string is `HLAASCIIstring`. The following table shows the mapping of ASCII characters to the AIS six-bit character. 
  
 | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char | six-bit | dec | char | 
 | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- | ------ | ---- | ---- | 
@@ -136,7 +136,7 @@ An `AIS_RadioSignal` can be associated with a `RadioTransmitter` object instance
 | WorldLocation | Location of the antenna in world coordinates. | The vessel position. | 
  
 ### NETN-ETR extensions 
-
+ 
 The NETN-AIS FOM module covers the following: 
  
 * AIS messages are represented as `AisMessage` interactions extending the RPR-Communication FOM Module `RadioSignal` interaction class. 
@@ -182,7 +182,6 @@ classDiagram
 direction LR
 
 HLAobjectRoot <|-- ORG_Root
-HLAobjectRoot : CreationTime(NETN-BASE)
 HLAobjectRoot : UniqueId(NETN-BASE)
 ORG_Root <|-- OrganizationElement
 ORG_Root : Name(NETN-ORG)
@@ -248,6 +247,12 @@ This class defines additional attributes for vessel equipment.
 |RadioSystemType|EntityTypeStruct|Optional. The type of transmitter. If the value is not provided then the subscribing federate that is responsible for the modelling of the AIS station shall determine the type of transmitter.|
 |ShipType|ShipTypeEnum8|Optional. The type of vessel.|
 |TransmitterStatus|TransmitterOperationalStatusEnum8|Optional. The initial status of the AIS Transmitter(s) of the AIS station. If the value is not provided then the value shall be assumed to be ON.|
+|EntityType<br/>(NETN-ORG)|EntityTypeStruct|Required. SISO-REF-010 code for entity type definitions. If unknown, use 0.0.0.0.0.0.0.| 
+|Name<br/>(NETN-ORG)|HLAunicodeString|Required. Required. A unique name.| 
+|Organization<br/>(NETN-ORG)|UUID|Required: A reference to the organization the element is affiliated with.| 
+|SuperiorUnit<br/>(NETN-ORG)|UUID|Required: A reference to a unit within the organization for which this element is a subunit/equipment or controlled installation.  The default value is all zeros (no aggregate unit).| 
+|Symbol<br/>(NETN-ORG)|SymbolStruct|Required. Initial symbol identifier and amplification data for this element. In NETN-ORG the symbol identifier acts as a template and may contain wildcard characters '*' to indicate undefined elements of the symbol code.| 
+|UniqueId<br/>(NETN-BASE)|UUID|Required. A unique identifier for the object. The Universally Unique Identifier (UUID) is generated or pre-defined.| 
 
 ### SARaircraft
 
