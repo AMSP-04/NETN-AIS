@@ -2,7 +2,7 @@
 # NETN-AIS
 |Version| Date| Dependencies|
 |---|---|---|
-|1.1|2024-03-10|NETN-BASE, RPR-Communication, NETN-ETR, NETN-ORG, NETN-SMC|
+|2.0|2024-03-10|NETN-BASE, RPR-Communication, NETN-ETR, NETN-ORG, NETN-SMC|
 
 The purpose of the NATO Education and Training Network Automatic Identification System Module (NETN-AIS) is to:     
         
