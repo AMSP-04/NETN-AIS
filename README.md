@@ -3,20 +3,20 @@
 
 |Version| Date| Dependencies|
 |---|---|---|
-|1.1|2024-03-04|NETN-BASE, RPR-Communication, NETN-ETR, NETN-ORG, NETN-SMC|
+|1.1|2024-03-10|NETN-BASE, RPR-Communication, NETN-ETR, NETN-ORG, NETN-SMC|
 
 > [Full Documentation](NETN-AIS.md)
 
 The purpose of the NATO Education and Training Network Automatic Identification System Module (NETN-AIS) is to:     
         
-* represent vessel traffic in a simulation using AIS messages to for example communicate position status reports of vessels.   
-* enable the exchange of AIS messages between HLA Federate Applications in both a real-time and non-real-time platform-level simulation.   
-* allow HLA Federate Applications to use regular HLA interaction classes and parameters to represent vessel information and leave any translation to physical message formats to dedicated gateways.
+* represent vessel traffic in a simulation using AIS messages to, for example, communicate position status reports of vessels.   
+* enable the exchange of AIS messages between HLA Federate Applications in real-time and non-real-time platform-level simulation.   
+* allow HLA Federate Applications to use regular HLA interaction classes and parameters to represent vessel information and leave any translations to physical message formats to dedicated gateways.
 
 
 AIS is a worldwide automated tracking system used for sharing vessel identification and location information by propagating messages between nearby vessels and Vessel Traffic Services stations.
 
-The NETN-AIS module is a simulation-oriented representation of AIS messages. It does not focus on the physical message format as defined by the AIS standard ITU-R M.1371-5, however, the module is aligned with this standard to enable easy mapping to and from live message formats.
+The NETN-AIS module is a simulation-oriented representation of AIS messages. It does not focus on the physical message format defined by the AIS standard ITU-R M.1371-5. However, the module is aligned with this standard to enable easy mapping to and from live message formats.
 
 ## License
 
