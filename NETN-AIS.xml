@@ -16,7 +16,7 @@
         <description>AIS is a worldwide automated tracking system used for sharing vessel identification and location information by propagating messages between nearby vessels and Vessel Traffic Services stations.</description>
         <useLimitation>The NETN-AIS module is a simulation-oriented representation of AIS messages. It does not focus on the physical message format defined by the AIS standard ITU-R M.1371-5. However, the module is aligned with this standard to enable easy mapping to and from live message formats.</useLimitation>
         <useHistory>v1.0 - Developed by MSG-163 for NETN FOM v3.0</useHistory>
-        <useHistory notes="netn-ais_changelog_1">v1.1 - Developed by MSG-191 for NETN FOM v4.0</useHistory>
+        <useHistory notes="netn-ais_changelog_1">v2.0 - Developed by MSG-191 for NETN FOM v4.0</useHistory>
         <poc>
             <pocType>Release authority</pocType>
             <pocName>NATO Modelling and Simulation Group</pocName>
@@ -1612,12 +1612,12 @@ This attribute represents the 7 digits value of the IMO number. The value shall 
 * Added `AidToNavigation` object class attribute `DimensionToStern` 
 * Added `AidToNavigation` object class attribute `DimensionToBow` 
 * Added `AidToNavigation` object class attribute `DimensionToPort` 
-* Added `AidToNavigation` object class attribute `DimensionToStarboard`
-
-* Added datatype `SendSafetyRelatedMessageTaskStruct`
-* Added datatype `SendSafetyRelatedBroadcastMessageTaskStruct`
-* Added datatype `TaskDefinitionVariantRecord`
-* Added datatype `TaskProgressVariantRecord`
+* Added `AidToNavigation` object class attribute `DimensionToStarboard` 
+ 
+* Added datatype `SendSafetyRelatedMessageTaskStruct` 
+* Added datatype `SendSafetyRelatedBroadcastMessageTaskStruct` 
+* Added datatype `TaskDefinitionVariantRecord` 
+* Added datatype `TaskProgressVariantRecord` 
 * Added datatype `EntityControlActionEnum`</semantics>
         </note>
         <note>
@@ -1777,7 +1777,7 @@ The `AIS_Equipment` defines, amongst others, the `RadioSystemType` of the AIS st
 - `7.3.0.37.2.0.0` for a class B/SO (Self-Organizing) transmitter 
 - `7.3.0.37.3.0.0` for a class B/CS (Carrier-Sense) transmitter 
  
-See Radio Kind in the SISO Enumerations for categories. Adding a subcategory makes it possible to identify the specific type of transmitter. These non-standard subcategory values should be defined as part of the federation agreements. The country code value 0 in this example should be replaced by the appropriate value.
+See Radio Kind in the SISO Enumerations for categories. Adding a subcategory makes it possible to identify the specific type of transmitter. These non-standard subcategory values should be defined as part of the federation agreements. The country code value 0 in this example should be replaced by the appropriate value. 
  
 In addition, the NETN-ORG MSDL schema is extended with an AIS schema. This enables persistent storage of AIS-related ORBAT data in the same file as the rest of the ORBAT data.</semantics>
         </note>

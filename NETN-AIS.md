@@ -170,7 +170,7 @@ The `AIS_Equipment` defines, amongst others, the `RadioSystemType` of the AIS st
 - `7.3.0.37.2.0.0` for a class B/SO (Self-Organizing) transmitter 
 - `7.3.0.37.3.0.0` for a class B/CS (Carrier-Sense) transmitter 
  
-See Radio Kind in the SISO Enumerations for categories. Adding a subcategory makes it possible to identify the specific type of transmitter. These non-standard subcategory values should be defined as part of the federation agreements. The country code value 0 in this example should be replaced by the appropriate value.
+See Radio Kind in the SISO Enumerations for categories. Adding a subcategory makes it possible to identify the specific type of transmitter. These non-standard subcategory values should be defined as part of the federation agreements. The country code value 0 in this example should be replaced by the appropriate value. 
  
 In addition, the NETN-ORG MSDL schema is extended with an AIS schema. This enables persistent storage of AIS-related ORBAT data in the same file as the rest of the ORBAT data.
 
