@@ -174,6 +174,41 @@ See Radio Kind in the SISO Enumerations for categories. Adding a subcategory mak
  
 In addition, the NETN-ORG MSDL schema is extended with an AIS schema. This enables persistent storage of AIS-related ORBAT data in the same file as the rest of the ORBAT data.
 
+## Patterns for initialization
+
+The initialization of the NETN-ENTITY Physical Entity `Marking` and `Callsign` attributes for AIS simulation is dependent on the use case. In some cases, these attributes need to be set to specific values, while in other use cases, a specific value is not relevant.
+
+Below are patterns for initializing the `PhysicalEntity` attributes `Marking` and `Callsign`. If a callsign is used, the value should follow the ITU recommendation for callsigns.
+
+### Using NETN-ORG AIS Extension
+
+When using the AIS NETN-ORG extension for initialization, the entity `Marking` and `Callsign` get initial values using the NETN-ORG initialization data.
+
+|  Physical Entity attribute | Initialized with|
+| --- | --- |
+| `Marking` | NETN-ORG `Equipment.Name`|
+| `Callsign`| NETN-ORG `AIS_Equipment.Callsign`|
+
+### Using NETN-ORG
+
+If no NETN-ORG AIS initialization data is available, the NETN-ORG `Equipment.Name` is used as the entity `Callsign` value. The federate owning the `Marking` attribute provides its value.
+
+| NETN Physical Entity attribute | Initialized with|
+| --- | --- |
+| `Marking` | A marking value provided by the federate owning the `Marking` attribute.|
+| `Callsign` | NETN-ORG `Equipment.Name`, an AIS Callsign value |
+
+### Not using NETN-ORG
+
+If no NETN-ORG initialization data is available or used, the `Marking` is set to the AIS MMSI value, and the `Callsign` is set to the associated AIS callsign value. In this pattern, other applications can look up additional AIS Station information based on the received MMSI value (e.g. a configuration file with the additional data). In addition, RPR-FOM-based federates can provide the MMSI value to consumers using the marking attribute.
+
+| NETN Physical Entity attribute | Initialized with |
+| --- | --- |
+| `Marking`| AIS MMSI value provided by the federate owning the `Marking` attribute. |
+| `Callsign` | (1) AIS Callsign value provided by the entity owner, or (2) not used/not published |
+
+
+
 
 ## Object Classes
 
